@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيت قلبي 🤍</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* شاشة البداية */
+        #intro-screen {
+            background: radial-gradient(circle, #1a1a2e 0%, #0b0f19 100%);
+        }
+
+        .typing-text {
+            font-size: 1.5rem;
+            line-height: 2;
+            margin-bottom: 30px;
+            min-height: 120px;
+            max-width: 600px;
+            color: #f1f1f1;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        /* الأزرار والتفاعلات العامة */
+        .btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+
+        /* الظرف */
+        .envelope-container {
+            cursor: pointer;
+            font-size: 5rem;
+            animation: float 2s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* النجوم والقلوب المتطايرة بالخلفية */
+        .star, .heart-float {
+            position: absolute;
+            color: #fff;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* الباب والمدخل */
+        .door-container {
+            font-size: 6rem;
+            cursor: pointer;
+            transition: transform 0.5s;
+            margin-bottom: 20px;
+        }
+        .door-container:hover {
+            transform: scale(1.1);
+        }
+
+        /* القائمة الرئيسية للأبواب */
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            max-width: 700px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .room-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 25px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .room-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            border-color: #ff6584;
+            box-shadow: 0 10px 25px rgba(255, 101, 132, 0.2);
+        }
+
+        .room-card span {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .room-card h3 {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        /* شاشات الغرف الفرعية */
+        .content-box {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 25px;
+            max-width: 550px;
+            width: 90%;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .back-btn {
+            background: transparent;
+            border: none;
+            color: #aaa;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 15px;
+            transition: color 0.3s;
+        }
+        .back-btn:hover {
+            color: #fff;
+        }
+
+        /* شبكة أسباب الحب (30 سبب) */
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 10px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .reason-heart {
+            background: rgba(255, 101, 132, 0.2);
+            border: 1px solid rgba(255, 101, 132, 0.4);
+            aspect-ratio: 1;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .reason-heart:hover, .reason-heart.opened {
+            background: #ff6584;
+            color: #fff;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #ff6584;
+        }
+
+        /* النافذة المنبثقة للرسائل */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 20px;
+        }
+        .modal-content {
+            background: #161b22;
+            border: 1px solid #30363d;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* اللمسة الأخيرة والدب */
+        .last-moment {
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: #ff8fa3;
+            cursor: pointer;
+            transition: 0.3s;
+            text-shadow: 0 0 5px rgba(255,143,163,0.3);
+        }
+        .last-moment:hover {
+            color: #ff6584;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الخلفية المتحركة -->
+    <div id="bg-effects"></div>
+
+    <!-- 1. شاشة البداية -->
+    <div id="intro-screen" class="screen active">
+        <div class="typing-text" id="typing-box"></div>
+        <div class="envelope-container" id="open-envelope" style="display: none;" onclick="goToScreen('door-screen')">
+            💌
+            <div style="font-size: 1rem; margin-top: 10px; color: #ff8fa3;">اضغط لفتح الظرف 🤍</div>
+        </div>
+    </div>
+
+    <!-- 2. مدخل البيت -->
+    <div id="door-screen" class="screen">
+        <div class="door-container" onclick="openDoor()">🚪</div>
+        <p style="font-size: 1.2rem; color: #ccc;" id="door-hint">اضغط لفتح باب قلبي ✨</p>
+    </div>
+
+    <!-- 3. قائمة الأبواب الرئيسية -->
+    <div id="main-rooms-screen" class="screen">
+        <h2 style="margin-bottom: 25px; font-weight: 400; letter-spacing: 1px;">اختر مساحة من قلبي 🤍</h2>
+        <div class="rooms-grid">
+            <div class="room-card" onclick="openRoom('rose')">
+                <span>🌹</span>
+                <h3>الاشتياق</h3>
+            </div>
+            <div class="room-card" onclick="openRoom('confession')">
+                <span>💌</span>
+                <h3>الاعترافات</h3>
+            </div>
+            <div class="room-card" onclick="openRoom('reasons')">
+                <span>❤️</span>
+                <h3>أسباب حبي</h3>
+            </div>
+            <div class="room-card" onclick="openRoom('wishes')">
+                <span>⭐</span>
+                <h3>الأمنيات</h3>
+            </div>
+            <div class="room-card" onclick="openRoom('memories')">
+                <span>🕯️</span>
+                <h3>الذكريات</h3>
+            </div>
+            <div class="room-card" onclick="openRoom('hug')">
+                <span>🤍</span>
+                <h3>الحضن</h3>
+            </div>
+        </div>
+        <div class="last-moment" onclick="openFinalScreen()">🥺 لحظة... لا تروح...</div>
+    </div>
+
+    <!-- 4. الغرف الفرعية -->
+    <div id="room-screen" class="screen">
+        <div class="content-box" id="room-content-area"></div>
+        <button class="back-btn" onclick="goToScreen('main-rooms-screen')">← رجوع للأبواب</button>
+    </div>
+
+    <!-- 5. شاشة النهاية الكبرى -->
+    <div id="final-screen" class="screen" style="background: radial-gradient(circle, #0f172a 0%, #020617 100%);">
+        <div class="content-box" style="max-width: 600px;">
+            <p id="final-text" style="line-height: 2.2; font-size: 1.1rem; margin-bottom: 20px;"></p>
+            <div style="font-size: 2rem; margin: 15px 0;">♾️</div>
+            <button class="btn" onclick="triggerHugEffect()">💋 ابعتلي حضن من بعيد</button>
+        </div>
+    </div>
+
+    <!-- نافذة منبثقة عامة -->
+    <div class="modal" id="custom-modal" onclick="closeModal(event)">
+        <div class="modal-content" id="modal-body"></div>
+    </div>
+
+    <script>
+        const introLines = [
+            "في أماكن... ما بتنشاف بالعين...",
+            "في أماكن... بتنحس بالقلب... 🤍",
+            "واليوم... رح آخدك بمكان... ما دخله حدا قبلك...✨"
+        ];
+
+        let lineIdx = 0;
+        let charIdx = 0;
+        const typingBox = document.getElementById('typing-box');
+
+        function typeWriter() {
+            if (lineIdx < introLines.length) {
+                if (charIdx < introLines[lineIdx].length) {
+                    typingBox.innerHTML += introLines[lineIdx].charAt(charIdx);
+                    charIdx++;
+                    setTimeout(typeWriter, 50);
+                } else {
+                    setTimeout(() => {
+                        typingBox.innerHTML += "<br><br>";
+                        lineIdx++;
+                        charIdx = 0;
+                        typeWriter();
+                    }, 1000);
+                }
+            } else {
+                document.getElementById('open-envelope').style.display = 'block';
+            }
+        }
+
+        window.onload = () => {
+            typeWriter();
+            createBackgroundEffects();
+        };
+
+        function goToScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            document.getElementById('custom-modal').style.display = 'none';
+        }
+
+        function openDoor() {
+            document.getElementById('door-hint').innerText = "✨✨ جاري فتح الباب وفتح القلوب...";
+            setTimeout(() => {
+                goToScreen('main-rooms-screen');
+            }, 1200);
+        }
+
+        function openRoom(type) {
+            goToScreen('room-screen');
+            const area = document.getElementById('room-content-area');
+            
+            if(type === 'rose') {
+                area.innerHTML = `
+                    <h2 style="margin-bottom: 15px;">🌹 غرفة الاشتياق</h2>
+                    <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px;">اشتقتلك بطريقة لو وصفتها... ما كانت الكلمات كافية...🥹❤️</p>
+                    <div style="font-size: 3rem; animation: float 2s infinite;">🌹</div>
+                `;
+            } else if(type === 'confession') {
+                area.innerHTML = `
+                    <h2 style="margin-bottom: 15px;">💌 الاعترافات</h2>
+                    <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px;">كل زاوية بقلبي بتعرف إنك صرت النبض اللي بعيش فيه كل يوم... 💗</p>
+                    <button class="btn" onclick="showPopup('🤍 احضن هالكلمات', 'تم إرسال آلاف القلوب لقلبك الآن! ❤️❤️❤️')">احضن هالكلمات</button>
+                `;
+            } else if(type === 'reasons') {
+                let gridHtml = '<div class="reasons-grid">';
+                for(let i=1; i<=30; i++) {
+                    gridHtml += `<div class="reason-heart" onclick="openReason(${i})">❤️</div>`;
+                }
+                gridHtml += '</div>';
+                area.innerHTML = `<h2 style="margin-bottom: 10px;">❤️ 30 سبب أحبك</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:15px;">اضغط على القلوب لاكتشاف الأسباب</p>` + gridHtml;
+            } else if(type === 'wishes') {
+                area.innerHTML = `
+                    <h2 style="margin-bottom: 15px;">⭐ الأمنيات</h2>
+                    <p style="font-size: 1.2rem; line-height: 1.8;">كل دعوة طلعت من قلبي بالليل كانت إلك وحدك... إنك تضل بخير، وتضل مبسوط، وتضل جنبي بكل عمري ✨🤲🏻</p>
+                `;
+            } else if(type === 'memories') {
+                area.innerHTML = `
+                    <h2 style="margin-bottom: 15px;">🕯️ الذكريات</h2>
+                    <p style="font-size: 1.2rem; line-height: 1.8;">حتى بالمسافات البعيدة، ضحكتك وصوتك هما المكان الدافي اللي بلجأ له كل ما حسيت بتعب العالم... 🔥🤍</p>
+                `;
+            } else if(type === 'hug') {
+                area.innerHTML = `
+                    <h2 style="margin-bottom: 15px;">🤍 الحضن</h2>
+                    <div style="font-size: 4rem; margin: 15px 0;">👩‍❤️‍👨</div>
+                    <p style="font-size: 1.1rem; line-height: 1.8;">رغم كل المسافات... عيون قلبي دايماً شايفيتك وقريبة منك 🥹🫂❤️</p>
+                `;
+            }
+        }
+
+        function openReason(num) {
+            let msg = `السبب رقم ${num}: لأن وجودك بحياتي خلاني أكتشف إنه الحب الحقيقي هادئ، صادق، وساكن بالروح.. ❤️`;
+            if(num === 5 || num === 10 || num === 15) {
+                msg += "<br><br>🥹 <b>لسا عندي أكتر...</b>";
+            }
+            if(num === 20) {
+                msg += "<br><br>🤍 <b>واضح إني ما بعرف أحب شوي...</b>";
+            }
+            if(num === 30) {
+                msg += "<br><br>✨ <b>وإذا سألتني شو السبب الحقيقي؟ لأنك... أنت.❤️</b>";
+            }
+            showPopup(`سبب رقم ${num} ❤️`, msg);
+        }
+
+        function showPopup(title, content) {
+            const modal = document.getElementById('custom-modal');
+            const body = document.getElementById('modal-body');
+            body.innerHTML = `<h3 style="color: #ff6584; margin-bottom: 15px;">${title}</h3><p style="line-height: 1.6; margin-bottom: 20px;">${content}</p><button class="btn" onclick="closeModalDirect()" style="padding: 8px 20px; font-size: 0.9rem;">تمام 🤍</button>`;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(e) {
+            if(e.target.id === 'custom-modal') {
+                document.getElementById('custom-modal').style.display = 'none';
+            }
+        }
+        function closeModalDirect() {
+            document.getElementById('custom-modal').style.display = 'none';
+        }
+
+        function openFinalScreen() {
+            goToScreen('final-screen');
+            const finalText = document.getElementById('final-text');
+            finalText.innerHTML = `
+                إذا كنت وصلت لهون...<br>
+                فأنت ما قريت رسائل... أنت عشت جوّا قلبي...<br>
+                وكل كلمة هون... كانت حقيقية... وكل دعوة... كانت إلك...🤲🏻<br>
+                وكل نبضة... كانت بتنادي اسمك...🤍<br><br>
+                شكراً لأنك الشخص اللي غيّر حياتي بطريقة ما كنت أتخيلها...🥹<br>
+                أتمنى تضل تبتسم... وتضل بخير... وتضل الشخص اللي بحبه... اليوم... وبكرا... وكل العمر...❤️
+            `;
+        }
+
+        function triggerHugEffect() {
+            showPopup("🫂 الحضن وصلك...", "حتى لو بيننا مسافات... قلبي وعالمي كله ملكك وحدك 💖✨");
+            for(let i=0; i<30; i++) {
+                createFloatingHeart();
+            }
+        }
+
+        function createBackgroundEffects() {
+            const bg = document.getElementById('bg-effects');
+            setInterval(() => {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.innerHTML = Math.random() > 0.5 ? '✨' : '⭐';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                star.style.opacity = Math.random();
+                bg.appendChild(star);
+                setTimeout(() => star.remove(), 4000);
+            }, 500);
+        }
+
+        function createFloatingHeart() {
+            const bg = document.getElementById('bg-effects');
+            const heart = document.createElement('div');
+            heart.classList.add('heart-float');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.bottom = '0px';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            heart.style.transition = 'all 3s ease-out';
+            bg.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.style.transform = `translateY(-${Math.random() * 400 + 200}px) scale(1.3)`;
+                heart.style.opacity = '0';
+            }, 100);
+
+            setTimeout(() => heart.remove(), 3100);
+        }
+    </script>
+</body>
+          </html>
+
