@@ -25,7 +25,6 @@
             position: relative;
         }
 
-        /* خلفية النجوم والفراشات */
         .stars-container {
             position: fixed;
             top: 0;
@@ -65,7 +64,7 @@
             width: 100%;
             flex-direction: column;
             align-items: center;
-            animation: fadeIn 0.8s ease forwards;
+            animation: fadeIn 0.6s ease forwards;
         }
 
         .screen.active {
@@ -73,30 +72,30 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* عناصر تفاعلية وأزرار */
         .btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: #fff;
-            padding: 12px 30px;
+            padding: 14px 32px;
             border-radius: 30px;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             cursor: pointer;
             margin-top: 25px;
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-weight: 700;
         }
 
         .btn:hover {
             background: #fff;
             color: #05050a;
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
         }
 
         input[type="text"] {
@@ -119,10 +118,9 @@
             box-shadow: 0 0 10px rgba(255, 71, 126, 0.5);
         }
 
-        /* المشاهد والتفاصيل */
         .text-glow {
-            font-size: 1.4rem;
-            line-height: 1.8;
+            font-size: 1.35rem;
+            line-height: 1.9;
             margin-bottom: 15px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
@@ -135,45 +133,26 @@
             transition: transform 0.3s;
         }
 
-        .envelope:hover {
-            transform: scale(1.1);
-        }
+        .envelope:hover { transform: scale(1.1); }
 
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
 
-        .key-icon {
-            font-size: 4rem;
-            margin: 20px 0;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        /* شبكة الغرف والورد والأسباب */
         .grid-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 12px;
             width: 100%;
-            max-height: 60vh;
+            max-height: 55vh;
             overflow-y: auto;
             padding: 10px;
             margin-top: 15px;
         }
 
-        .grid-cards::-webkit-scrollbar {
-            width: 5px;
-        }
-        .grid-cards::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
-        }
+        .grid-cards::-webkit-scrollbar { width: 5px; }
+        .grid-cards::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
         .card-item {
             background: rgba(255, 255, 255, 0.05);
@@ -244,7 +223,7 @@
             cursor: pointer;
             animation: heartBeat 1.2s infinite;
             filter: drop-shadow(0 0 15px rgba(255, 71, 126, 0.6));
-            margin: 30px 0;
+            margin: 20px 0;
         }
 
         @keyframes heartBeat {
@@ -274,10 +253,13 @@
 
     <div class="container">
         
-        <!-- البداية -->
+        <!-- شاشة الترحيب والبداية المباشرة -->
         <div id="screen-intro" class="screen active">
-            <div id="intro-text" class="text-glow" style="min-height: 120px;"></div>
-            <button class="btn" id="start-btn" style="display: none;">🤍 افتح بيت قلبي</button>
+            <h1 style="color: #ff758c; margin-bottom: 20px; font-size: 2rem;">🌙 بيت قلبي</h1>
+            <div id="intro-text" class="text-glow" style="min-height: 90px; margin-bottom: 10px;">
+                اضغط على الزر أدناه لتبدأ رحلة الأبواب والأسرار... 🤍
+            </div>
+            <button class="btn" id="start-btn" onclick="startJourney()">✨ ابدأ الرحلة فوراً</button>
         </div>
 
         <!-- الباب الأول: غرفة الاشتياق -->
@@ -376,29 +358,29 @@
         </div>
 
         <div id="screen-message" class="screen">
-            <div id="final-text-content" style="text-align: right; line-height: 2; font-size: 1.1rem; background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; max-height: 60vh; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1);"></div>
+            <div id="final-text-content" style="text-align: right; line-height: 2; font-size: 1.05rem; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px; max-height: 55vh; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1);"></div>
             <button class="btn" id="last-step-btn" style="display: none; margin-top: 20px;" onclick="showUltimateHeart()">🥺 شغلة صغيرة كمان...</button>
         </div>
 
         <div id="screen-heart" class="screen">
             <div class="heart-pulse" onclick="showSecretNote()">🤍</div>
-            <p id="heart-caption" style="font-size: 1.2rem; margin-top: 20px; line-height: 1.8;"></p>
+            <p id="heart-caption" style="font-size: 1.15rem; margin-top: 15px; line-height: 1.8;"></p>
         </div>
 
     </div>
 
-    <!-- نافذة منبثقة لعرض محتوى العناصر (الورد، الأسباب، الذكريات) -->
+    <!-- نافذة منبثقة للمحتوى -->
     <div class="modal" id="contentModal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="modal-close" onclick="forceCloseModal()">&times;</span>
-            <div id="modal-body" style="font-size: 1.2rem; line-height: 1.8; color: #fff;"></div>
+            <div id="modal-body" style="font-size: 1.15rem; line-height: 1.8; color: #fff;"></div>
         </div>
     </div>
 
     <script>
         // خلق النجوم في الخلفية
         const starsContainer = document.getElementById('starsContainer');
-        for (let i = 0; i < 80; i++) {
+        for (let i = 0; i < 70; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             star.style.top = Math.random() * 100 + '%';
@@ -409,50 +391,9 @@
             starsContainer.appendChild(star);
         }
 
-        // تسلسل شاشة البداية
-        const introTexts = [
-            "مرحبًا...",
-            "إذا وصلت لهون...",
-            "فأكيد في سبب خلاك تضغط على هالرابط...",
-            "وإذا كنت عم تقرأ هالكلام...",
-            "فمعناه إنك الشخص الوحيد اللي إله حق يكون هون... 🤍",
-            "أهلًا في المكان اللي بنيته من كل دعوة دعوتها إلك...",
-            "...ومن كل مرة اشتقتلك فيها...",
-            "...ومن كل مرة ابتسمت فيها لأنك موجود بحياتي...",
-            "هاد المكان...",
-            "مو مجرد موقع...",
-            "هاد المكان...",
-            "هو قلبي. ❤️"
-        ];
-
-        let currentLine = 0;
-        const introTextDiv = document.getElementById('intro-text');
-        const startBtn = document.getElementById('start-btn');
-
-        function playIntro() {
-            if (currentLine < introTexts.length) {
-                introTextDiv.style.opacity = 0;
-                setTimeout(() => {
-                    introTextDiv.innerHTML = introTexts[currentLine];
-                    introTextDiv.style.opacity = 1;
-                    currentLine++;
-                    setTimeout(playIntro, 2800);
-                }, 400);
-            } else {
-                setTimeout(() => {
-                    introTextDiv.innerHTML = "✨ أهلًا في بيت قلبي ✨";
-                    startBtn.style.display = "inline-block";
-                }, 1000);
-            }
-        }
-
-        window.onload = () => {
-            setTimeout(playIntro, 1000);
-        };
-
-        startBtn.onclick = () => {
+        function startJourney() {
             goToScreen('screen-door1');
-        };
+        }
 
         function goToScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -494,9 +435,7 @@
             }
         }
 
-        // دوال تحميل الغرف (محتويات تفاعلية)
-        let openedCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-
+        // تحميل محتويات الغرف
         function loadRoses() {
             const grid = document.getElementById('roses-grid');
             grid.innerHTML = '';
@@ -507,4 +446,38 @@
                 "أوقات، كل اللي بحتاجه من الدنيا هو رسالة منك تقول فيها إنك بخير. 🥹",
                 "يمكن بيننا مسافات، بس ولا مرة حسيت إنك بعيد عن قلبي. ❤️",
                 "اسمك صار يمر ببالي بدون أي سبب، ويمكن هاد أجمل سبب للسعادة. 🤍",
-                
+                "كل دعوة بدعيها لنفسي، في وحدة قبلها إلك. 🤲🏻❤️",
+                "وجودك بحياتي خلاني أحب الأيام أكتر. 🥹",
+                "لو رجع فيني الزمن، كنت رح أحبك بنفس الطريقة وأكتر. 🤍",
+                "ولو خيروني بين ألف شخص، رح أختارك كل مرة بدون تردد. ❤️"
+            ];
+            data.forEach((text, index) => {
+                const item = document.createElement('div');
+                item.className = 'card-item';
+                item.innerHTML = `🌹<br><span style="font-size:0.8rem; margin-top:5px;">وردة ${index+1}</span>`;
+                item.onclick = () => showModal(text, 1, data.length);
+                grid.appendChild(item);
+            });
+        }
+
+        function loadLetters() {
+            const grid = document.getElementById('letters-grid');
+            grid.innerHTML = '';
+            const data = [
+                "بعرف إني مو دايمًا بعرف أوصف اللي بقلبي، بس وجودك صار جزء من راحتي والمسكن اللي بلجأله دائماً. 🤍",
+                "شكراً لأنك كنت حنون معي... حنيتك كانت سبب إني أحبك أكتر كل يوم. 🥹❤️",
+                "إذا سألتني شو أجمل صدفة بحياتي، ما رح أفكر كتير رح جاوب: إنت. 🤍🌍",
+                "بحب تفاصيلك، ضحكتك، صوتك، وحتى الأشياء اللي يمكن إنت ما بتحبها بنفسك. ❤️",
+                "ولو رجع فيني الزمن ألف مرة، كل مرة رح أختارك بنفس القلب وبحب أكبر. 🥹🤍"
+            ];
+            data.forEach((text, index) => {
+                const item = document.createElement('div');
+                item.className = 'card-item';
+                item.innerHTML = `💌<br><span style="font-size:0.8rem; margin-top:5px;">رسالة ${index+1}</span>`;
+                item.onclick = () => showModal(text, 2, data.length);
+                grid.appendChild(item);
+            });
+        }
+
+        function loadReasons() {
+            const grid = document.getE
