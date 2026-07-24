@@ -42,7 +42,6 @@
             display: flex;
         }
 
-        /* شاشة البداية */
         #intro-screen {
             background: radial-gradient(circle, #1a1a2e 0%, #0b0f19 100%);
         }
@@ -57,7 +56,6 @@
             text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
-        /* الأزرار والتفاعلات العامة */
         .btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -78,7 +76,6 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
         }
 
-        /* الظرف */
         .envelope-container {
             cursor: pointer;
             font-size: 5rem;
@@ -91,7 +88,6 @@
             50% { transform: translateY(-15px); }
         }
 
-        /* النجوم والقلوب المتطايرة بالخلفية */
         .star, .heart-float {
             position: absolute;
             color: #fff;
@@ -99,7 +95,6 @@
             z-index: 1;
         }
 
-        /* الباب والمدخل */
         .door-container {
             font-size: 6rem;
             cursor: pointer;
@@ -110,7 +105,6 @@
             transform: scale(1.1);
         }
 
-        /* القائمة الرئيسية للأبواب */
         .rooms-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -148,7 +142,6 @@
             color: #fff;
         }
 
-        /* شاشات الغرف الفرعية */
         .content-box {
             background: rgba(255, 255, 255, 0.07);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -180,12 +173,41 @@
             color: #fff;
         }
 
-        /* شبكة أسباب الحب (30 سبب) */
+        /* شبكات العناصر المتعددة داخل الغرف */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+            max-height: 50vh;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .interactive-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.8rem;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .interactive-item:hover {
+            background: rgba(255, 101, 132, 0.3);
+            border-color: #ff6584;
+            transform: scale(1.08);
+        }
+
         .reasons-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 10px;
-            max-height: 60vh;
+            max-height: 55vh;
             overflow-y: auto;
             padding: 10px;
             width: 100%;
@@ -212,7 +234,6 @@
             box-shadow: 0 0 15px #ff6584;
         }
 
-        /* النافذة المنبثقة للرسائل */
         .modal {
             display: none;
             position: fixed;
@@ -235,7 +256,6 @@
             animation: fadeIn 0.3s ease;
         }
 
-        /* اللمسة الأخيرة والدب */
         .last-moment {
             margin-top: 25px;
             font-size: 0.95rem;
@@ -252,10 +272,8 @@
 </head>
 <body>
 
-    <!-- الخلفية المتحركة -->
     <div id="bg-effects"></div>
 
-    <!-- 1. شاشة البداية -->
     <div id="intro-screen" class="screen active">
         <div class="typing-text" id="typing-box"></div>
         <div class="envelope-container" id="open-envelope" style="display: none;" onclick="goToScreen('door-screen')">
@@ -264,13 +282,11 @@
         </div>
     </div>
 
-    <!-- 2. مدخل البيت -->
     <div id="door-screen" class="screen">
         <div class="door-container" onclick="openDoor()">🚪</div>
         <p style="font-size: 1.2rem; color: #ccc;" id="door-hint">اضغط لفتح باب قلبي ✨</p>
     </div>
 
-    <!-- 3. قائمة الأبواب الرئيسية -->
     <div id="main-rooms-screen" class="screen">
         <h2 style="margin-bottom: 25px; font-weight: 400; letter-spacing: 1px;">اختر مساحة من قلبي 🤍</h2>
         <div class="rooms-grid">
@@ -302,13 +318,11 @@
         <div class="last-moment" onclick="openFinalScreen()">🥺 لحظة... لا تروح...</div>
     </div>
 
-    <!-- 4. الغرف الفرعية -->
     <div id="room-screen" class="screen">
         <div class="content-box" id="room-content-area"></div>
         <button class="back-btn" onclick="goToScreen('main-rooms-screen')">← رجوع للأبواب</button>
     </div>
 
-    <!-- 5. شاشة النهاية الكبرى -->
     <div id="final-screen" class="screen" style="background: radial-gradient(circle, #0f172a 0%, #020617 100%);">
         <div class="content-box" style="max-width: 600px;">
             <p id="final-text" style="line-height: 2.2; font-size: 1.1rem; margin-bottom: 20px;"></p>
@@ -317,7 +331,6 @@
         </div>
     </div>
 
-    <!-- نافذة منبثقة عامة -->
     <div class="modal" id="custom-modal" onclick="closeModal(event)">
         <div class="modal-content" id="modal-body"></div>
     </div>
@@ -370,22 +383,54 @@
             }, 1200);
         }
 
+        // قواعد البيانات للرسايل المختلفة بكل قسم
+        const roseMessages = [
+            "اشتقتلك بطريقة لو وصفتها... ما كانت الكلمات كافية...🥹❤️",
+            "كل ما تمر دوشة هالدنيا، بتمنى لو صوتك عندي يهدي كلشي... 🌹",
+            "المسافات بعيدة، بس بقلبي أنت أقرب إلي من كل شي بحيط فيني... 🥀",
+            "اشتقت لضحكتك ولحكيك وللطريقة اللي بتغير فيها يومي بس تكون موجود... 🌸",
+            "لو تعرف كم مرة باليوم بفكر فيك، رح تعرف قديش غلاك كبير بقلبي... 🤍"
+        ];
+
+        const confessionMessages = [
+            "كل زاوية بقلبي بتعرف إنك صرت النبض اللي بعيش فيه كل يوم... 💗",
+            "بعترف إني ما كنت أعرف شو يعني الأمان الحقيقي لغاية ما عرفتك... ✨",
+            "أنت مو بس صدفة حلوة بحياتي، أنت أجمل اختيار ختاره قلبي عن قناعة... 💌",
+            "بحبك بكل عيوبك، بتفاصيلك، وبكل شي فيك بيخليك أنت وحدك... ❤️"
+        ];
+
+        const wishMessages = [
+            "كل دعوة طلعت من قلبي بالليل كانت إلك وحدك... إنك تضل بخير، وتضل مبسوط... ✨🤲🏻",
+            "بتمنى ربنا يجمعنا قريباً، وتخلص كل هالماسافات اللي بيننا لنبقى سوا للأبد... ⭐",
+            "أمنيتي الوحيدة بكل سنة وكل يوم: إنك تضل تبتسم وتضل الأمان لقلبي... 🌙",
+            "بدعي دائماً تكون خطواتك محروسة بالفرح، وكل تعب بحياتك يتبدل براحة بال... 💫"
+        ];
+
+        const memoryMessages = [
+            "حتى بالمسافات البعيدة، ضحكتك وصوتك هما المكان الدافي اللي بلجأ له كل ما حسيت بتعب العالم... 🔥🤍",
+            "بتذكر أول مرة حكينا فيها، وكيف هيك بدونه مسبق صرت أهم شخص بحياتي... 🕯️",
+            "أحلى ذكرياتي هي اللي جمعتني فيك، وكل لحظة قضيناها سوا محفورة بقلبي للأبد... 🕰️",
+            "كل يوم معك بينضاف لقائمة أجمل أيام عمري اللي ما بينتنسوا أبداً... ✨"
+        ];
+
         function openRoom(type) {
             goToScreen('room-screen');
             const area = document.getElementById('room-content-area');
             
             if(type === 'rose') {
-                area.innerHTML = `
-                    <h2 style="margin-bottom: 15px;">🌹 غرفة الاشتياق</h2>
-                    <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px;">اشتقتلك بطريقة لو وصفتها... ما كانت الكلمات كافية...🥹❤️</p>
-                    <div style="font-size: 3rem; animation: float 2s infinite;">🌹</div>
-                `;
+                let html = `<h2 style="margin-bottom: 15px;">🌹 غرفة الاشتياق</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">اضغط على الوردات لاكتشاف مشاعري</p><div class="items-grid">`;
+                for(let i=0; i<6; i++) {
+                    html += `<div class="interactive-item" onclick="showRandomMsg('🌹 رسالة شوق', roseMessages)">🌹</div>`;
+                }
+                html += `</div>`;
+                area.innerHTML = html;
             } else if(type === 'confession') {
-                area.innerHTML = `
-                    <h2 style="margin-bottom: 15px;">💌 الاعترافات</h2>
-                    <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px;">كل زاوية بقلبي بتعرف إنك صرت النبض اللي بعيش فيه كل يوم... 💗</p>
-                    <button class="btn" onclick="showPopup('🤍 احضن هالكلمات', 'تم إرسال آلاف القلوب لقلبك الآن! ❤️❤️❤️')">احضن هالكلمات</button>
-                `;
+                let html = `<h2 style="margin-bottom: 15px;">💌 الاعترافات</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">افتح المغلفات لتعرف شو مخبّي لك بقلبي</p><div class="items-grid">`;
+                for(let i=0; i<6; i++) {
+                    html += `<div class="interactive-item" onclick="showRandomMsg('💌 اعتراف صادق', confessionMessages)">💌</div>`;
+                }
+                html += `</div>`;
+                area.innerHTML = html;
             } else if(type === 'reasons') {
                 let gridHtml = '<div class="reasons-grid">';
                 for(let i=1; i<=30; i++) {
@@ -394,22 +439,33 @@
                 gridHtml += '</div>';
                 area.innerHTML = `<h2 style="margin-bottom: 10px;">❤️ 30 سبب أحبك</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:15px;">اضغط على القلوب لاكتشاف الأسباب</p>` + gridHtml;
             } else if(type === 'wishes') {
-                area.innerHTML = `
-                    <h2 style="margin-bottom: 15px;">⭐ الأمنيات</h2>
-                    <p style="font-size: 1.2rem; line-height: 1.8;">كل دعوة طلعت من قلبي بالليل كانت إلك وحدك... إنك تضل بخير، وتضل مبسوط، وتضل جنبي بكل عمري ✨🤲🏻</p>
-                `;
+                let html = `<h2 style="margin-bottom: 15px;">⭐ الأمنيات</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">المس النجوم لتشوف دعواتي إليك</p><div class="items-grid">`;
+                for(let i=0; i<6; i++) {
+                    html += `<div class="interactive-item" onclick="showRandomMsg('⭐ أمنية من قلبي', wishMessages)">⭐</div>`;
+                }
+                html += `</div>`;
+                area.innerHTML = html;
             } else if(type === 'memories') {
-                area.innerHTML = `
-                    <h2 style="margin-bottom: 15px;">🕯️ الذكريات</h2>
-                    <p style="font-size: 1.2rem; line-height: 1.8;">حتى بالمسافات البعيدة، ضحكتك وصوتك هما المكان الدافي اللي بلجأ له كل ما حسيت بتعب العالم... 🔥🤍</p>
-                `;
+                let html = `<h2 style="margin-bottom: 15px;">🕯️ الذكريات</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">اولع الشموع لتتذكر لحظاتنا</p><div class="items-grid">`;
+                for(let i=0; i<6; i++) {
+                    html += `<div class="interactive-item" onclick="showRandomMsg('🕯️ ذكرى حلوة', memoryMessages)">🕯️</div>`;
+                }
+                html += `</div>`;
+                area.innerHTML = html;
             } else if(type === 'hug') {
                 area.innerHTML = `
                     <h2 style="margin-bottom: 15px;">🤍 الحضن</h2>
                     <div style="font-size: 4rem; margin: 15px 0;">👩‍❤️‍👨</div>
-                    <p style="font-size: 1.1rem; line-height: 1.8;">رغم كل المسافات... عيون قلبي دايماً شايفيتك وقريبة منك 🥹🫂❤️</p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">رغم كل المسافات... عيون قلبي دايماً شايفيتك وقريبة منك 🥹🫂❤️</p>
+                    <button class="btn" onclick="showPopup('🤍 حضن دافئ', 'حتى لو ما كنا بنفس المكان، حضن روحي إلك ما بيغيب ولا لحظة... ❤️')">احضن هالكلمات</button>
                 `;
             }
+        }
+
+        function showRandomMsg(title, msgArray) {
+            // تختار رسالة عشوائية كل ما ضغط المستخدم
+            const randomMsg = msgArray[Math.floor(Math.random() * msgArray.length)];
+            showPopup(title, randomMsg);
         }
 
         function openReason(num) {
@@ -479,23 +535,4 @@
 
         function createFloatingHeart() {
             const bg = document.getElementById('bg-effects');
-            const heart = document.createElement('div');
-            heart.classList.add('heart-float');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.bottom = '0px';
-            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            heart.style.transition = 'all 3s ease-out';
-            bg.appendChild(heart);
-            
-            setTimeout(() => {
-                heart.style.transform = `translateY(-${Math.random() * 400 + 200}px) scale(1.3)`;
-                heart.style.opacity = '0';
-            }, 100);
-
-            setTimeout(() => heart.remove(), 3100);
-        }
-    </script>
-</body>
-          </html>
-
+            const heart = document
