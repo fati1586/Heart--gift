@@ -3,483 +3,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بيت قلبي 🤍</title>
+    <title>متاهة الحب لـ حمودي 🤍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
-
         body {
-            background-color: #0b0f19;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
             color: #fff;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .screen {
-            display: none;
-            width: 100%;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
             padding: 20px;
-            z-index: 10;
         }
-
-        .screen.active {
-            display: flex;
-        }
-
-        #intro-screen {
-            background: radial-gradient(circle, #1a1a2e 0%, #0b0f19 100%);
-        }
-
-        .typing-text {
-            font-size: 1.4rem;
-            line-height: 2.2;
-            margin-bottom: 25px;
-            max-width: 600px;
-            color: #f1f1f1;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-        }
-
-        .btn {
+        .container {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-        }
-
-        .envelope-container {
-            cursor: pointer;
-            font-size: 5rem;
-            animation: float 2s ease-in-out infinite;
-            margin-top: 10px;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .door-container {
-            font-size: 6rem;
-            cursor: pointer;
-            transition: transform 0.5s;
-            margin-bottom: 20px;
-        }
-        .door-container:hover {
-            transform: scale(1.1);
-        }
-
-        .rooms-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 20px;
-            max-width: 700px;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .room-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 25px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.3s;
             backdrop-filter: blur(10px);
-        }
-
-        .room-card:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-5px);
-            border-color: #ff6584;
-            box-shadow: 0 10px 25px rgba(255, 101, 132, 0.2);
-        }
-
-        .room-card span {
-            font-size: 2.5rem;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .room-card h3 {
-            font-size: 1.1rem;
-            color: #fff;
-        }
-
-        .content-box {
-            background: rgba(255, 255, 255, 0.07);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            border-radius: 25px;
-            max-width: 550px;
-            width: 90%;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            margin-bottom: 20px;
-        }
-
-        .back-btn {
-            background: transparent;
-            border: none;
-            color: #aaa;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-top: 15px;
-            transition: color 0.3s;
-        }
-        .back-btn:hover {
-            color: #fff;
-        }
-
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-            max-height: 50vh;
-            overflow-y: auto;
-            padding: 5px;
-        }
-
-        .interactive-item {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 1.8rem;
-            transition: 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .interactive-item:hover {
-            background: rgba(255, 101, 132, 0.3);
-            border-color: #ff6584;
-            transform: scale(1.08);
-        }
-
-        .reasons-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            max-height: 55vh;
-            overflow-y: auto;
-            padding: 10px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .reason-heart {
-            background: rgba(255, 101, 132, 0.2);
-            border: 1px solid rgba(255, 101, 132, 0.4);
-            aspect-ratio: 1;
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 1.5rem;
-            transition: 0.3s;
-        }
-
-        .reason-heart:hover {
-            background: #ff6584;
-            color: #fff;
-            transform: scale(1.1);
-            box-shadow: 0 0 15px #ff6584;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            padding: 20px;
-        }
-        .modal-content {
-            background: #161b22;
-            border: 1px solid #30363d;
-            padding: 30px;
             border-radius: 20px;
-            max-width: 400px;
+            padding: 30px;
             width: 100%;
+            max-width: 500px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        .last-moment {
-            margin-top: 25px;
-            font-size: 0.95rem;
-            color: #ff8fa3;
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ffb6c1;
+        }
+        .room-indicator {
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .question-box {
+            font-size: 18px;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             transition: 0.3s;
-            text-shadow: 0 0 5px rgba(255,143,163,0.3);
+            width: 100%;
         }
-        .last-moment:hover {
-            color: #ff6584;
-            transform: scale(1.05);
+        button:hover {
+            background: #ff6b81;
+            transform: translateY(-2px);
+        }
+        .error-msg {
+            color: #ff6b81;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .success-screen {
+            display: none;
+        }
+        .final-gate {
+            font-size: 20px;
+            color: #ffef9f;
+            line-height: 1.8;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. شاشة البداية -->
-    <div id="intro-screen" class="screen active">
-        <div class="typing-text">
-            في أماكن... ما بتنشاف بالعين...<br><br>
-            في أماكن... بتنحس بالقلب... 🤍<br><br>
-            واليوم... رح آخدك بمكان... ما دخله حدا قبلك...✨
+    <div class="container" id="game-container">
+        <div id="quiz-screen">
+            <div class="room-indicator" id="room-title">الغرفة 1 من 6: الاشتياق 🌹</div>
+            <div class="question-box" id="question-text"></div>
+            <input type="text" id="answer-input" placeholder="اكتب إجابتك هون...">
+            <button onclick="checkAnswer()">تأكيد الإجابة 🤍</button>
+            <div class="error-msg" id="error-msg"></div>
         </div>
-        <div class="envelope-container" onclick="goToScreen('door-screen')">
-            💌
-            <div style="font-size: 1rem; margin-top: 10px; color: #ff8fa3;">اضغط لفتح الظرف 🤍</div>
+
+        <div class="success-screen" id="success-screen">
+            <h1>مبروك يا روحي! 🔓✨</h1>
+            <p class="final-gate" style="margin-top: 15px;">
+                فتحت كل الأبواب ووصلت لنهاية المتاهة.. وهلأ صار لازم تعرف إنك مو بس ساكن بقلبي، أنت القلب وروحي وكل دنيتي يا أغلى حمودي بالعالم! 🥹🤍🫂
+            </p>
         </div>
-    </div>
-
-    <!-- 2. مدخل البيت -->
-    <div id="door-screen" class="screen">
-        <div class="door-container" onclick="openDoor()">🚪</div>
-        <p style="font-size: 1.2rem; color: #ccc;" id="door-hint">اضغط لفتح باب قلبي ✨</p>
-    </div>
-
-    <!-- 3. قائمة الأبواب الرئيسية -->
-    <div id="main-rooms-screen" class="screen">
-        <h2 style="margin-bottom: 25px; font-weight: 400; letter-spacing: 1px;">اختر مساحة من قلبي 🤍</h2>
-        <div class="rooms-grid">
-            <div class="room-card" onclick="openRoom('rose')">
-                <span>🌹</span>
-                <h3>الاشتياق</h3>
-            </div>
-            <div class="room-card" onclick="openRoom('confession')">
-                <span>💌</span>
-                <h3>الاعترافات</h3>
-            </div>
-            <div class="room-card" onclick="openRoom('reasons')">
-                <span>❤️</span>
-                <h3>أسباب حبي</h3>
-            </div>
-            <div class="room-card" onclick="openRoom('wishes')">
-                <span>⭐</span>
-                <h3>الأمنيات</h3>
-            </div>
-            <div class="room-card" onclick="openRoom('memories')">
-                <span>🕯️</span>
-                <h3>الذكريات</h3>
-            </div>
-            <div class="room-card" onclick="openRoom('hug')">
-                <span>🤍</span>
-                <h3>الحضن</h3>
-            </div>
-        </div>
-        <div class="last-moment" onclick="openFinalScreen()">🥺 لحظة... لا تروح...</div>
-    </div>
-
-    <!-- 4. الغرف الفرعية -->
-    <div id="room-screen" class="screen">
-        <div class="content-box" id="room-content-area"></div>
-        <button class="back-btn" onclick="goToScreen('main-rooms-screen')">← رجوع للأبواب</button>
-    </div>
-
-    <!-- 5. شاشة النهاية الكبرى -->
-    <div id="final-screen" class="screen" style="background: radial-gradient(circle, #0f172a 0%, #020617 100%);">
-        <div class="content-box" style="max-width: 600px;">
-            <p id="final-text" style="line-height: 2.2; font-size: 1.1rem; margin-bottom: 20px;"></p>
-            <div style="font-size: 2rem; margin: 15px 0;">♾️</div>
-            <button class="btn" onclick="triggerHugEffect()">💋 ابعتلي حضن من بعيد</button>
-        </div>
-    </div>
-
-    <!-- نافذة منبثقة عامة -->
-    <div class="modal" id="custom-modal" onclick="closeModal(event)">
-        <div class="modal-content" id="modal-body"></div>
     </div>
 
     <script>
-        function goToScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById(screenId);
-            if (target) target.classList.add('active');
-            const modal = document.getElementById('custom-modal');
-            if (modal) modal.style.display = 'none';
-        }
-
-        function openDoor() {
-            const hint = document.getElementById('door-hint');
-            if (hint) hint.innerText = "✨✨ جاري فتح الباب وفتح القلوب...";
-            setTimeout(() => {
-                goToScreen('main-rooms-screen');
-            }, 800);
-        }
-
-        const roseMessages = [
-            "اشتقتلك بطريقة لو وصفتها... ما كانت الكلمات كافية...🥹❤️",
-            "كل ما تمر دوشة هالدنيا، بتمنى لو صوتك عندي يهدي كلشي... 🌹",
-            "المسافات بعيدة، بس بقلبي أنت أقرب إلي من كل شي بحيط فيني... 🥀",
-            "اشتقت لضحكتك ولحكيك وللطريقة اللي بتغير فيها يومي بس تكون موجود... 🌸",
-            "لو تعرف كم مرة باليوم بفكر فيك، رح تعرف قديش غلاك كبير بقلبي... 🤍"
+        const rooms = [
+            {
+                title: "الغرفة 1 من 6: الاشتياق 🌹",
+                question: "شو أكتر شي بحب اعملو أول ما بفيق من النوم؟",
+                answers: ["اني اسمع صوتك", "اسمع صوتك", "انّي اسمع صوتك", "سماع صوتك"]
+            },
+            {
+                title: "الغرفة 2 من 6: الاعترافات 💌",
+                question: "شو أكتر كلمة بحب دايماً أسمعها منك؟",
+                answers: ["يا بنوتي", "بنوتي"]
+            },
+            {
+                title: "الغرفة 3 من 6: أسباب الحب ❤️",
+                question: "بأي تاريخ عيد ميلادي يلي لازم ما تنساه أبداً؟ (كتبه بالشكل الصحيح)",
+                answers: ["08/08/2001", "8/8/2001", "2001/08/08"]
+            },
+            {
+                title: "الغرفة 4 من 6: الأمنيات ⭐",
+                question: "شو أكتر شي بيتمناه قلبي بحياتي معك؟ (سهلتلك ياها وماتتعب حالك بالتفكير.. الجواب واضح وصارخ 😉❤️)",
+                answers: ["حضنك", "حضنك انت", "حضن منك"]
+            },
+            {
+                title: "الغرفة 5 من 6: الذكريات 🕯️",
+                question: "شو أكتر صفة بحبها فيك ودايماً بتخليني أعزك أكتر؟ (بدها ذكاء خفيف، بس أنت قدها 😌)",
+                answers: ["الحنية", "حنيتك", "الحنيه"]
+            },
+            {
+                title: "الغرفة 6 من 6: الحضن الأخير 🤍",
+                question: "من وين هو الشخص الغالي اللي ساكن قلبي وروحي؟ (يلا سهلتها عليك ع الآخر، لا تخيب ظني عاد 😜)",
+                answers: ["سوريا", "سوريا 🇸🇾"]
+            }
         ];
 
-        const confessionMessages = [
-            "كل زاوية بقلبي بتعرف إنك صرت النبض اللي بعيش فيه كل يوم... 💗",
-            "بعترف إني ما كنت أعرف شو يعني الأمان الحقيقي لغاية ما عرفتك... ✨",
-            "أنت مو بس صدفة حلوة بحياتي، أنت أجمل اختيار ختاره قلبي عن قناعة... 💌",
-            "بحبك بكل عيوبك، بتفاصيلك، وبكل شي فيك بيخليك أنت وحدك... ❤️"
-        ];
+        let currentRoom = 0;
 
-        const wishMessages = [
-            "كل دعوة طلعت من قلبي بالليل كانت إلك وحدك... إنك تضل بخير، وتضل مبسوط... ✨🤲🏻",
-            "بتمنى ربنا يجمعنا قريباً، وتخلص كل هالماسافات اللي بيننا لنبقى سوا للأبد... ⭐",
-            "أمنيتي الوحيدة بكل سنة وكل يوم: إنك تضل تبتسم وتضل الأمان لقلبي... 🌙",
-            "بدعي دائماً تكون خطواتك محروسة بالفرح، وكل تعب بحياتك يتبدل براحة بال... 💫"
-        ];
-
-        const memoryMessages = [
-            "حتى بالمسافات البعيدة، ضحكتك وصوتك هما المكان الدافي اللي بلجأ له كل ما حسيت بتعب العالم... 🔥🤍",
-            "بتذكر أول مرة حكينا فيها، وكيف هيك بدونه مسبق صرت أهم شخص بحياتي... 🕯️",
-            "أحلى ذكرياتي هي اللي جمعتني فيك، وكل لحظة قضيناها سوا محفورة بقلبي للأبد... 🕰️",
-            "كل يوم معك بينضاف لقائمة أجمل أيام عمري اللي ما بينتنسوا أبداً... ✨"
-        ];
-
-        function openRoom(type) {
-            goToScreen('room-screen');
-            const area = document.getElementById('room-content-area');
-            if (!area) return;
-            
-            if(type === 'rose') {
-                let html = `<h2 style="margin-bottom: 15px;">🌹 غرفة الاشتياق</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">اضغط على الوردات لاكتشاف مشاعري</p><div class="items-grid">`;
-                for(let i=0; i<6; i++) {
-                    html += `<div class="interactive-item" onclick="showRandomMsg('🌹 رسالة شوق', roseMessages)">🌹</div>`;
-                }
-                html += `</div>`;
-                area.innerHTML = html;
-            } else if(type === 'confession') {
-                let html = `<h2 style="margin-bottom: 15px;">💌 الاعترافات</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">افتح المغلفات لتعرف شو مخبّي لك بقلبي</p><div class="items-grid">`;
-                for(let i=0; i<6; i++) {
-                    html += `<div class="interactive-item" onclick="showRandomMsg('💌 اعتراف صادق', confessionMessages)">💌</div>`;
-                }
-                html += `</div>`;
-                area.innerHTML = html;
-            } else if(type === 'reasons') {
-                let gridHtml = '<div class="reasons-grid">';
-                for(let i=1; i<=30; i++) {
-                    gridHtml += `<div class="reason-heart" onclick="openReason(${i})">❤️</div>`;
-                }
-                gridHtml += '</div>';
-                area.innerHTML = `<h2 style="margin-bottom: 10px;">❤️ 30 سبب أحبك</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:15px;">اضغط على القلوب لاكتشاف الأسباب</p>` + gridHtml;
-            } else if(type === 'wishes') {
-                let html = `<h2 style="margin-bottom: 15px;">⭐ الأمنيات</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">المس النجوم لتشوف دعواتي إليك</p><div class="items-grid">`;
-                for(let i=0; i<6; i++) {
-                    html += `<div class="interactive-item" onclick="showRandomMsg('⭐ أمنية من قلبي', wishMessages)">⭐</div>`;
-                }
-                html += `</div>`;
-                area.innerHTML = html;
-            } else if(type === 'memories') {
-                let html = `<h2 style="margin-bottom: 15px;">🕯️ الذكريات</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">ولع الشموع لتتذكر لحظاتنا</p><div class="items-grid">`;
-                for(let i=0; i<6; i++) {
-                    html += `<div class="interactive-item" onclick="showRandomMsg('🕯️ ذكرى حلوة', memoryMessages)">🕯️</div>`;
-                }
-                html += `</div>`;
-                area.innerHTML = html;
-            } else if(type === 'hug') {
-                area.innerHTML = `
-                    <h2 style="margin-bottom: 15px;">🤍 الحضن</h2>
-                    <div style="font-size: 4rem; margin: 15px 0;">👩‍❤️‍👨</div>
-                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">رغم كل المسافات... عيون قلبي دايماً شايفيتك وقريبة منك 🥹🫂❤️</p>
-                    <button class="btn" onclick="showPopup('🤍 حضن دافئ', 'حتى لو ما كنا بنفس المكان، حضن روحي إلك ما بيغيب ولا لحظة... ❤️')">احضن هالكلمات</button>
-                `;
+        function loadRoom() {
+            if (currentRoom < rooms.length) {
+                document.getElementById("room-title").innerText = rooms[currentRoom].title;
+                document.getElementById("question-text").innerText = rooms[currentRoom].question;
+                document.getElementById("answer-input").value = "";
+                document.getElementById("error-msg").innerText = "";
+            } else {
+                document.getElementById("quiz-screen").style.display = "none";
+                document.getElementById("success-screen").style.display = "block";
             }
         }
 
-        function showRandomMsg(title, msgArray) {
-            const randomMsg = msgArray[Math.floor(Math.random() * msgArray.length)];
-            showPopup(title, randomMsg);
-        }
+        function checkAnswer() {
+            let userVal = document.getElementById("answer-input").value.trim().toLowerCase();
+            let validAnswers = rooms[currentRoom].answers;
 
-        function openReason(num) {
-            let msg = `السبب رقم ${num}: لأن وجودك بحياتي خلاني أكتشف إنه الحب الحقيقي هادئ، صادق، وساكن بالروح.. ❤️`;
-            if(num === 5 || num === 10 || num === 15) {
-                msg += "<br><br>🥹 <b>لسا عندي أكتر...</b>";
-            }
-            if(num === 20) {
-                msg += "<br><br>🤍 <b>واضح إني ما بعرف أحب شوي...</b>";
-            }
-            if(num === 30) {
-                msg += "<br><br>✨ <b>وإذا سألتني شو السبب الحقيقي؟ لأنك... أنت.❤️</b>";
-            }
-            showPopup(`سبب رقم ${num} ❤️`, msg);
-        }
+            // تنظيف النص المدخل للمقارنة البسيطة
+            let isCorrect = validAnswers.some(ans => userVal.includes(ans.toLowerCase()));
 
-        function showPopup(title, content) {
-            const modal = document.getElementById('custom-modal');
-            const body = document.getElementById('modal-body');
-            if (modal && body) {
-                body.innerHTML = `<h3 style="color: #ff6584; margin-bottom: 15px;">${title}</h3><p style="line-height: 1.6; margin-bottom: 20px;">${content}</p><button class="btn" onclick="closeModalDirect()" style="padding: 8px 20px; font-size: 0.9rem;">تمام 🤍</button>`;
-                modal.style.display = 'flex';
+            if (isCorrect) {
+                currentRoom++;
+                loadRoom();
+            } else {
+                document.getElementById("error-msg").innerText = "خطأ يا حمودي! ركز شوي وتذكرني مليح ورجع جرب 😜❌";
             }
         }
 
-        function closeModal(e) {
-            if(e.target.id === 'custom-modal') {
-                document.getElementById('custom-modal').style.display = 'none';
-            }
-        }
-
-        function closeModalDirect() {
-            const modal = document.getElementById('custom-modal');
-            if (modal) modal.style.display = 'none';
-        }
-
-        function openFinalScreen() {
-            goToScreen('final-screen');
-            const finalText = document.getElementById('final-text');
-            if (finalText) {
-                finalText.innerHTML = `
-                    إذا كنت وصلت لهون...<br>
-                    فأنت ما قريت رسائل... أنت عشت جوّا قلبي...<br>
-                    وكل كلمة هون... كانت حقيقية... وكل دعوة... كانت إلك...🤲🏻<br>
-                    وكل نبضة... كانت بتنادي اسمك...🤍<br><br>
-                    شكراً لأنك الشخص اللي غيّر حياتي بطريقة ما كنت أتخيلها...🥹<br>
-                    أتمنى تضل تبتسم... وتضل بخير... وتضل الشخص اللي بحبه... اليوم... وبكرا... وكل العمر...❤️
-                `;
-            }
-        }
-
-        function triggerHugEffect() {
-            showPopup("🫂 الحضن وصلك...", "حتى لو بيننا مسافات... قلبي وعالمي كله ملكك وحدك 💖✨");
-        }
+        // بدء اللعبة
+        loadRoom();
     </script>
 </body>
 </html>
+
