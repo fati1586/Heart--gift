@@ -16,11 +16,11 @@
             background-color: #0b0f19;
             color: #fff;
             min-height: 100vh;
-            overflow-x: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
+            overflow-x: hidden;
         }
 
         .screen {
@@ -47,10 +47,9 @@
         }
 
         .typing-text {
-            font-size: 1.5rem;
-            line-height: 2;
-            margin-bottom: 30px;
-            min-height: 120px;
+            font-size: 1.4rem;
+            line-height: 2.2;
+            margin-bottom: 25px;
             max-width: 600px;
             color: #f1f1f1;
             text-shadow: 0 0 10px rgba(255,255,255,0.3);
@@ -80,19 +79,12 @@
             cursor: pointer;
             font-size: 5rem;
             animation: float 2s ease-in-out infinite;
-            margin-bottom: 20px;
+            margin-top: 10px;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
-        }
-
-        .star, .heart-float {
-            position: absolute;
-            color: #fff;
-            pointer-events: none;
-            z-index: 1;
         }
 
         .door-container {
@@ -152,12 +144,6 @@
             backdrop-filter: blur(15px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             margin-bottom: 20px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .back-btn {
@@ -226,7 +212,7 @@
             transition: 0.3s;
         }
 
-        .reason-heart:hover, .reason-heart.opened {
+        .reason-heart:hover {
             background: #ff6584;
             color: #fff;
             transform: scale(1.1);
@@ -252,7 +238,6 @@
             width: 100%;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            animation: fadeIn 0.3s ease;
         }
 
         .last-moment {
@@ -271,21 +256,26 @@
 </head>
 <body>
 
-    <div id="bg-effects"></div>
-
+    <!-- 1. شاشة البداية -->
     <div id="intro-screen" class="screen active">
-        <div class="typing-text" id="typing-box"></div>
-        <div class="envelope-container" id="open-envelope" style="display: none;" onclick="goToScreen('door-screen')">
+        <div class="typing-text">
+            في أماكن... ما بتنشاف بالعين...<br><br>
+            في أماكن... بتنحس بالقلب... 🤍<br><br>
+            واليوم... رح آخدك بمكان... ما دخله حدا قبلك...✨
+        </div>
+        <div class="envelope-container" onclick="goToScreen('door-screen')">
             💌
             <div style="font-size: 1rem; margin-top: 10px; color: #ff8fa3;">اضغط لفتح الظرف 🤍</div>
         </div>
     </div>
 
+    <!-- 2. مدخل البيت -->
     <div id="door-screen" class="screen">
         <div class="door-container" onclick="openDoor()">🚪</div>
         <p style="font-size: 1.2rem; color: #ccc;" id="door-hint">اضغط لفتح باب قلبي ✨</p>
     </div>
 
+    <!-- 3. قائمة الأبواب الرئيسية -->
     <div id="main-rooms-screen" class="screen">
         <h2 style="margin-bottom: 25px; font-weight: 400; letter-spacing: 1px;">اختر مساحة من قلبي 🤍</h2>
         <div class="rooms-grid">
@@ -317,11 +307,13 @@
         <div class="last-moment" onclick="openFinalScreen()">🥺 لحظة... لا تروح...</div>
     </div>
 
+    <!-- 4. الغرف الفرعية -->
     <div id="room-screen" class="screen">
         <div class="content-box" id="room-content-area"></div>
         <button class="back-btn" onclick="goToScreen('main-rooms-screen')">← رجوع للأبواب</button>
     </div>
 
+    <!-- 5. شاشة النهاية الكبرى -->
     <div id="final-screen" class="screen" style="background: radial-gradient(circle, #0f172a 0%, #020617 100%);">
         <div class="content-box" style="max-width: 600px;">
             <p id="final-text" style="line-height: 2.2; font-size: 1.1rem; margin-bottom: 20px;"></p>
@@ -330,46 +322,12 @@
         </div>
     </div>
 
+    <!-- نافذة منبثقة عامة -->
     <div class="modal" id="custom-modal" onclick="closeModal(event)">
         <div class="modal-content" id="modal-body"></div>
     </div>
 
     <script>
-        const introLines = [
-            "في أماكن... ما بتنشاف بالعين...",
-            "في أماكن... بتنحس بالقلب... 🤍",
-            "واليوم... رح آخدك بمكان... ما دخله حدا قبلك...✨"
-        ];
-
-        let lineIdx = 0;
-        let charIdx = 0;
-        const typingBox = document.getElementById('typing-box');
-
-        function typeWriter() {
-            if (lineIdx < introLines.length) {
-                if (charIdx < introLines[lineIdx].length) {
-                    typingBox.innerHTML += introLines[lineIdx].charAt(charIdx);
-                    charIdx++;
-                    setTimeout(typeWriter, 50);
-                } else {
-                    setTimeout(() => {
-                        typingBox.innerHTML += "<br><br>";
-                        lineIdx++;
-                        charIdx = 0;
-                        typeWriter();
-                    }, 1000);
-                }
-            } else {
-                const env = document.getElementById('open-envelope');
-                if (env) env.style.display = 'block';
-            }
-        }
-
-        window.onload = () => {
-            typeWriter();
-            createBackgroundEffects();
-        };
-
         function goToScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(screenId);
@@ -383,7 +341,7 @@
             if (hint) hint.innerText = "✨✨ جاري فتح الباب وفتح القلوب...";
             setTimeout(() => {
                 goToScreen('main-rooms-screen');
-            }, 1200);
+            }, 800);
         }
 
         const roseMessages = [
@@ -521,20 +479,7 @@
 
         function triggerHugEffect() {
             showPopup("🫂 الحضن وصلك...", "حتى لو بيننا مسافات... قلبي وعالمي كله ملكك وحدك 💖✨");
-            for(let i=0; i<30; i++) {
-                createFloatingHeart();
-            }
         }
-
-        function createBackgroundEffects() {
-            const bg = document.getElementById('bg-effects');
-            if (!bg) return;
-            setInterval(() => {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                star.innerHTML = Math.random() > 0.5 ? '✨' : '⭐';
-                star.style.left = Math.random() * 100 + 'vw';
-                star.style.top = Math.random() * 100 + 'vh';
-                star.style.fontSize = (Math.random() * 10 + 10) + 'px';
-                star.style.opacity = Math.random();
-       
+    </script>
+</body>
+</html>
