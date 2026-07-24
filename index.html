@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متاهة الحب لـ حمودي 🤍</title>
+    <title>بيت قلبي لـ حمودي 🤍</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -20,37 +20,62 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
+        
+        /* نجوم الخلفية والشهب */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
         .container {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 30px;
             width: 100%;
             max-width: 500px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             text-align: center;
+            position: relative;
+            z-index: 10;
         }
-        h1 {
-            font-size: 22px;
-            margin-bottom: 15px;
+
+        h1, h2 {
             color: #ffb6c1;
-        }
-        .room-indicator {
-            font-size: 13px;
-            color: #ddd;
             margin-bottom: 15px;
-            background: rgba(0,0,0,0.2);
-            padding: 5px 12px;
-            border-radius: 20px;
-            display: inline-block;
         }
-        .question-box {
-            font-size: 17px;
+
+        p {
+            line-height: 1.8;
+            font-size: 16px;
             margin-bottom: 20px;
-            line-height: 1.6;
         }
+
+        button {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        button:hover {
+            background: #ff6b81;
+            transform: translateY(-2px);
+        }
+
         input[type="text"] {
             width: 100%;
             padding: 12px 15px;
@@ -63,155 +88,326 @@
             text-align: center;
             margin-bottom: 15px;
         }
-        button {
-            background: #ff4757;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 100%;
-            margin-top: 5px;
-        }
-        button:hover {
-            background: #ff6b81;
-            transform: translateY(-2px);
-        }
+
         .error-msg {
             color: #ff6b81;
             margin-top: 10px;
             font-size: 14px;
             font-weight: 600;
         }
-        .content-box {
+
+        .screen {
             display: none;
-            font-size: 16px;
-            line-height: 1.8;
-            color: #fff;
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.6s ease-in-out;
         }
-        .content-box p {
-            margin-bottom: 20px;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px dashed rgba(255, 255, 255, 0.3);
+
+        .active {
+            display: block;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* شبكة الأبواب */
+        .doors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .door-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 20px 10px;
+            border-radius: 15px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .door-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.03);
+        }
+
+        .message-box {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        /* أسباب الحب */
+        .reasons-container {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding: 10px;
+        }
+        .reason-card {
+            background: rgba(255,255,255,0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .reason-card:hover {
+            background: rgba(255,182,193,0.3);
+        }
+
+        /* زر لا تروح بالأسفل */
+        .secret-footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #ccc;
+            cursor: pointer;
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="game-container">
-        <div class="room-indicator" id="room-title">الغرفة 1 من 6: الاشتياق 🌹</div>
+    <div class="container">
         
-        <!-- قسم السؤال -->
-        <div id="quiz-section">
-            <div class="question-box" id="question-text"></div>
-            <input type="text" id="answer-input" placeholder="اكتب إجابتك هون...">
-            <button onclick="checkAnswer()">تأكيد الإجابة 🤍</button>
-            <div class="error-msg" id="error-msg"></div>
+        <!-- 1. شاشة البداية -->
+        <div id="screen-intro" class="screen active">
+            <p id="intro-text" style="font-size: 18px; line-height: 2; margin-bottom: 30px;"></p>
+            <div id="envelope-area" style="display: none;">
+                <div style="font-size: 50px; cursor: pointer; margin-bottom: 15px;" onclick="openHouse()">💌</div>
+                <button onclick="openHouse()">🤍 افتح بيت قلبي</button>
+            </div>
         </div>
 
-        <!-- قسم محتوى الغرفة اللي بيظهر بعد الإجابة الصح -->
-        <div class="content-box" id="content-section">
-            <h1>فتحنا الباب! 🎉🔓</h1>
-            <p id="room-message"></p>
-            <button onclick="nextRoom()" id="next-btn">الانتقال للغرفة التالية ✨</button>
+        <!-- 2. رحب بيت القلب -->
+        <div id="screen-welcome" class="screen">
+            <h2>🚪 المدخل</h2>
+            <div class="message-box">
+                <p>أهلًا في المكان...<br>
+                اللي بنيته من كل مرة اشتقتلك فيها...🥹<br>
+                ومن كل مرة دعيتلك فيها...🤲🏻<br>
+                ومن كل مرة ابتسمت لأنك موجود بحياتي...🌷<br><br>
+                هون... كل زاوية فيها قطعة من قلبي...❤️</p>
+            </div>
+            <button onclick="showDoorsMenu()">دخول الأبواب ✨</button>
         </div>
+
+        <!-- 3. قائمة الأبواب الرئيسية -->
+        <div id="screen-doors" class="screen">
+            <h2>اختاري باباً لنفتح سرّاً 🗝️</h2>
+            <p style="font-size: 14px; color: #ddd;">كل باب خلفه سؤال عننا، إذا عرفته بيفتحلك محتواه الخاص!</p>
+            <div class="doors-grid">
+                <button class="door-btn" onclick="startRoom(0)">🌹 الاشتياق</button>
+                <button class="door-btn" onclick="startRoom(1)">💌 الاعترافات</button>
+                <button class="door-btn" onclick="startRoom(2)">❤️ أسباب حبي</button>
+                <button class="door-btn" onclick="startRoom(3)">⭐ الأمنيات</button>
+                <button class="door-btn" onclick="startRoom(4)">🕯️ الذكريات</button>
+                <button class="door-btn" onclick="startRoom(5)">🤍 الحضن</button>
+            </div>
+        </div>
+
+        <!-- 4. شاشة الأسئلة قبل فتح الغرفة -->
+        <div id="screen-quiz" class="screen">
+            <h2 id="quiz-room-title">اختبار الباب</h2>
+            <p id="quiz-question" style="margin-bottom: 20px; font-weight: 600;"></p>
+            <input type="text" id="quiz-input" placeholder="اكتب إجابتك هون...">
+            <button onclick="checkRoomAnswer()">تأكيد الإجابة 🤍</button>
+            <div class="error-msg" id="quiz-error"></div>
+        </div>
+
+        <!-- 5. شاشة محتوى الغرفة -->
+        <div id="screen-room-content" class="screen">
+            <h2 id="room-content-title"></h2>
+            <div class="message-box" id="room-content-text"></div>
+            
+            <!-- أسباب الحب الخاصة إذا كانت الغرفة الثالثة -->
+            <div id="reasons-box" style="display: none;">
+                <div class="reasons-container" id="reasons-list"></div>
+            </div>
+
+            <button onclick="backToDoors()">العودة للأبواب 🚪</button>
+        </div>
+
+        <!-- 6. النهاية -->
+        <div id="screen-ending" class="screen">
+            <h2>🌌 سماء قلبي</h2>
+            <div class="message-box" style="text-align: center;">
+                <p>إذا كنت وصلت لهون...<br>
+                فأنت ما قريت رسائل... أنت عشت جوّا قلبي...<br>
+                وكل كلمة هون... كانت حقيقية...<br>
+                وكل دعوة... كانت إلك...🤲🏻<br>
+                وكل نبضة... كانت بتنادي اسمك...🤍<br><br>
+                شكراً لأنك الشخص اللي غيّر حياتي بطريقة ما كنت أتخيلها...🥹<br>
+                أتمنى تضل تبتسم... وتضل بخير... وتضل الشخص اللي بحبه... اليوم... وبكرا... وكل العمر...❤️ ♾️</p>
+            </div>
+            <div class="secret-footer" onclick="showTeddyModal()">🥺 لحظة... لا تروح...</div>
+        </div>
+
+        <!-- 7. نافذة الدبدوب الأخيرة -->
+        <div id="screen-teddy" class="screen">
+            <div style="font-size: 60px; margin-bottom: 10px;">🧸❤️</div>
+            <p style="font-size: 15px; line-height: 1.8;">
+                <strong>"بس كنت بدي أذكرك...</strong><br>
+                مهما صار...<br>
+                في شخص هون...<br>
+                رح يضل يدعيلك...<br>
+                ويحبك...<br>
+                ويعتبرك أجمل صدفة بحياته...🤍🌎"
+            </p>
+            <button onclick="finalHug()" style="margin-top: 15px;">💋 ابعتلي حضن من بعيد</button>
+            <div id="final-hug-msg" style="margin-top: 15px; color: #ffb6c1; font-weight: bold; display: none;">
+                🫂 الحضن وصلك... حتى لو بيننا مسافات. 💖
+            </div>
+        </div>
+
     </div>
 
     <script>
-        const rooms = [
+        // إدخال نصوص البداية حرف بحرف
+        const introString = "في أماكن... ما بتنشاف بالعين...\nفي أماكن... بتنحس بالقلب... 🤍\nواليوم... رح آخدك بمكان... ما دخله حدا قبلك...✨";
+        let charIndex = 0;
+
+        function typeIntro() {
+            if (charIndex < introString.length) {
+                document.getElementById("intro-text").innerHTML += introString.charAt(charIndex) === '\n' ? '<br>' : introString.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeIntro, 45);
+            } else {
+                document.getElementById("envelope-area").style.display = "block";
+            }
+        }
+        window.onload = typeIntro;
+
+        function openHouse() {
+            switchScreen("screen-welcome");
+        }
+
+        function showDoorsMenu() {
+            switchScreen("screen-doors");
+        }
+
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // بيانات الغرف والأسئلة الخاصة
+        const roomsData = [
             {
-                title: "الغرفة 1 من 6: الاشتياق 🌹",
-                question: "شو أكتر شي بحب اعملو أول ما بفيق من النوم؟",
-                answers: ["اني اسمع صوتك", "اسمع صوتك", "انّي اسمع صوتك", "سماع صوتك"],
-                message: "برافو يا روحي! أول فكرة بتخطر عبالي وأول شي بتمنه أول ما تفتح عيوني، هو إني أسمع صوتك ليبدأ نهاردي صح ودافي فيك 🤍."
+                title: "🌹 غرفة الاشتياق",
+                question: "سؤال الباب: شو أكتر شي بحب اعملو أول ما بفيق من النوم؟ (سهلتها عليك 😉)",
+                answers: ["اني اسمع صوتك", "اسمع صوتك", "سماع صوتك"],
+                content: "اشتقتلك... بطريقة لو وصفتها... ما كانت الكلمات الكافية...🥹❤️<br><br>كل صباح بيبدأ بإنّي بتمنى صوتك يكون أول شي يلامس روحي ويطمني عليك."
             },
             {
-                title: "الغرفة 2 من 6: الاعترافات 💌",
-                question: "شو أكتر كلمة بحب دايماً أسمعها منك؟",
+                title: "💌 غرفة الاعترافات",
+                question: "سؤال الباب: شو أكتر كلمة بحب دايماً أسمعها منك؟",
                 answers: ["يا بنوتي", "بنوتي"],
-                message: "صح يا قلبي! لما بتقولي 'يا بنوتي' بحس بالدفا والأمان كله، وكأني ملكت الدنيا وما فيها بحرف منك 🎀."
+                content: "لما بتقولي هالجملة، بحس حالي ملكت الدنيا وما فيها..<br><br>الأمان اللي بقلبي لما بتكون موجود ما بيوصفه أي كلام بالعالم 🤍."
             },
             {
-                title: "الغرفة 3 من 6: أسباب الحب ❤️",
-                question: "بأي تاريخ عيد ميلادي يلي لازم ما تنساه أبداً؟ (كتبه بالشكل الصحيح)",
+                title: "❤️ أسباب حبي",
+                question: "سؤال الباب: بأي تاريخ عيد ميلادي يلي لازم ما تنساه أبداً؟ (اكتبه بالصيغة الصحيحة)",
                 answers: ["08/08/2001", "8/8/2001", "2001/08/08"],
-                message: "إي أوكيه حافظ التاريخ ولازم ما تنساه أبداً! هاد أثمن تاريخ ولد فيه الإنسان اللي غير حياتي وقلب دنيتي للأحلى 🎂✨."
+                content: "هاد التاريخ مو بس عيد ميلادي، هاد اليوم اللي انكتبت فيه قصتي معك! ❤️<br><br>جهزت لك 30 سبب ليش بحبك، افتحهم واحد واحد:"
             },
             {
-                title: "الغرفة 4 من 6: الأمنيات ⭐",
-                question: "شو أكتر شي بيتمناه قلبي بحياتي معك؟ (سهلتلك ياها وماتتعب حالك بالتفكير.. الجواب واضح وصارخ 😉❤️)",
+                title: "⭐ الأمنيات",
+                question: "سؤال الباب: شو أكتر شي بيتمناه قلبي بحياتي معك؟",
                 answers: ["حضنك", "حضنك انت", "حضن منك"],
-                message: "يا عيني عليك عرفتها فوراً! ما بتمنى بهالدنيا أكتر من حضنك الدافئ اللي بينسيني كل تعب المسافات 🫂❤️."
+                content: "لو طلبت من النجوم أمنية وحدة اليوم... بتمنى تلمس ايدي ونكون سوا بدون مسافات تفرقنا ✨✨✨"
             },
             {
-                title: "الغرفة 5 من 6: الذكريات 🕯️",
-                question: "شو أكتر صفة بحبها فيك ودايماً بتخليني أعزك أكتر؟ (بدها ذكاء خفيف، بس أنت قدها 😌)",
+                title: "🕯️ الذكريات",
+                question: "سؤال الباب: شو أكتر صفة بحبها فيك ودايماً بتخليني أعزك أكتر؟",
                 answers: ["الحنية", "حنيتك", "الحنيه"],
-                message: "يا عمري أنت، حنيتك هي أكتر شي بيسحرني فيك وبتخليني أعشقك كل يوم أكتر من قبلو، الله ليحرمني من قلبك الطيب 🤍."
+                content: "كل تفصيلة جمعتنا، وكل ضحكة ضحكناها مع بعض محفورة بقلبي.<br><br>حنيتك هي الدفا اللي بيحميني من عتمة البعد 🕯️🔥🤍"
             },
             {
-                title: "الغرفة 6 من 6: الحضن الأخير 🤍",
-                question: "من وين هو الشخص الغالي اللي ساكن قلبي وروحي؟ (يلا سهلتها عليك ع الآخر، لا تخيب ظني عاد 😜)",
+                title: "🤍 الحضن الأخير",
+                question: "سؤال الباب: من وين هو الشخص الغالي اللي ساكن قلبي وروحي؟",
                 answers: ["سوريا", "سوريا 🇸🇾"],
-                message: "يا عمري وروح قلبي أنت! سوريا وريحتها و أهلها.. ومحلك الحقيقي هونيك بقلبي وروحي للأبد 🇸🇾🤍."
+                content: "هون الغرفة هادئة جداً... شخصين بقلب واحد رغم المسافات 🤍🫂<br><br>محلك الحقيقي هون بقلبي وروحي للأبد، مهما كانت الإمكانيات والمسافات بعيدة."
             }
         ];
 
-        let currentRoom = 0;
+        let activeRoomIndex = 0;
+        let openedRoomsCount = 0;
 
-        function loadRoom() {
-            if (currentRoom < rooms.length) {
-                document.getElementById("room-title").innerText = rooms[currentRoom].title;
-                document.getElementById("question-text").innerText = rooms[currentRoom].question;
-                document.getElementById("answer-input").value = "";
-                document.getElementById("error-msg").innerText = "";
-                
-                // إظهار قسم الأسئلة وإخفاء قسم المحتوى
-                document.getElementById("quiz-section").style.display = "block";
-                document.getElementById("content-section").style.display = "none";
-            } else {
-                // شاشة النهاية بعد ما يخلص كل الغرف
-                document.getElementById("room-title").innerText = "نهاية المتاهة 🤍✨";
-                document.getElementById("quiz-section").style.display = "none";
-                document.getElementById("content-section").style.display = "block";
-                document.getElementById("room-message").innerHTML = "<strong>مبروك يا روحي! 🔓✨</strong><br>فتحت كل الأبواب ووصلت لنهاية المتاهة.. وهلأ صار لازم تعرف إنك مو بس ساكن بقلبي، أنت القلب وروحي وكل دنيتي يا أغلى حمودي بالعالم! 🥹🤍🫂";
-                document.getElementById("next-btn").style.display = "none"; // إخفاء زر التبديل بالنهاية
-            }
+        function startRoom(index) {
+            activeRoomIndex = index;
+            document.getElementById("quiz-room-title").innerText = roomsData[index].title;
+            document.getElementById("quiz-question").innerText = roomsData[index].question;
+            document.getElementById("quiz-input").value = "";
+            document.getElementById("quiz-error").innerText = "";
+            switchScreen("screen-quiz");
         }
 
-        function checkAnswer() {
-            let userVal = document.getElementById("answer-input").value.trim().toLowerCase();
-            let validAnswers = rooms[currentRoom].answers;
-
-            let isCorrect = validAnswers.some(ans => userVal.includes(ans.toLowerCase()));
+        function checkRoomAnswer() {
+            let userVal = document.getElementById("quiz-input").value.trim().toLowerCase();
+            let validAns = roomsData[activeRoomIndex].answers;
+            let isCorrect = validAns.some(a => userVal.includes(a.toLowerCase()));
 
             if (isCorrect) {
-                // إخفاء السؤال وإظهار رسالة ومحتوى الغرفة
-                document.getElementById("quiz-section").style.display = "none";
-                document.getElementById("room-message").innerText = rooms[currentRoom].message;
-                document.getElementById("content-section").style.display = "block";
+                openRoomContent(activeRoomIndex);
             } else {
-                document.getElementById("error-msg").innerText = "خطأ يا حمودي! ركز شوي وتذكرني مليح ورجع جرب 😜❌";
+                document.getElementById("quiz-error").innerText = "خطأ يا حمودي! ركز شوي وتذكرني مليح ورجع جرب 😜❌";
             }
         }
 
-        function nextRoom() {
-            currentRoom++;
-            loadRoom();
+        function openRoomContent(index) {
+            document.getElementById("room-content-title").innerText = roomsData[index].title;
+            document.getElementById("room-content-text").innerHTML = roomsData[index].content;
+            
+            // معالجة خاصة لغرفة أسباب الحب (رقم 2)
+            let reasonsBox = document.getElementById("reasons-box");
+            if (index === 2) {
+                reasonsBox.style.display = "block";
+                loadReasons();
+            } else {
+                reasonsBox.style.display = "none";
+            }
+
+            switchScreen("screen-room-content");
+            openedRoomsCount++;
         }
 
-        // بدء اللعبة
-        loadRoom();
+        function loadReasons() {
+            let list = document.getElementById("reasons-list");
+            list.innerHTML = "";
+            for (let i = 1; i <= 30; i++) {
+                let div = document.createElement("div");
+                div.className = "reason-card";
+                div.innerHTML = `سبب رقم ${i} ❤️ (اضغط لنبض القلب)`;
+                div.onclick = function() {
+                    div.innerHTML = `السبب ${i}: لأنك أنت الشخص الوحيد اللي بتعرف كيف تفرح قلبي وتخليني أحس بالأمان التام معك 🤍`;
+                };
+                list.appendChild(div);
+            }
+        }
+
+        function backToDoors() {
+            // إذا فتح كل الأبواب الستة، يروح لنهاية المتاهة الساحرة
+            if (openedRoomsCount >= 6) {
+                switchScreen("screen-ending");
+            } else {
+                switchScreen("screen-doors");
+            }
+        }
+
+        function showTeddyModal() {
+            switchScreen("screen-teddy");
+        }
+
+        function finalHug() {
+            document.getElementById("final-hug-msg").style.display = "block";
+        }
     </script>
 </body>
 </html>
