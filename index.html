@@ -33,22 +33,22 @@
             text-align: center;
         }
         h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 22px;
+            margin-bottom: 15px;
             color: #ffb6c1;
         }
         .room-indicator {
-            font-size: 14px;
+            font-size: 13px;
             color: #ddd;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             background: rgba(0,0,0,0.2);
-            padding: 5px 10px;
+            padding: 5px 12px;
             border-radius: 20px;
             display: inline-block;
         }
         .question-box {
-            font-size: 18px;
-            margin-bottom: 25px;
+            font-size: 17px;
+            margin-bottom: 20px;
             line-height: 1.6;
         }
         input[type="text"] {
@@ -74,6 +74,7 @@
             cursor: pointer;
             transition: 0.3s;
             width: 100%;
+            margin-top: 5px;
         }
         button:hover {
             background: #ff6b81;
@@ -85,32 +86,44 @@
             font-size: 14px;
             font-weight: 600;
         }
-        .success-screen {
+        .content-box {
             display: none;
-        }
-        .final-gate {
-            font-size: 20px;
-            color: #ffef9f;
+            font-size: 16px;
             line-height: 1.8;
+            color: #fff;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .content-box p {
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <div class="container" id="game-container">
-        <div id="quiz-screen">
-            <div class="room-indicator" id="room-title">الغرفة 1 من 6: الاشتياق 🌹</div>
+        <div class="room-indicator" id="room-title">الغرفة 1 من 6: الاشتياق 🌹</div>
+        
+        <!-- قسم السؤال -->
+        <div id="quiz-section">
             <div class="question-box" id="question-text"></div>
             <input type="text" id="answer-input" placeholder="اكتب إجابتك هون...">
             <button onclick="checkAnswer()">تأكيد الإجابة 🤍</button>
             <div class="error-msg" id="error-msg"></div>
         </div>
 
-        <div class="success-screen" id="success-screen">
-            <h1>مبروك يا روحي! 🔓✨</h1>
-            <p class="final-gate" style="margin-top: 15px;">
-                فتحت كل الأبواب ووصلت لنهاية المتاهة.. وهلأ صار لازم تعرف إنك مو بس ساكن بقلبي، أنت القلب وروحي وكل دنيتي يا أغلى حمودي بالعالم! 🥹🤍🫂
-            </p>
+        <!-- قسم محتوى الغرفة اللي بيظهر بعد الإجابة الصح -->
+        <div class="content-box" id="content-section">
+            <h1>فتحنا الباب! 🎉🔓</h1>
+            <p id="room-message"></p>
+            <button onclick="nextRoom()" id="next-btn">الانتقال للغرفة التالية ✨</button>
         </div>
     </div>
 
@@ -119,32 +132,38 @@
             {
                 title: "الغرفة 1 من 6: الاشتياق 🌹",
                 question: "شو أكتر شي بحب اعملو أول ما بفيق من النوم؟",
-                answers: ["اني اسمع صوتك", "اسمع صوتك", "انّي اسمع صوتك", "سماع صوتك"]
+                answers: ["اني اسمع صوتك", "اسمع صوتك", "انّي اسمع صوتك", "سماع صوتك"],
+                message: "برافو يا روحي! أول فكرة بتخطر عبالي وأول شي بتمنه أول ما تفتح عيوني، هو إني أسمع صوتك ليبدأ نهاردي صح ودافي فيك 🤍."
             },
             {
                 title: "الغرفة 2 من 6: الاعترافات 💌",
                 question: "شو أكتر كلمة بحب دايماً أسمعها منك؟",
-                answers: ["يا بنوتي", "بنوتي"]
+                answers: ["يا بنوتي", "بنوتي"],
+                message: "صح يا قلبي! لما بتقولي 'يا بنوتي' بحس بالدفا والأمان كله، وكأني ملكت الدنيا وما فيها بحرف منك 🎀."
             },
             {
                 title: "الغرفة 3 من 6: أسباب الحب ❤️",
                 question: "بأي تاريخ عيد ميلادي يلي لازم ما تنساه أبداً؟ (كتبه بالشكل الصحيح)",
-                answers: ["08/08/2001", "8/8/2001", "2001/08/08"]
+                answers: ["08/08/2001", "8/8/2001", "2001/08/08"],
+                message: "إي أوكيه حافظ التاريخ ولازم ما تنساه أبداً! هاد أثمن تاريخ ولد فيه الإنسان اللي غير حياتي وقلب دنيتي للأحلى 🎂✨."
             },
             {
                 title: "الغرفة 4 من 6: الأمنيات ⭐",
                 question: "شو أكتر شي بيتمناه قلبي بحياتي معك؟ (سهلتلك ياها وماتتعب حالك بالتفكير.. الجواب واضح وصارخ 😉❤️)",
-                answers: ["حضنك", "حضنك انت", "حضن منك"]
+                answers: ["حضنك", "حضنك انت", "حضن منك"],
+                message: "يا عيني عليك عرفتها فوراً! ما بتمنى بهالدنيا أكتر من حضنك الدافئ اللي بينسيني كل تعب المسافات 🫂❤️."
             },
             {
                 title: "الغرفة 5 من 6: الذكريات 🕯️",
                 question: "شو أكتر صفة بحبها فيك ودايماً بتخليني أعزك أكتر؟ (بدها ذكاء خفيف، بس أنت قدها 😌)",
-                answers: ["الحنية", "حنيتك", "الحنيه"]
+                answers: ["الحنية", "حنيتك", "الحنيه"],
+                message: "يا عمري أنت، حنيتك هي أكتر شي بيسحرني فيك وبتخليني أعشقك كل يوم أكتر من قبلو، الله ليحرمني من قلبك الطيب 🤍."
             },
             {
                 title: "الغرفة 6 من 6: الحضن الأخير 🤍",
                 question: "من وين هو الشخص الغالي اللي ساكن قلبي وروحي؟ (يلا سهلتها عليك ع الآخر، لا تخيب ظني عاد 😜)",
-                answers: ["سوريا", "سوريا 🇸🇾"]
+                answers: ["سوريا", "سوريا 🇸🇾"],
+                message: "يا عمري وروح قلبي أنت! سوريا وريحتها و أهلها.. ومحلك الحقيقي هونيك بقلبي وروحي للأبد 🇸🇾🤍."
             }
         ];
 
@@ -156,9 +175,17 @@
                 document.getElementById("question-text").innerText = rooms[currentRoom].question;
                 document.getElementById("answer-input").value = "";
                 document.getElementById("error-msg").innerText = "";
+                
+                // إظهار قسم الأسئلة وإخفاء قسم المحتوى
+                document.getElementById("quiz-section").style.display = "block";
+                document.getElementById("content-section").style.display = "none";
             } else {
-                document.getElementById("quiz-screen").style.display = "none";
-                document.getElementById("success-screen").style.display = "block";
+                // شاشة النهاية بعد ما يخلص كل الغرف
+                document.getElementById("room-title").innerText = "نهاية المتاهة 🤍✨";
+                document.getElementById("quiz-section").style.display = "none";
+                document.getElementById("content-section").style.display = "block";
+                document.getElementById("room-message").innerHTML = "<strong>مبروك يا روحي! 🔓✨</strong><br>فتحت كل الأبواب ووصلت لنهاية المتاهة.. وهلأ صار لازم تعرف إنك مو بس ساكن بقلبي، أنت القلب وروحي وكل دنيتي يا أغلى حمودي بالعالم! 🥹🤍🫂";
+                document.getElementById("next-btn").style.display = "none"; // إخفاء زر التبديل بالنهاية
             }
         }
 
@@ -166,15 +193,21 @@
             let userVal = document.getElementById("answer-input").value.trim().toLowerCase();
             let validAnswers = rooms[currentRoom].answers;
 
-            // تنظيف النص المدخل للمقارنة البسيطة
             let isCorrect = validAnswers.some(ans => userVal.includes(ans.toLowerCase()));
 
             if (isCorrect) {
-                currentRoom++;
-                loadRoom();
+                // إخفاء السؤال وإظهار رسالة ومحتوى الغرفة
+                document.getElementById("quiz-section").style.display = "none";
+                document.getElementById("room-message").innerText = rooms[currentRoom].message;
+                document.getElementById("content-section").style.display = "block";
             } else {
                 document.getElementById("error-msg").innerText = "خطأ يا حمودي! ركز شوي وتذكرني مليح ورجع جرب 😜❌";
             }
+        }
+
+        function nextRoom() {
+            currentRoom++;
+            loadRoom();
         }
 
         // بدء اللعبة
@@ -182,4 +215,3 @@
     </script>
 </body>
 </html>
-
