@@ -173,7 +173,6 @@
             color: #fff;
         }
 
-        /* شبكات العناصر المتعددة داخل الغرف */
         .items-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -361,7 +360,8 @@
                     }, 1000);
                 }
             } else {
-                document.getElementById('open-envelope').style.display = 'block';
+                const env = document.getElementById('open-envelope');
+                if (env) env.style.display = 'block';
             }
         }
 
@@ -372,18 +372,20 @@
 
         function goToScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            document.getElementById('custom-modal').style.display = 'none';
+            const target = document.getElementById(screenId);
+            if (target) target.classList.add('active');
+            const modal = document.getElementById('custom-modal');
+            if (modal) modal.style.display = 'none';
         }
 
         function openDoor() {
-            document.getElementById('door-hint').innerText = "✨✨ جاري فتح الباب وفتح القلوب...";
+            const hint = document.getElementById('door-hint');
+            if (hint) hint.innerText = "✨✨ جاري فتح الباب وفتح القلوب...";
             setTimeout(() => {
                 goToScreen('main-rooms-screen');
             }, 1200);
         }
 
-        // قواعد البيانات للرسايل المختلفة بكل قسم
         const roseMessages = [
             "اشتقتلك بطريقة لو وصفتها... ما كانت الكلمات كافية...🥹❤️",
             "كل ما تمر دوشة هالدنيا، بتمنى لو صوتك عندي يهدي كلشي... 🌹",
@@ -416,6 +418,7 @@
         function openRoom(type) {
             goToScreen('room-screen');
             const area = document.getElementById('room-content-area');
+            if (!area) return;
             
             if(type === 'rose') {
                 let html = `<h2 style="margin-bottom: 15px;">🌹 غرفة الاشتياق</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">اضغط على الوردات لاكتشاف مشاعري</p><div class="items-grid">`;
@@ -446,7 +449,7 @@
                 html += `</div>`;
                 area.innerHTML = html;
             } else if(type === 'memories') {
-                let html = `<h2 style="margin-bottom: 15px;">🕯️ الذكريات</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">اولع الشموع لتتذكر لحظاتنا</p><div class="items-grid">`;
+                let html = `<h2 style="margin-bottom: 15px;">🕯️ الذكريات</h2><p style="font-size:0.9rem; color:#aaa; margin-bottom:10px;">ولع الشموع لتتذكر لحظاتنا</p><div class="items-grid">`;
                 for(let i=0; i<6; i++) {
                     html += `<div class="interactive-item" onclick="showRandomMsg('🕯️ ذكرى حلوة', memoryMessages)">🕯️</div>`;
                 }
@@ -463,7 +466,6 @@
         }
 
         function showRandomMsg(title, msgArray) {
-            // تختار رسالة عشوائية كل ما ضغط المستخدم
             const randomMsg = msgArray[Math.floor(Math.random() * msgArray.length)];
             showPopup(title, randomMsg);
         }
@@ -485,8 +487,10 @@
         function showPopup(title, content) {
             const modal = document.getElementById('custom-modal');
             const body = document.getElementById('modal-body');
-            body.innerHTML = `<h3 style="color: #ff6584; margin-bottom: 15px;">${title}</h3><p style="line-height: 1.6; margin-bottom: 20px;">${content}</p><button class="btn" onclick="closeModalDirect()" style="padding: 8px 20px; font-size: 0.9rem;">تمام 🤍</button>`;
-            modal.style.display = 'flex';
+            if (modal && body) {
+                body.innerHTML = `<h3 style="color: #ff6584; margin-bottom: 15px;">${title}</h3><p style="line-height: 1.6; margin-bottom: 20px;">${content}</p><button class="btn" onclick="closeModalDirect()" style="padding: 8px 20px; font-size: 0.9rem;">تمام 🤍</button>`;
+                modal.style.display = 'flex';
+            }
         }
 
         function closeModal(e) {
@@ -494,21 +498,25 @@
                 document.getElementById('custom-modal').style.display = 'none';
             }
         }
+
         function closeModalDirect() {
-            document.getElementById('custom-modal').style.display = 'none';
+            const modal = document.getElementById('custom-modal');
+            if (modal) modal.style.display = 'none';
         }
 
         function openFinalScreen() {
             goToScreen('final-screen');
             const finalText = document.getElementById('final-text');
-            finalText.innerHTML = `
-                إذا كنت وصلت لهون...<br>
-                فأنت ما قريت رسائل... أنت عشت جوّا قلبي...<br>
-                وكل كلمة هون... كانت حقيقية... وكل دعوة... كانت إلك...🤲🏻<br>
-                وكل نبضة... كانت بتنادي اسمك...🤍<br><br>
-                شكراً لأنك الشخص اللي غيّر حياتي بطريقة ما كنت أتخيلها...🥹<br>
-                أتمنى تضل تبتسم... وتضل بخير... وتضل الشخص اللي بحبه... اليوم... وبكرا... وكل العمر...❤️
-            `;
+            if (finalText) {
+                finalText.innerHTML = `
+                    إذا كنت وصلت لهون...<br>
+                    فأنت ما قريت رسائل... أنت عشت جوّا قلبي...<br>
+                    وكل كلمة هون... كانت حقيقية... وكل دعوة... كانت إلك...🤲🏻<br>
+                    وكل نبضة... كانت بتنادي اسمك...🤍<br><br>
+                    شكراً لأنك الشخص اللي غيّر حياتي بطريقة ما كنت أتخيلها...🥹<br>
+                    أتمنى تضل تبتسم... وتضل بخير... وتضل الشخص اللي بحبه... اليوم... وبكرا... وكل العمر...❤️
+                `;
+            }
         }
 
         function triggerHugEffect() {
@@ -520,6 +528,7 @@
 
         function createBackgroundEffects() {
             const bg = document.getElementById('bg-effects');
+            if (!bg) return;
             setInterval(() => {
                 const star = document.createElement('div');
                 star.classList.add('star');
@@ -528,11 +537,4 @@
                 star.style.top = Math.random() * 100 + 'vh';
                 star.style.fontSize = (Math.random() * 10 + 10) + 'px';
                 star.style.opacity = Math.random();
-                bg.appendChild(star);
-                setTimeout(() => star.remove(), 4000);
-            }, 500);
-        }
-
-        function createFloatingHeart() {
-            const bg = document.getElementById('bg-effects');
-            const heart = document
+       
