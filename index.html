@@ -1,174 +1,413 @@
-د<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بيت قلبي 🤍</title>
+    <title>إلك... 🤍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #05050a;
-            color: #ffffff;
-            font-family: Tahoma, Arial, sans-serif;
-            text-align: center;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
-        .box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 500px;
+        .screen {
+            position: absolute;
             width: 100%;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
-        }
-        h1 { color: #ff758c; margin-bottom: 20px; }
-        p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; }
-        input {
-            padding: 12px;
-            width: 80%;
-            border-radius: 20px;
-            border: 1px solid #ccc;
-            background: rgba(255,255,255,0.1);
-            color: #fff;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out;
+            padding: 20px;
             text-align: center;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            outline: none;
         }
-        button {
-            background: #ff758c;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 20px;
+        .screen.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* نجوم الخلفية */
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        /* تنسيقات عامة للنصوص والأزرار */
+        h2, p {
+            margin-bottom: 20px;
+            font-weight: 400;
+            line-height: 1.8;
+        }
+        .highlight {
+            font-size: 1.8rem;
+            color: #ffb6c1;
+            margin-bottom: 30px;
+        }
+        input[type="text"] {
+            padding: 12px 20px;
             font-size: 1.1rem;
-            cursor: pointer;
-            font-weight: bold;
+            border-radius: 30px;
+            border: 2px solid #ffb6c1;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+            text-align: center;
+            margin-bottom: 20px;
+            width: 80%;
+            max-width: 350px;
         }
-        button:hover { background: #ff477e; }
-        .error { color: #ff6b6b; margin-top: 10px; display: none; }
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        button.btn {
+            background: #ffb6c1;
+            color: #0d0d0d;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4);
+        }
+        button.btn:hover {
+            background: #ffc0cb;
+            transform: scale(1.05);
+        }
+        .error-msg {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        /* الصناديق والأبواب */
+        .box-container, .door-container {
+            cursor: pointer;
+            font-size: 4rem;
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        .box-container:hover, .door-container:hover {
+            transform: scale(1.1);
+        }
+        /* الأسباب والرسائل */
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            max-width: 800px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .card-item {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+            flex: 1 1 45%;
+            text-align: right;
+        }
+        .card-item:hover {
+            background: rgba(255, 182, 193, 0.2);
+            transform: translateY(-3px);
+        }
+        .hidden-text {
+            display: none;
+            margin-top: 10px;
+            color: #ffb6c1;
+            font-size: 0.95rem;
+        }
+        /* القلوب العائمة */
+        .floating-heart {
+            position: absolute;
+            color: #ffb6c1;
+            animation: floatUp 4s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="box" id="app">
-        <!-- شاشة البداية -->
-        <div id="s0">
-            <h1>🌙 بيت قلبي</h1>
-            <p>إذا وصلت لهون... فأكيد في سبب خلاك تضغط على هالرابط.<br>هاد المكان مو مجرد موقع، هاد المكان هو قلبي. ❤️</p>
-            <button onclick="nextStep(1)">🤍 افتح بيت قلبي</button>
-        </div>
+    <div class="stars" id="starsContainer"></div>
 
-        <!-- الباب الأول -->
-        <div id="s1" style="display:none;">
-            <h2>🌹 الباب الأول</h2>
-            <p>شو أكتر شي بحب أعمله أول ما بفيق من النوم؟ 🥹🤍</p>
-            <input type="text" id="ans1" placeholder="اكتب الجواب هنا...">
-            <br>
-            <button onclick="check(1, ['اصحى', 'صوتك', 'فيق', 'تفيق', 'أسمع صوتك'])">تأكيد الجواب 🗝️</button>
-            <div id="err1" class="error">حاول مرة تانية يا قلبي! 🤍</div>
-        </div>
+    <!-- الشاشة الأولى: البداية -->
+    <div class="screen active" id="screen0">
+        <div class="box-container" onclick="nextScreen()">✨</div>
+        <p class="highlight" id="introText">اضغط هنا لنبدأ الرحلة...</p>
+    </div>
 
-        <!-- الباب الثاني -->
-        <div id="s2" style="display:none;">
-            <h2>💌 الباب الثاني</h2>
-            <p>شو أكتر كلمة بحب دايمًا أسمعها منك؟ 🥹</p>
-            <input type="text" id="ans2" placeholder="اكتب الجواب هنا...">
-            <br>
-            <button onclick="check(2, ['بنوتي', 'بنت', 'يا بنوتي'])">فتح الباب 🗝️</button>
-            <div id="err2" class="error">تذكر الكلمة اللي دايماً بتخليني أبتسم! 🤍</div>
-        </div>
+    <!-- الشاشة الثانية: الظرف والمفتاح -->
+    <div class="screen" id="screenEnvelope">
+        <div class="box-container" onclick="nextScreen()">💌</div>
+        <h2>إلك...</h2>
+        <p style="color: #ffb6c1;">اضغط لفتح الظرف</p>
+    </div>
 
-        <!-- الباب الثالث -->
-        <div id="s3" style="display:none;">
-            <h2>❤️ الباب الثالث</h2>
-            <p>شو تاريخ ميلادي؟ (مثال: 08/08/2001)</p>
-            <input type="text" id="ans3" placeholder="DD/MM/YYYY">
-            <br>
-            <button onclick="check(3, ['08/08/2001', '8/8/2001', '2001'])">ادخل الغرفة ✨</button>
-            <div id="err3" class="error">مو هيك تاريخ ميلادي! ركز شوي 🤭</div>
-        </div>
+    <!-- الشاشة الثالثة: الباب الأول (الاشتياق) -->
+    <div class="screen" id="screenDoor1">
+        <h2>🌹 الباب الأول: غرفة الاشتياق</h2>
+        <p>شو أكتر شي بحب أعمله أول ما بفيق من النوم؟ 🥹🤍</p>
+        <input type="text" id="answer1" placeholder="اكتب الجواب هنا...">
+        <div class="error-msg" id="err1">حاول مرة تانية يا عيوني... 🤍</div>
+        <button class="btn" onclick="checkAnswer(1, 'أسمع صوتك')">فتح الباب 🔓</button>
+    </div>
 
-        <!-- الباب الرابع -->
-        <div id="s4" style="display:none;">
-            <h2>🕯️ الباب الرابع</h2>
-            <p>شو أكتر صفة بحبها فيك؟ 🥹</p>
-            <input type="text" id="ans4" placeholder="اكتب الجواب هنا...">
-            <br>
-            <button onclick="check(4, ['حنية', 'الحنية', 'حنيتك'])">افتح الغرفة 🗝️</button>
-            <div id="err4" class="error">أكتر صفة لمست قلبي من أول يوم! 🤍</div>
+    <!-- شاشة محتوى الغرفة الأولى -->
+    <div class="screen" id="screenRoom1">
+        <h2>🌹 غرفة الاشتياق</h2>
+        <p style="font-size: 0.9rem; color: #ffb6c1; margin-bottom: 10px;">اضغط على الورود لتشوف الرسائل:</p>
+        <div class="card-grid">
+            <div class="card-item" onclick="revealText(this)">🌹 اشتقتلك بطريقة ما بتعرفها الكلمات...🥹🤍</div>
+            <div class="card-item" onclick="revealText(this)">🌷 لو كان في طريقة أبعتلك حضن مع هالرسالة... كان أول شي عملته. 🫂❤️</div>
+            <div class="card-item" onclick="revealText(this)">🌹 كل يوم بكتشف إني بحبك أكتر من اليوم اللي قبله... 🤍</div>
+            <div class="card-item" onclick="revealText(this)">🌸 أوقات... كل اللي بحتاجه من الدنيا... هو رسالة منك تقول فيها إنك بخير. 🥹</div>
+            <div class="card-item" onclick="revealText(this)">🌹 يمكن بيننا مسافات... بس ولا مرة حسيت إنك بعيد عن قلبي. ❤️</div>
+            <div class="card-item" onclick="revealText(this)">🌷 اسمك... صار يمر ببالي بدون أي سبب... ويمكن هاد أجمل سبب للسعادة. 🤍</div>
+            <div class="card-item" onclick="revealText(this)">🌹 كل دعوة بدعيها لنفسي... في وحدة قبلها إلك. 🤲🏻❤️</div>
+            <div class="card-item" onclick="revealText(this)">🌸 وجودك بحياتي... خلاني أحب الأيام أكتر. 🥹</div>
+            <div class="card-item" onclick="revealText(this)">🌹 لو رجع فيني الزمن... كنت رح أحبك بنفس الطريقة... وأكتر. 🤍</div>
+            <div class="card-item" onclick="revealText(this)">🌷 ولو خيروني بين ألف شخص... رح أختارك... كل مرة... بدون تردد. ❤️</div>
         </div>
+        <button class="btn" style="margin-top: 20px;" onclick="nextScreen()">الانتقال للباب التالي 🗝️</button>
+    </div>
 
-        <!-- الباب الخامس -->
-        <div id="s5" style="display:none;">
-            <h2>⭐ الباب الخامس</h2>
-            <p>شو أكتر شي بتمنّاه بحياتي؟ 🥹</p>
-            <input type="text" id="ans5" placeholder="اكتب الجواب هنا...">
-            <br>
-            <button onclick="check(5, ['حضن', 'حضنك'])">افتح سماء الأمنيات 🌙</button>
-            <div id="err5" class="error">أمنيتي الأغلى معك... 🫂</div>
-        </div>
+    <!-- الشاشة الرابعة: الباب الثاني (الاعترافات) -->
+    <div class="screen" id="screenDoor2">
+        <h2>💌 الباب الثاني: غرفة الاعترافات</h2>
+        <p>شو أكتر كلمة بحب دايمًا أسمعها منك؟ 🥹</p>
+        <input type="text" id="answer2" placeholder="اكتب الجواب هنا...">
+        <div class="error-msg" id="err2">حاول مرة تانية يا روحي... 🤍</div>
+        <button class="btn" onclick="checkAnswer(2, 'يا بنوتي')">فتح الباب 🔓</button>
+    </div>
 
-        <!-- الباب السادس والأخير -->
-        <div id="s6" style="display:none;">
-            <h2>🌍 الباب السادس والأخير</h2>
-            <p>من وين الشخص اللي ساكن قلبي؟ ❤️🇸🇾</p>
-            <input type="text" id="ans6" placeholder="اكتب البلد...">
-            <br>
-            <button onclick="check(6, ['سوريا', 'سورية', '🇸🇾'])">افتح صندوق قلبي 🎁</button>
-            <div id="err6" class="error">متأكد؟ راجع حالك واكتب البلد صح! 🤭</div>
+    <!-- شاشة محتوى الغرفة الثانية -->
+    <div class="screen" id="screenRoom2">
+        <h2>💌 غرفة الاعترافات</h2>
+        <div class="card-grid">
+            <div class="card-item" onclick="revealText(this)">💌 بعرف إني مو دايمًا بعرف أوصف اللي بقلبي... بس وجودك جزء من راحتي. 🤍</div>
+            <div class="card-item" onclick="revealText(this)">💌 شكراً لأنك كنت حنون معي... حنيتك سبب إني أحبك أكتر كل يوم. 🥹❤️</div>
+            <div class="card-item" onclick="revealText(this)">💌 إذا سألتني شو أجمل صدفة بحياتي... رح جاوب: إنت. 🤍🌍</div>
+            <div class="card-item" onclick="revealText(this)">💌 بحب تفاصيلك، ضحكتك، صوتك... وكل شي فيك. ❤️</div>
+            <div class="card-item" onclick="revealText(this)">💌 ولو رجع فيني الزمن ألف مرة... كل مرة رح أختارك. 🥹🤍</div>
         </div>
+        <button class="btn" style="margin-top: 20px;" onclick="nextScreen()">الانتقال للباب التالي 🗝️</button>
+    </div>
 
-        <!-- النهاية -->
-        <div id="s7" style="display:none;">
-            <h1 style="font-size: 3rem;">🎁</h1>
-            <p style="text-align: right; line-height: 2;">
-                إذا وصلت لهون... فأول شي... شكراً. 🤍<br>
-                شكراً لأنك مشيت معي بكل هالرحلة... وقريت كل كلمة طالعة من قلبي.<br><br>
-                يمكن هاد مجرد موقع بالنسبة لأي حدا، بس بالنسبة إلي... هاد المكان هو كل المشاعر اللي ما عرفت أحكيها بصوتي.<br><br>
-                وبدعيلك من كل قلبي: الله يحفظك، ويطمن قلبك، ويرزقك كل الخير اللي بتستحقه.<br>
-                وإذا في أمنية وحدة بتمنى تتحقق... فهي إنو يجي اليوم اللي ما عاد يكون بينا أي مسافة، وأقدر أحضنك وأقلك كل هالكلام وأنا قدامك. ❤️<br><br>
-                <b>من أول يوم... أنت ربحت قلبي... واليوم... أنا بس سلمتك مفاتيحه. 🗝️🤍</b>
-            </p>
-            <p style="color: #ff758c; margin-top: 15px;"><b>وبالمناسبة... إذا نسيت أي كلمة من هالموقع، بتمنى ما تنسى أبدًا إن في بنت بتحبك من كل قلبها. 🤍</b></p>
+    <!-- الشاشة الخامسة: الباب الثالث (أسباب الحب) -->
+    <div class="screen" id="screenDoor3">
+        <h2>❤️ الباب الثالث: أسباب الحب</h2>
+        <p>شو تاريخ ميلادي؟ (مثال: 08/08/2001)</p>
+        <input type="text" id="answer3" placeholder="08/08/2001">
+        <div class="error-msg" id="err3">ركز منيح بالتاريخ! 🤭</div>
+        <button class="btn" onclick="checkAnswer(3, '08/08/2001')">فتح الباب 🔓</button>
+    </div>
+
+    <!-- شاشة محتوى الغرفة الثالثة -->
+    <div class="screen" id="screenRoom3">
+        <h2>❤️ 30 سبب ليش بحبك</h2>
+        <div class="card-grid" style="max-height: 50vh;">
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 1: بحب حنيتك لأنها أول شي لمس قلبي. 🥹</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 2: بحب اهتمامك فيني بأصغر التفاصيل. 🌷</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 3: بحب صوتك لأنه بيطمني. 🎧🤍</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 4: بحب ضحكتك اللي بتخليني أبتسم. 😊</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 5: بحب طريقة كلامك معي. 💌</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 6: بحب وجودك بحياتي لأنه غيّرني للأحسن. 🌍</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 7: بحب صبرك عليّ لما أكون عنيدة. 😂🤍</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 8: بحب إنك أول شخص بخطر ببالي. 🌙</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 9: بحب لما تطمن عليّ بدون ما أطلب. 🥹</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 10: بحب إنك بتخليني أحس بالأمان. 🫂❤️</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 11: بحب طيبتك مع الناس ومعي. 🌸</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 12: بحب إنك بتسمعني حتى لو حكيت كتير. 😂</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 13: بحب قلبك النظيف. 🤍</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 14: بحب طريقة تفكيرك. ✨</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 15: بحب إنك صرت جزء من يومي. ☀️</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 16: بحب إنك بتفهمني قبل ما أحكي. 🥹</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 17: بحب وجود اسمك بين دعواتي. 🤲🏻</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 18: بحب إنك بتخليني أضحك من قلبي. 😭❤️</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 19: بحب لما تناديني "يا بنوتي". 🎀</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 20: بحب كل ذكرى صغيرة بينا. 📸🤍</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 21: بحب طموحك وبتمنى تشوف أحلامك تتحقق. 🌟</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 22: بحب إنك الشخص اللي بدي أحكيله كل شي. 💌</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 23: بحب إنك بتخليني أحس إني مو لحالي. 🤍</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 24: بحب إنك سبب راحتي. 🌷</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 25: بحب إنك صرت وطني، حتى وإنت ببلد بعيد (تركيا). 🇸🇾❤️</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 26: بحب دعواتك إليّ. 🤲🏻</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 27: بحب إنك بتخليني أؤمن إن الحب بسيط وصادق. 🤍</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 28: بحب إنك موجود... وبس. ❤️</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 29: بحب كل نسخة منك، حتى بأيام تعبك. 🫂</div>
+            <div class="card-item" onclick="revealText(this)">❤️ السبب 30: وبحبك لأنك "أنت". ❤️🥹</div>
         </div>
+        <button class="btn" style="margin-top: 15px;" onclick="nextScreen()">الانتقال للباب التالي 🗝️</button>
+    </div>
+
+    <!-- الشاشة السادسة: الباب الرابع (الذكريات) -->
+    <div class="screen" id="screenDoor4">
+        <h2>🕯️ الباب الرابع: غرفة الذكريات</h2>
+        <p>شو أكتر صفة بحبها فيك؟</p>
+        <input type="text" id="answer4" placeholder="اكتب الجواب هنا...">
+        <div class="error-msg" id="err4">فكر شوي كمان... 🤍</div>
+        <button class="btn" onclick="checkAnswer(4, 'الحنية')">فتح الباب 🔓</button>
+    </div>
+
+    <!-- شاشة محتوى الغرفة الرابعة -->
+    <div class="screen" id="screenRoom4">
+        <h2>🕯️ غرفة الذكريات</h2>
+        <div class="card-grid">
+            <div class="card-item" onclick="revealText(this)">📸 تتذكر أول مرة حسيت إنك صرت جزء من يومي؟ من وقتها ما عاد مرّ يوم إلا واسمك حاضر فيه. 🤍</div>
+            <div class="card-item" onclick="revealText(this)">📸 تتذكر أول مرة ضحكت بسببي؟ كانت بداية ذكريات حلوة كتير. 😊❤️</div>
+            <div class="card-item" onclick="revealText(this)">📸 الأيام الصعبة كان وجودك يخففها بكلمة بسيطة. 🥹</div>
+            <div class="card-item" onclick="revealText(this)">📸 أجمل ذكرى بالنسبة إلي هي أي لحظة كنت فيها معي. 🤍</div>
+            <div class="card-item" onclick="revealText(this)">📸 كل شعور حلو حسّيته معك... لسا بقلبي لهلأ. ❤️</div>
+        </div>
+        <button class="btn" style="margin-top: 20px;" onclick="nextScreen()">الانتقال للباب التالي 🗝️</button>
+    </div>
+
+    <!-- الشاشة السابعة: الباب الخامس (الأمنيات) -->
+    <div class="screen" id="screenDoor5">
+        <h2>⭐ الباب الخامس: غرفة الأمنيات</h2>
+        <p>شو أكتر شي بتمنّاه بحياتي؟ 🥹</p>
+        <input type="text" id="answer5" placeholder="اكتب الجواب هنا...">
+        <div class="error-msg" id="err5">فكر باللي بتمناه منك دائماً... 🤍</div>
+        <button class="btn" onclick="checkAnswer(5, 'حضنك')">فتح الباب 🔓</button>
+    </div>
+
+    <!-- شاشة محتوى الغرفة الخامسة -->
+    <div class="screen" id="screenRoom5">
+        <h2>⭐ غرفة الأمنيات</h2>
+        <div class="card-grid">
+            <div class="card-item" onclick="revealText(this)">⭐ بتمنى الله يحفظك من كل سوء... ويكتبلك الخير وين ما كنت. 🤲🏻🤍</div>
+            <div class="card-item" onclick="revealText(this)">⭐ بتمنى أشوفك تحقق كل أحلامك... وأكون أول وحدة تفرحلك. 🌟</div>
+            <div class="card-item" onclick="revealText(this)">⭐ بتمنى ما يمر عليك يوم إلا وفيه سبب يخليك تبتسم. 😊❤️</div>
+            <div class="card-item" onclick="revealText(this)">⭐ بتمنى لو تعبت يوم تلاقي فيني الشخص اللي ترتاحله. 🫂</div>
+            <div class="card-item" onclick="revealText(this)">⭐ بتمنى يجي اليوم اللي ما يكون بينا مسافات... ونضحك سوا. 🥹🤍</div>
+        </div>
+        <button class="btn" style="margin-top: 20px;" onclick="nextScreen()">الانتقال للباب الأخير 🌍</button>
+    </div>
+
+    <!-- الشاشة الثامنة: الباب السادس (الأخير) -->
+    <div class="screen" id="screenDoor6">
+        <h2>🌍 الباب الأخير</h2>
+        <p>من وين الشخص اللي ساكن قلبي؟ ❤️</p>
+        <input type="text" id="answer6" placeholder="الدولة...">
+        <div class="error-msg" id="err6">غلط! فكر منيح... 🤭</div>
+        <button class="btn" onclick="checkAnswer(6, 'سوريا')">فتح الباب 🔓</button>
+    </div>
+
+    <!-- الشاشة الأخيرة: الغرفة النهائية -->
+    <div class="screen" id="screenFinal">
+        <h2>🤍 الرسالة الأخيرة</h2>
+        <p style="max-width: 600px; font-size: 1rem; line-height: 2; color: #ffdede; max-height: 55vh; overflow-y: auto; padding: 10px; text-align: right;">
+            إذا وصلت لهون... فأول شي شكراً. 🤍<br>
+            شكراً لأنك مشيت معي بكل هالرحلة وما استعجلت وقريت كل كلمة طالعة من قلبي.<br><br>
+            هاد المكان هو كل المشاعر اللي ما عرفت أحكيها بصوتي.<br>
+            كل باب فتحته كان جزء من قلبي، ووبدعيلك من كل قلبي الله يحفظك ويطمن قلبك ويرزقك كل خير.<br><br>
+            وإذا في أمنية وحدة بتمنى تتحقق، فهي إنو يجي اليوم اللي ما عاد يكون بينا أي مسافة وأقدر أحضنك وأقلك كل هالكلام وأنا قدامك. ❤️<br><br>
+            وبآخر شي... إذا سألتني شو أجمل صدفة بحياتي؟ رح جاوب بدون تفكير: إنت. ♾️
+        </p>
+        <button class="btn" style="margin-top: 15px;" onclick="showSecret()">🥺 اضغط هون لشغلة صغيرة...</button>
+        <p id="secretText" style="display:none; margin-top: 15px; color: #ffb6c1; font-size: 1.1rem; font-weight: bold;">
+            "من أول يوم أنت ربحت قلبي... واليوم أنا بس سلمتك مفاتيحه. 🗝️🤍<br>
+            وبالمناسبة... إذا نسيت أي كلمة من هالموقع، بتمنى ما تنسى أبدًا إن في بنت بتحبك من كل قلبها. 🤍"
+        </p>
     </div>
 
     <script>
-        function nextStep(step) {
-            for(let i=0; i<=7; i++) {
-                let el = document.getElementById('s' + i);
-                if(el) el.style.display = 'none';
-            }
-            let target = document.getElementById('s' + step);
-            if(target) target.style.display = 'block';
+        // توليد النجوم في الخلفية
+        const starsContainer = document.getElementById('starsContainer');
+        for (let i = 0; i < 60; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.width = (Math.random() * 3) + 'px';
+            star.style.height = star.style.width;
+            star.style.animationDelay = (Math.random() * 2) + 's';
+            starsContainer.appendChild(star);
         }
 
-        function check(step, allowedValues) {
-            let val = document.getElementById('ans' + step).value.trim().toLowerCase();
-            let err = document.getElementById('err' + step);
-            let ok = false;
+        // إدارة التنقل بين الشاشات
+        let currentScreenIndex = 0;
+        const screens = [
+            'screen0', 'screenEnvelope', 
+            'screenDoor1', 'screenRoom1', 
+            'screenDoor2', 'screenRoom2', 
+            'screenDoor3', 'screenRoom3', 
+            'screenDoor4', 'screenRoom4', 
+            'screenDoor5', 'screenRoom5', 
+            'screenDoor6', 'screenFinal'
+        ];
 
-            for(let item of allowedValues) {
-                if(val.includes(item.toLowerCase())) {
-                    ok = true;
-                    break;
-                }
+        function nextScreen() {
+            document.getElementById(screens[currentScreenIndex]).classList.remove('active');
+            currentScreenIndex++;
+            if (currentScreenIndex < screens.length) {
+                document.getElementById(screens[currentScreenIndex]).classList.add('active');
             }
+            createFloatingHearts();
+        }
 
-            if(ok) {
-                err.style.display = 'none';
-                nextStep(step + 1);
+        // التحقق من الإجابات
+        function checkAnswer(doorNum, correctAnswer) {
+            const userAnswer = document.getElementById('answer' + doorNum).value.trim();
+            const errElem = document.getElementById('err' + doorNum);
+            
+            // مقارنة مرنة (تقبل النص سواء كان مع أو بدون تشكيل بسيط أو تطابق تام)
+            if (userAnswer.includes(correctAnswer) || correctAnswer.includes(userAnswer) && userAnswer.length > 1) {
+                errElem.style.display = 'none';
+                nextScreen();
             } else {
-                err.style.display = 'block';
+                errElem.style.display = 'block';
             }
         }
-    </script>
-</body>
-</html>
 
+        // إظهار النص المخفي داخل الكروت عند الضغط عليها
+        function cardItemClicked(element) {
+            // هذه دالة احتياطية في حال رغبت بتوسيع الكروت
+        }
+
+        function revealText(card) {
+            // اهتزاز خفيف أو تأثير بصري عند الضغط على الكارت
+            card.style.borderColor = '#ffffff';
+            setTimeout(() => { card.style.borderColor = 'rgba(255, 182, 193, 0.3)'; }, 300);
+            createFloatingHearts();
+        }
+
+        function showSecret() {
+            document.getElementById('secretText').style.display = 'block';
+            // إضافة قلوب كثيرة عند الن
