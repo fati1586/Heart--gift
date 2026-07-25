@@ -188,7 +188,7 @@
         <button class="btn" onclick="nextScreen()">🤍 افتح بيت القلب</button>
     </div>
 
-    <!-- الشاشة 3: مدخل الباب الأول والسؤال -->
+    <!-- الشاشة 3: سؤال الباب الأول (الاشتياق) -->
     <div class="screen" id="screen3">
         <h2>🚪 المدخل</h2>
         <p style="color: #ffb6c1;">مو أي حدا بيدخل لهون... لازم يكون بيعرف صاحبة هالقلب... 🥹</p>
@@ -197,10 +197,10 @@
         <p>شو أكتر شي بحب أعمله أول ما بفيق من النوم؟ 🥹🤍</p>
         <input type="text" id="ans1" placeholder="اكتب الجواب هنا...">
         <div class="error-msg" id="err1">حاول مرة تانية يا عيوني... 🤍</div>
-        <button class="btn" onclick="checkAns(1, 'أسمع صوتك')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAns(1, 'أسمع صوتك', 'screenRoom1')">فتح الباب 🔓</button>
     </div>
 
-    <!-- شاشة محتوى الغرفة الأولى (الاشتياق) -->
+    <!-- الغرفة الأولى: رسائل الاشتياق -->
     <div class="screen" id="screenRoom1">
         <h2>🌹 غرفة الاشتياق</h2>
         <p style="font-size: 0.9rem; color: #ffb6c1; margin-bottom: 10px;">اضغط على الورود لتشوف الرسائل:</p>
@@ -219,17 +219,17 @@
         <button class="btn" onclick="nextScreen()">الانتقال للباب الثاني 🗝️</button>
     </div>
 
-    <!-- الشاشة 4: الباب الثاني (الاعترافات) -->
+    <!-- الشاشة 4: سؤال الباب الثاني (الاعترافات) -->
     <div class="screen" id="screen4">
         <h2>💌 الباب الثاني: غرفة الاعترافات</h2>
         <p style="color: #ffb6c1;">في كلمات كانت بقلبي من زمان... بس ما لقيت طريقة أحكيها.</p>
         <p>شو أكتر كلمة بحب دايمًا أسمعها منك؟ 🥹</p>
         <input type="text" id="ans2" placeholder="اكتب الجواب هنا...">
         <div class="error-msg" id="err2">حاول مرة تانية يا روحي... 🤍</div>
-        <button class="btn" onclick="checkAns(2, 'يا بنوتي')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAns(2, 'يا بنوتي', 'screenRoom2')">فتح الباب 🔓</button>
     </div>
 
-    <!-- شاشة محتوى الغرفة الثانية -->
+    <!-- الغرفة الثانية: رسائل الاعترافات -->
     <div class="screen" id="screenRoom2">
         <h2>💌 غرفة الاعترافات</h2>
         <div class="cards-container">
@@ -242,17 +242,17 @@
         <button class="btn" onclick="nextScreen()">الانتقال للباب الثالث 🗝️</button>
     </div>
 
-    <!-- الشاشة 5: الباب الثالث (أسباب الحب) -->
+    <!-- الشاشة 5: سؤال الباب الثالث (أسباب الحب) -->
     <div class="screen" id="screen5">
         <h2>❤️ الباب الثالث: أسباب الحب</h2>
         <p style="color: #ffb6c1;">هون مخبيّة الأسباب اللي خلت قلبي يختارك.</p>
         <p>شو تاريخ ميلادي؟ (مثال: 08/08/2001)</p>
         <input type="text" id="ans3" placeholder="08/08/2001">
         <div class="error-msg" id="err3">ركز منيح بالتاريخ! 🤭</div>
-        <button class="btn" onclick="checkAns(3, '08/08/2001')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAns(3, '08/08/2001', 'screenRoom3')">فتح الباب 🔓</button>
     </div>
 
-    <!-- شاشة محتوى الغرفة الثالثة (الأسباب الـ 30) -->
+    <!-- الغرفة الثالثة: أسباب الحب الـ 30 -->
     <div class="screen" id="screenRoom3">
         <h2>❤️ 30 سبب ليش بحبك</h2>
         <div class="cards-container">
@@ -290,17 +290,17 @@
         <button class="btn" onclick="nextScreen()">الانتقال للباب الرابع 🗝️</button>
     </div>
 
-    <!-- الشاشة 6: الباب الرابع (الذكريات) -->
+    <!-- الشاشة 6: سؤال الباب الرابع (الذكريات) -->
     <div class="screen" id="screen6">
         <h2>🕯️ الباب الرابع: غرفة الذكريات</h2>
         <p style="color: #ffb6c1;">إنت تركت ذكريات صارت جزء من قلبي.</p>
         <p>شو أكتر صفة بحبها فيك؟</p>
         <input type="text" id="ans4" placeholder="اكتب الجواب هنا...">
         <div class="error-msg" id="err4">فكر شوي كمان... 🤍</div>
-        <button class="btn" onclick="checkAns(4, 'الحنية')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAns(4, 'الحنية', 'screenRoom4')">فتح الباب 🔓</button>
     </div>
 
-    <!-- شاشة محتوى الغرفة الرابعة -->
+    <!-- الغرفة الرابعة: الذكريات -->
     <div class="screen" id="screenRoom4">
         <h2>🕯️ غرفة الذكريات</h2>
         <div class="cards-container">
@@ -313,17 +313,17 @@
         <button class="btn" onclick="nextScreen()">الانتقال للباب الخامس 🗝️</button>
     </div>
 
-    <!-- الشاشة 7: الباب الخامس (الأمنيات) -->
+    <!-- الشاشة 7: سؤال الباب الخامس (الأمنيات) -->
     <div class="screen" id="screen7">
         <h2>⭐ الباب الخامس: غرفة الأمنيات</h2>
         <p style="color: #ffb6c1;">كل إنسان عنده أمنيات، بس في أمنية وحدة هي الأقرب لقلبي.</p>
         <p>شو أكتر شي بتمنّاه بحياتي؟ 🥹</p>
         <input type="text" id="ans5" placeholder="اكتب الجواب هنا...">
         <div class="error-msg" id="err5">فكر باللي بتمناه منك دائماً... 🤍</div>
-        <button class="btn" onclick="checkAns(5, 'حضنك')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAns(5, 'حضنك', 'screenRoom5')">فتح الباب 🔓</button>
     </div>
 
-    <!-- شاشة محتوى الغرفة الخامسة -->
+    <!-- الغرفة الخامسة: الأمنيات -->
     <div class="screen" id="screenRoom5">
         <h2>⭐ غرفة الأمنيات</h2>
         <div class="cards-container">
@@ -331,7 +331,7 @@
             <div class="card-box" onclick="toggleCard(this)">⭐ النجمة الثانية<div class="card-content">بتمنى أشوفك تحقق كل أحلامك... وأكون أول وحدة تفرحلك. 🌟</div></div>
             <div class="card-box" onclick="toggleCard(this)">⭐ النجمة الثالثة<div class="card-content">بتمنى ما يمر عليك يوم إلا وفيه سبب يخليك تبتسم. 😊❤️</div></div>
             <div class="card-box" onclick="toggleCard(this)">⭐ النجمة الرابعة<div class="card-content">بتمنى إذا تعبت يوم... تلاقي فيني الشخص اللي ترتاحله وتحكيله كل شي. 🫂</div></div>
-            <div class="card-box" onclick="toggleCard(this)">⭐ النجمة الخامسة<div class="card-content">وبتمنى... يجي اليوم اللي ما يكون بينا مسافات... ونضحك سوا بدل ما نشتاق من بعيد. 🥹🤍</div></div>
+            <div class="card-box" onclick="toggleCard(this)">⭐ النجمة الخامسة<div class="card-content">بتمنى... يجي اليوم اللي ما يكون بينا مسافات... ونضحك سوا بدل ما نشتاق من بعيد. 🥹🤍</div></div>
         </div>
         <button class="btn" onclick="nextScreen()">الانتقال للباب الأخير 🌍</button>
     </div>
@@ -343,10 +343,7 @@
         <p>من وين الشخص اللي ساكن قلبي؟ ❤️</p>
         <input type="text" id="ans6" placeholder="الدولة...">
         <div class="error-msg" id="err6">غلط! فكر منيح... 🤭</div>
-        <button class="btn" onclick="checkAns(6, 'سوريا')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAns(6, 'سوريا', 'screenFinal')">فتح الباب 🔓</button>
     </div>
 
-    <!-- الغرفة الأخيرة والرسالة الختامية -->
-    <div class="screen" id="screenFinal">
-        <h2>🤍 الغرفة الأخيرة</h2>
-   
+    <!-- الغرفة الأخيرة 
