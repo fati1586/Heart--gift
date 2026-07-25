@@ -169,7 +169,7 @@
     <!-- الشاشة 0: البداية -->
     <div class="screen active" id="screen0">
         <div class="clickable-icon" onclick="nextScreen()">✨</div>
-        <p class="highlight">مرحبًا... اضغط هنا لنبدأ الرحلة</p>
+        <p class="highlight" style="cursor: pointer;" onclick="nextScreen()">مرحبًا... اضغط هنا لنبدأ الرحلة</p>
     </div>
 
     <!-- الشاشة 1: رسالة البداية والظرف -->
@@ -179,7 +179,7 @@
             وإذا كنت عم تقرأ هالكلام... فمعناه إنك الشخص الوحيد اللي إله حق يكون هون... 🤍
         </p>
         <div class="clickable-icon" onclick="nextScreen()" style="margin-top: 20px;">💌</div>
-        <p style="color: #ffb6c1;">إلك... (اضغط للفتح)</p>
+        <p style="color: #ffb6c1; cursor: pointer;" onclick="nextScreen()">إلك... (اضغط للفتح)</p>
     </div>
 
     <!-- الشاشة 2: المفتاح وزر فتح بيت القلب -->
@@ -343,7 +343,4 @@
         <p>من وين الشخص اللي ساكن قلبي؟ ❤️</p>
         <input type="text" id="ans6" placeholder="الدولة...">
         <div class="error-msg" id="err6">غلط! فكر منيح... 🤭</div>
-        <button class="btn" onclick="checkAns(6, 'سوريا', 'screenFinal')">فتح الباب 🔓</button>
-    </div>
-
-    <!-- الغرفة الأخيرة 
+        <button class="btn" onclick="checkAn
