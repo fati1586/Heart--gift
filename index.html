@@ -26,20 +26,16 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            display: flex;
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.8s ease-in-out;
             padding: 20px;
             text-align: center;
             overflow-y: auto;
         }
         .screen.active {
-            opacity: 1;
-            pointer-events: auto;
+            display: flex;
         }
         /* نجوم الخلفية */
         .stars {
@@ -63,11 +59,13 @@
             margin-bottom: 15px;
             font-weight: 400;
             line-height: 1.8;
+            z-index: 2;
         }
         .highlight {
             font-size: 1.8rem;
             color: #ffb6c1;
             margin-bottom: 20px;
+            cursor: pointer;
         }
         input[type="text"] {
             padding: 12px 20px;
@@ -81,6 +79,7 @@
             margin-bottom: 15px;
             width: 80%;
             max-width: 350px;
+            z-index: 2;
         }
         input[type="text"]::placeholder {
             color: rgba(255, 255, 255, 0.5);
@@ -97,6 +96,7 @@
             transition: 0.3s;
             box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4);
             margin-top: 15px;
+            z-index: 2;
         }
         button.btn:hover {
             background: #ffc0cb;
@@ -107,12 +107,14 @@
             font-size: 0.9rem;
             margin-bottom: 10px;
             display: none;
+            z-index: 2;
         }
         .clickable-icon {
             cursor: pointer;
             font-size: 4rem;
             transition: transform 0.3s;
             margin-bottom: 15px;
+            z-index: 2;
         }
         .clickable-icon:hover {
             transform: scale(1.1);
@@ -127,6 +129,7 @@
             padding: 10px;
             margin: 0 auto;
             width: 100%;
+            z-index: 2;
         }
         .card-box {
             background: rgba(255, 255, 255, 0.08);
@@ -168,8 +171,8 @@
 
     <!-- الشاشة 0: البداية -->
     <div class="screen active" id="screen0">
-        <div class="clickable-icon" onclick="nextScreen()">✨</div>
-        <p class="highlight" style="cursor: pointer;" onclick="nextScreen()">مرحبًا... اضغط هنا لنبدأ الرحلة</p>
+        <div class="clickable-icon" onclick="goToScreen('screen1')">✨</div>
+        <p class="highlight" onclick="goToScreen('screen1')">مرحبًا... اضغط هنا لنبدأ الرحلة</p>
     </div>
 
     <!-- الشاشة 1: رسالة البداية والظرف -->
@@ -178,14 +181,14 @@
             إذا وصلت لهون... فأكيد في سبب خلاك تضغط على هالرابط...<br>
             وإذا كنت عم تقرأ هالكلام... فمعناه إنك الشخص الوحيد اللي إله حق يكون هون... 🤍
         </p>
-        <div class="clickable-icon" onclick="nextScreen()" style="margin-top: 20px;">💌</div>
-        <p style="color: #ffb6c1; cursor: pointer;" onclick="nextScreen()">إلك... (اضغط للفتح)</p>
+        <div class="clickable-icon" onclick="goToScreen('screen2')" style="margin-top: 20px;">💌</div>
+        <p style="color: #ffb6c1; cursor: pointer;" onclick="goToScreen('screen2')">إلك... (اضغط للفتح)</p>
     </div>
 
     <!-- الشاشة 2: المفتاح وزر فتح بيت القلب -->
     <div class="screen" id="screen2">
         <div class="clickable-icon">🗝️</div>
-        <button class="btn" onclick="nextScreen()">🤍 افتح بيت القلب</button>
+        <button class="btn" onclick="goToScreen('screen3')">🤍 افتح بيت القلب</button>
     </div>
 
     <!-- الشاشة 3: سؤال الباب الأول (الاشتياق) -->
@@ -197,7 +200,7 @@
         <p>شو أكتر شي بحب أعمله أول ما بفيق من النوم؟ 🥹🤍</p>
         <input type="text" id="ans1" placeholder="اكتب الجواب هنا...">
         <div class="error-msg" id="err1">حاول مرة تانية يا عيوني... 🤍</div>
-        <button class="btn" onclick="checkAns(1, 'أسمع صوتك', 'screenRoom1')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAnswer(1, 'أسمع صوتك', 'screenRoom1')">فتح الباب 🔓</button>
     </div>
 
     <!-- الغرفة الأولى: رسائل الاشتياق -->
@@ -216,7 +219,7 @@
             <div class="card-box" onclick="toggleCard(this)">🌹 لو رجع فيني الزمن... كنت رح أحبك بنفس الطريقة... وأكتر. 🤍<div class="card-content">لو ينعاد الزمن ألف مرة رح أختارك.</div></div>
             <div class="card-box" onclick="toggleCard(this)">🌷 ولو خيروني بين ألف شخص... رح أختارك... كل مرة... بدون تردد. ❤️<div class="card-content">إنت الخيار الوحيد والأبدي.</div></div>
         </div>
-        <button class="btn" onclick="nextScreen()">الانتقال للباب الثاني 🗝️</button>
+        <button class="btn" onclick="goToScreen('screen4')">الانتقال للباب الثاني 🗝️</button>
     </div>
 
     <!-- الشاشة 4: سؤال الباب الثاني (الاعترافات) -->
@@ -226,7 +229,7 @@
         <p>شو أكتر كلمة بحب دايمًا أسمعها منك؟ 🥹</p>
         <input type="text" id="ans2" placeholder="اكتب الجواب هنا...">
         <div class="error-msg" id="err2">حاول مرة تانية يا روحي... 🤍</div>
-        <button class="btn" onclick="checkAns(2, 'يا بنوتي', 'screenRoom2')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAnswer(2, 'يا بنوتي', 'screenRoom2')">فتح الباب 🔓</button>
     </div>
 
     <!-- الغرفة الثانية: رسائل الاعترافات -->
@@ -239,7 +242,7 @@
             <div class="card-box" onclick="toggleCard(this)">💌 الرسالة الرابعة<div class="card-content">بحب تفاصيلك، ضحكتك، صوتك، وحتى الأشياء اللي ما بتحبها بنفسك أنا بحبها لأنها جزء منك. ❤️</div></div>
             <div class="card-box" onclick="toggleCard(this)">💌 الرسالة الخامسة<div class="card-content">ولو رجع فيني الزمن ألف مرة، كل مرة رح أختارك بنفس القلب وبحب أكبر. 🥹🤍</div></div>
         </div>
-        <button class="btn" onclick="nextScreen()">الانتقال للباب الثالث 🗝️</button>
+        <button class="btn" onclick="goToScreen('screen5')">الانتقال للباب الثالث 🗝️</button>
     </div>
 
     <!-- الشاشة 5: سؤال الباب الثالث (أسباب الحب) -->
@@ -249,7 +252,7 @@
         <p>شو تاريخ ميلادي؟ (مثال: 08/08/2001)</p>
         <input type="text" id="ans3" placeholder="08/08/2001">
         <div class="error-msg" id="err3">ركز منيح بالتاريخ! 🤭</div>
-        <button class="btn" onclick="checkAns(3, '08/08/2001', 'screenRoom3')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAnswer(3, '08/08/2001', 'screenRoom3')">فتح الباب 🔓</button>
     </div>
 
     <!-- الغرفة الثالثة: أسباب الحب الـ 30 -->
@@ -287,7 +290,7 @@
             <div class="card-box" onclick="toggleCard(this)">❤️ السبب 29<div class="card-content">بحب كل نسخة منك، حتى بأيام تعبك وزعلك. 🫂</div></div>
             <div class="card-box" onclick="toggleCard(this)">❤️ السبب 30<div class="card-content">وبحبك... لأنه مهما حاولت أعد الأسباب، رح يضل في سبب جديد كل يوم وهو إنك "أنت". ❤️🥹</div></div>
         </div>
-        <button class="btn" onclick="nextScreen()">الانتقال للباب الرابع 🗝️</button>
+        <button class="btn" onclick="goToScreen('screen6')">الانتقال للباب الرابع 🗝️</button>
     </div>
 
     <!-- الشاشة 6: سؤال الباب الرابع (الذكريات) -->
@@ -297,7 +300,7 @@
         <p>شو أكتر صفة بحبها فيك؟</p>
         <input type="text" id="ans4" placeholder="اكتب الجواب هنا...">
         <div class="error-msg" id="err4">فكر شوي كمان... 🤍</div>
-        <button class="btn" onclick="checkAns(4, 'الحنية', 'screenRoom4')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAnswer(4, 'الحنية', 'screenRoom4')">فتح الباب 🔓</button>
     </div>
 
     <!-- الغرفة الرابعة: الذكريات -->
@@ -310,7 +313,7 @@
             <div class="card-box" onclick="toggleCard(this)">📸 الذكرى الرابعة<div class="card-content">أجمل الذكريات بالنسبة إلي مو المكان ولا الوقت، أجمل ذكرى هي أي لحظة كنت فيها معي. 🤍</div></div>
             <div class="card-box" onclick="toggleCard(this)">📸 الذكرى الخامسة<div class="card-content">وبتعرف؟ أنا ما بحفظ التواريخ بقدر ما بحفظ المشاعر، وكل شعور حلو حسّيته معك لسا بقلبي لهلأ. ❤️</div></div>
         </div>
-        <button class="btn" onclick="nextScreen()">الانتقال للباب الخامس 🗝️</button>
+        <button class="btn" onclick="goToScreen('screen7')">الانتقال للباب الخامس 🗝️</button>
     </div>
 
     <!-- الشاشة 7: سؤال الباب الخامس (الأمنيات) -->
@@ -320,7 +323,7 @@
         <p>شو أكتر شي بتمنّاه بحياتي؟ 🥹</p>
         <input type="text" id="ans5" placeholder="اكتب الجواب هنا...">
         <div class="error-msg" id="err5">فكر باللي بتمناه منك دائماً... 🤍</div>
-        <button class="btn" onclick="checkAns(5, 'حضنك', 'screenRoom5')">فتح الباب 🔓</button>
+        <button class="btn" onclick="checkAnswer(5, 'حضنك', 'screenRoom5')">فتح الباب 🔓</button>
     </div>
 
     <!-- الغرفة الخامسة: الأمنيات -->
@@ -333,7 +336,7 @@
             <div class="card-box" onclick="toggleCard(this)">⭐ النجمة الرابعة<div class="card-content">بتمنى إذا تعبت يوم... تلاقي فيني الشخص اللي ترتاحله وتحكيله كل شي. 🫂</div></div>
             <div class="card-box" onclick="toggleCard(this)">⭐ النجمة الخامسة<div class="card-content">بتمنى... يجي اليوم اللي ما يكون بينا مسافات... ونضحك سوا بدل ما نشتاق من بعيد. 🥹🤍</div></div>
         </div>
-        <button class="btn" onclick="nextScreen()">الانتقال للباب الأخير 🌍</button>
+        <button class="btn" onclick="goToScreen('screen8')">الانتقال للباب الأخير 🌍</button>
     </div>
 
     <!-- الشاشة 8: الباب السادس والأخير -->
@@ -341,6 +344,4 @@
         <h2>🌍 الباب السادس والأخير</h2>
         <p style="color: #ffb6c1;">هاد الباب ما بيفتح إلا إذا جاوبت آخر سؤال.</p>
         <p>من وين الشخص اللي ساكن قلبي؟ ❤️</p>
-        <input type="text" id="ans6" placeholder="الدولة...">
-        <div class="error-msg" id="err6">غلط! فكر منيح... 🤭</div>
-        <button class="btn" onclick="checkAn
+        <input type="text" id="ans6" placeholder="الدولة...
