@@ -11,7 +11,6 @@
             box-sizing: border-box;
             font-family: 'Tahoma', sans-serif;
         }
-
         body {
             background-color: #0b0b0b;
             color: #fff;
@@ -23,7 +22,6 @@
             text-align: center;
             position: relative;
         }
-
         .screen {
             display: none;
             width: 100%;
@@ -31,16 +29,13 @@
             padding: 20px;
             animation: fadeIn 0.8s ease-in-out;
         }
-
         .screen.active {
             display: block;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .btn {
             background: #fff;
             color: #0b0b0b;
@@ -54,12 +49,10 @@
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(255,255,255,0.2);
         }
-
         .btn:hover {
             background: #e0e0e0;
             transform: scale(1.05);
         }
-
         input[type="text"] {
             width: 80%;
             padding: 12px 20px;
@@ -72,18 +65,15 @@
             margin-top: 15px;
             outline: none;
         }
-
         input[type="text"]::placeholder {
             color: rgba(255,255,255,0.5);
         }
-
         .error-msg {
             color: #ff6b6b;
             font-size: 0.9rem;
             margin-top: 10px;
             display: none;
         }
-
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -93,7 +83,6 @@
             overflow-y: auto;
             padding: 10px;
         }
-
         .item-box {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -103,42 +92,35 @@
             transition: 0.3s;
             font-size: 0.95rem;
         }
-
         .item-box:hover {
             background: rgba(255, 255, 255, 0.15);
             transform: translateY(-3px);
         }
-
         .item-box.opened {
             background: rgba(255, 255, 255, 0.25);
             border-color: #ff6b81;
         }
-
         p, h2, h3 {
             line-height: 1.8;
             margin-bottom: 15px;
         }
-
         .pulsing-heart {
             font-size: 5rem;
             cursor: pointer;
             animation: pulse 1.5s infinite;
             margin: 20px 0;
         }
-
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
-
         .star {
             position: absolute;
             background: #fff;
             border-radius: 50%;
             animation: twinkle 2s infinite alternate;
         }
-
         @keyframes twinkle {
             0% { opacity: 0.2; }
             100% { opacity: 1; }
@@ -147,7 +129,7 @@
 </head>
 <body>
 
-    <!-- الشاشة الأولى: المقدمة التفاعلية بالنقر -->
+    <!-- الشاشة الأولى: المقدمة -->
     <div id="screen-start" class="screen active">
         <h2 id="intro-text" style="font-size: 1.6rem;">مرحبًا...</h2>
         <button class="btn" id="next-intro-btn" onclick="nextIntroStep()">التالي 🤍</button>
@@ -162,16 +144,16 @@
 
     <!-- الباب الأول -->
     <div id="screen-door1-q" class="screen">
-        <h3>🌹 الباب الأول: مفتاح غرفة الاشتياق</h3>
-        <p>قبل ما تدخل أول غرفة... جاوبني:<br><b>شو أكتر شي بحب أعمله أول ما بفيق من النوم؟ 🥹🤍</b></p>
+        <h3>🌹 الباب الأول: غرفة الاشتياق</h3>
+        <p>قبل ما تدخل... جاوبني:<br><b>شو أكتر شي بحب أعمله أول ما بفيق من النوم؟ 🥹🤍</b></p>
         <input type="text" id="ans1" placeholder="اكتب الجواب هون...">
         <br>
         <button class="btn" onclick="checkAnswer(1)">تحقق</button>
-        <p id="err1" class="error-msg">حبوبي، فكر شوي! (تذكّر: أسمع صوتك)</p>
+        <p id="err1" class="error-msg">تذكّر: أسمع صوتك 🤍</p>
     </div>
 
     <div id="screen-door1-content" class="screen">
-        <h3>🌹 غرفة الاشتياق</h3>
+        <h3>🌹 رسائل الاشتياق</h3>
         <p style="font-size: 0.9rem; color: #ffb6c1;">اضغط على كل وردة لتكتشف رسالة:</p>
         <div class="grid-container" id="flowers-grid"></div>
         <button class="btn" id="next-to-door2" style="display:none;" onclick="nextScreen('screen-door2-q')">الانتقال للباب الثاني 🗝️</button>
@@ -179,77 +161,28 @@
 
     <!-- الباب الثاني -->
     <div id="screen-door2-q" class="screen">
-        <h3>💌 الباب الثاني: مفتاح غرفة الاعترافات</h3>
+        <h3>💌 الباب الثاني: غرفة الاعترافات</h3>
         <p>قبل ما تفتح الباب... جاوبني:<br><b>شو أكتر كلمة بحب دايمًا أسمعها منك؟ 🥹</b></p>
         <input type="text" id="ans2" placeholder="اكتب الجواب هون...">
         <br>
         <button class="btn" onclick="checkAnswer(2)">تحقق</button>
-        <p id="err2" class="error-msg">تذكّر: (يا بنوتي) 🤍</p>
+        <p id="err2" class="error-msg">تذكّر: يا بنوتي 🤍</p>
     </div>
 
     <div id="screen-door2-content" class="screen">
-        <h3>💌 غرفة الاعترافات</h3>
+        <h3>💌 رسائل الاعتراف</h3>
         <div class="grid-container" id="confessions-grid"></div>
-        <button class="btn" id="next-to-door3" style="display:none;" onclick="nextScreen('screen-door3-q')">الانتقال للباب الثالث ❤️</button>
+        <button class="btn" id="next-to-door3" style="display:none;" onclick="nextScreen('screen-door3-q')">الانتقال للباب الأخير ❤️</button>
     </div>
 
-    <!-- الباب الثالث -->
+    <!-- الباب الثالث والأخير -->
     <div id="screen-door3-q" class="screen">
         <h3>❤️ الباب الثالث: أسباب الحب</h3>
-        <p>إذا بدك تدخل... لازم تجاوب صح... 😌<br><b>شو تاريخ ميلادي؟</b></p>
-        <input type="text" id="ans3" placeholder="DD/MM/YYYY">
+        <p>آخر سؤال... جاوبني صح لتفتح الغرفة الأخيرة 😌<br><b>من وين الشخص اللي ساكن قلبي؟ ❤️</b></p>
+        <input type="text" id="ans3" placeholder="الدولة...">
         <br>
         <button class="btn" onclick="checkAnswer(3)">تحقق</button>
-        <p id="err3" class="error-msg">التاريخ هو 08/08/2001 🤍</p>
-    </div>
-
-    <div id="screen-door3-content" class="screen">
-        <h3>❤️ أسباب الحب (30 سبباً)</h3>
-        <p style="font-size: 0.9rem; color: #ffb6c1;">اضغط لاكتشاف الأسباب:</p>
-        <div class="grid-container" id="reasons-grid"></div>
-        <button class="btn" id="next-to-door4" style="display:none;" onclick="nextScreen('screen-door4-q')">الانتقال للباب الرابع 🕯️</button>
-    </div>
-
-    <!-- الباب الرابع -->
-    <div id="screen-door4-q" class="screen">
-        <h3>🕯️ الباب الرابع: غرفة الذكريات</h3>
-        <p>قبل ما تدخل... جاوبني. 🥹<br><b>شو أكتر صفة بحبها فيك؟</b></p>
-        <input type="text" id="ans4" placeholder="اكتب الجواب...">
-        <br>
-        <button class="btn" onclick="checkAnswer(4)">تحقق</button>
-        <p id="err4" class="error-msg">الصفة هي: الحنية 🤍</p>
-    </div>
-
-    <div id="screen-door4-content" class="screen">
-        <h3>🕯️ غرفة الذكريات</h3>
-        <div class="grid-container" id="memories-grid"></div>
-        <button class="btn" id="next-to-door5" style="display:none;" onclick="nextScreen('screen-door5-q')">الانتقال للباب الخامس ⭐</button>
-    </div>
-
-    <!-- الباب الخامس -->
-    <div id="screen-door5-q" class="screen">
-        <h3>⭐ الباب الخامس: غرفة الأمنيات</h3>
-        <p>كل إنسان عنده أمنيات... بس في أمنية وحدة هي الأقرب لقلبي. 🌙<br><b>شو أكتر شي بتمنّاه بحياتي؟ 🥹</b></p>
-        <input type="text" id="ans5" placeholder="اكتب الجواب...">
-        <br>
-        <button class="btn" onclick="checkAnswer(5)">تحقق</button>
-        <p id="err5" class="error-msg">الأمنية هي: حضنك 🫂</p>
-    </div>
-
-    <div id="screen-door5-content" class="screen">
-        <h3>⭐ غرفة الأمنيات</h3>
-        <div class="grid-container" id="wishes-grid"></div>
-        <button class="btn" id="next-to-door6" style="display:none;" onclick="nextScreen('screen-door6-q')">الانتقال للباب الأخير 🌍</button>
-    </div>
-
-    <!-- الباب السادس -->
-    <div id="screen-door6-q" class="screen">
-        <h3>🌍 الباب السادس: الغرفة الأخيرة</h3>
-        <p>ما بقي غير آخر باب...<br><b>من وين الشخص اللي ساكن قلبي؟ ❤️</b></p>
-        <input type="text" id="ans6" placeholder="الدولة...">
-        <br>
-        <button class="btn" onclick="checkAnswer(6)">تحقق</button>
-        <p id="err6" class="error-msg">البلد هو: سوريا 🇸🇾</p>
+        <p id="err3" class="error-msg">البلد هو: تركيا 🇹🇷</p>
     </div>
 
     <!-- الغرفة الأخيرة -->
@@ -258,11 +191,9 @@
         <h3>الغرفة الأخيرة</h3>
         <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 15px; text-align: right; max-height: 350px; overflow-y: auto; margin-top: 15px; font-size: 0.95rem;">
             <p><b>💌 الرسالة الأخيرة:</b></p>
-            <p>إذا وصلت لهون... فأول شي... شكراً. 🤍<br>شكراً لأنك مشيت معي بكل هالرحلة... وما استعجلت... وقريت كل كلمة، لأن كل كلمة هون طالعة من قلبي مو بس من إيدي.</p>
-            <p>يمكن هاد مجرد موقع بالنسبة لأي حدا... بس بالنسبة إلي، هاد المكان هو كل المشاعر اللي ما عرفت أحكيها بصوتي. كل باب فتحته كان جزء من قلبي. ❤️</p>
-            <p>وبدعيلك من كل قلبي... الله يحفظك، ويطمن قلبك، ويرزقك كل الخير اللي بتستحقه، ويبعد عنك كل تعب وحزن. 🫂</p>
+            <p>إذا وصلت لهون... فأول شي... شكراً. 🤍<br>شكراً لأنك مشيت معي بكل هالرحلة وقريت كل كلمة طالعة من قلبي.</p>
+            <p>وبدعيلك من كل قلبي... الله يحفظك، ويطمن قلبك، ويبعد عنك كل تعب وحزن. 🫂</p>
             <p>وإذا في أمنية وحدة بتمنى تتحقق... فهي إنو يجي اليوم اللي ما عاد يكون بينا أي مسافة، وأقدر أحضنك وأقلك كل هالكلام وأنا قدامك. 🌎</p>
-            <p>وأتمنى من كل قلبي... إنك تضل الشخص اللي بضحك معه، وبحكيله كل شي، وبدعي له كل يوم، وبحبه اليوم وبكرا وكل يوم بعده. ♾️</p>
         </div>
         <button class="btn" onclick="nextScreen('screen-secret')">🥺 لسا في شغلة صغيرة...</button>
     </div>
@@ -273,8 +204,7 @@
         <div id="secret-msg" style="display:none; margin-top: 20px;">
             <p style="font-size: 1.2rem; color: #ffb6c1;"><b>"من أول يوم... أنت ربحت قلبي... واليوم... أنا بس سلمتك مفاتيحه. 🗝️🤍"</b></p>
             <hr style="border: 0.5px solid rgba(255,255,255,0.2); margin: 20px 0;">
-            <p style="font-size: 1.1rem;">إذا ضاقت فيك الدنيا يوم... تذكر إن في قلب هون بيدعيلك وبيحبك، وبيعتبرك أجمل هدية أعطتني ياها الحياة. ❤️</p>
-            <p style="margin-top: 30px; font-size: 0.9rem; color: #aaa; cursor: pointer;" onclick="alert('وبالمناسبة... إذا نسيت أي كلمة من هالموقع... بتمنى ما تنسى أبدًا إن في بنت بتحبك من كل قلبها. 🤍')">🌙 (اضغط هنا للهمسة الأخيرة)</p>
+            <p style="font-size: 1.1rem;">إذا ضاقت فيك الدنيا يوم... تذكر إن في بنت هون بتدعي لك وبتحبك من كل قلبها. ❤️</p>
         </div>
     </div>
 
@@ -286,10 +216,6 @@
             "وإذا كنت عم تقرأ هالكلام...",
             "فمعناه إنك الشخص الوحيد اللي إله حق يكون هون... 🤍",
             "أهلًا في المكان اللي بنيته من كل دعوة دعوتها إلك...",
-            "...ومن كل مرة اشتقتلك فيها...",
-            "...ومن كل مرة ابتسمت فيها لأنك موجود بحياتي...",
-            "هاد المكان...",
-            "مو مجرد موقع...",
             "هاد المكان...",
             "هو قلبي. ❤️"
         ];
@@ -319,9 +245,6 @@
             document.getElementById(screenId).classList.add('active');
             if(screenId === 'screen-door1-content') initFlowers();
             if(screenId === 'screen-door2-content') initConfessions();
-            if(screenId === 'screen-door3-content') initReasons();
-            if(screenId === 'screen-door4-content') initMemories();
-            if(screenId === 'screen-door5-content') initWishes();
         }
 
         function checkAnswer(doorNum) {
@@ -331,19 +254,13 @@
 
             if (doorNum === 1 && (val.includes("صوتك") || val.includes("اسمع صوتك"))) correct = true;
             if (doorNum === 2 && (val.includes("بنوتي") || val.includes("يا بنوتي"))) correct = true;
-            if (doorNum === 3 && (val === "08/08/2001" || val === "8/8/2001" || val === "2001/08/08")) correct = true;
-            if (doorNum === 4 && (val.includes("حنية") || val.includes("الحنية"))) correct = true;
-            if (doorNum === 5 && (val.includes("حضنك") || val.includes("حضن"))) correct = true;
-            if (doorNum === 6 && (val.includes("سوريا") || val.includes("سوريا 🇸🇾"))) correct = true;
+            if (doorNum === 3 && (val.includes("تركيا") || val.includes("تركيا 🇹🇷"))) correct = true;
 
             if (correct) {
                 err.style.display = "none";
                 if (doorNum === 1) nextScreen('screen-door1-content');
                 if (doorNum === 2) nextScreen('screen-door2-content');
-                if (doorNum === 3) nextScreen('screen-door3-content');
-                if (doorNum === 4) nextScreen('screen-door4-content');
-                if (doorNum === 5) nextScreen('screen-door5-content');
-                if (doorNum === 6) nextScreen('screen-final');
+                if (doorNum === 3) nextScreen('screen-final');
             } else {
                 err.style.display = "block";
             }
@@ -353,13 +270,8 @@
             "اشتقتلك بطريقة ما بتعرفها الكلمات... 🥹🤍",
             "لو كان في طريقة أبعتلك حضن مع هالرسالة، كان أول شي عملته. 🫂❤️",
             "كل يوم بكتشف إني بحبك أكتر من اليوم اللي قبله... 🤍",
-            "أوقات كل اللي بحتاجه من الدنيا هو رسالة منك تقول فيها إنك بخير. 🥹",
             "يمكن بيننا مسافات، بس ولا مرة حسيت إنك بعيد عن قلبي. ❤️",
-            "اسمك صار يمر ببالي بدون أي سبب، ويمكن هاد أجمل سبب للسعادة. 🤍",
-            "كل دعوة بدعيها لنفسي، في وحدة قبلها إلك. 🤲🏻❤️",
-            "وجودك بحياتي خلاني أحب الأيام أكتر. 🥹",
-            "لو رجع فيني الزمن كنت رح أحبك بنفس الطريقة وأكتر. 🤍",
-            "ولو خيروني بين ألف شخص رح أختارك كل مرة بدون تردد. ❤️"
+            "وجودك بحياتي خلاني أحب الأيام أكتر. 🥹"
         ];
         let openedFlowers = 0;
         function initFlowers() {
@@ -386,9 +298,7 @@
         const confessions = [
             "بعرف إني مو دايمًا بعرف أوصف اللي بقلبي، بس وجودك صار جزء من راحتي... 🤍",
             "شكراً لأنك كنت حنون معي وأعطيتني شعور الأمان وأنا معك. 🥹❤️",
-            "إذا سألتني شو أجمل صدفة بحياتي، رح جاوب: إنت. 🤍🌍",
-            "بحب تفاصيلك، ضحكتك، صوتك، وحتى الأشياء اللي ما بتحبها بنفسك لأنها جزء منك. ❤️",
-            "ولو رجع فيني الزمن ألف مرة، رح أختارك بنفس القلب وبحب أكبر. 🥹🤍"
+            "إذا سألتني شو أجمل صدفة بحياتي، رح جاوب: إنت. 🤍🌍"
         ];
         let openedConfessions = 0;
         function initConfessions() {
@@ -412,58 +322,21 @@
             });
         }
 
-        const reasons = [
-            "بحب حنيتك لأنها أول شي لمس قلبي. 🥹", "بحب اهتمامك فيني حتى بأصغر التفاصيل. 🌷",
-            "بحب صوتك لأنه بيطمني. 🎧🤍", "بحب ضحكتك لأنها بتخليني أبتسم. 😊",
-            "بحب طريقة كلامك معي لأنها بتحسسني إني مميزة. 💌", "بحب وجودك بحياتي لأنه غيّرني للأحسن. 🌍",
-            "بحب صبرك عليّ حتى لما أكون عنيدة. 😂🤍", "بحب إنك أول شخص بخطر ببالي. 🌙",
-            "بحب لما تطمن عليّ بدون ما أطلب. 🥹", "بحب إنك بتخليني أحس بالأمان. 🫂❤️",
-            "بحب طيبتك مع الناس ومعي. 🌸", "بحب إنك بتسمعني حتى لو حكيت كتير. 😂",
-            "بحب قلبك النظيف. 🤍", "بحب طريقة تفكيرك. ✨", "بحب إنك صرت جزء من يومي. ☀️",
-            "بحب إنك بتفهمني حتى قبل ما أحكي. 🥹", "بحب وجود اسمك بين دعواتي. 🤲🏻",
-            "بحب إنك بتخليني أضحك من قلبي. 😭❤️", "بحب لما تناديني 'يا بنوتي'. 🎀",
-            "بحب كل ذكرى صغيرة بينا. 📸🤍", "بحب طموحك وبتمنى تشوف أحلامك تتحقق. 🌟",
-            "بحب إنك الشخص اللي بدي أحكيله كل شي. 💌", "بحب إنك بتخليني أحس إني مو لحالي. 🤍",
-            "بحب إنك سبب راحتي. 🌷", "بحب إنك صرت وطني وإنت ببلد بعيد. 🇸🇾❤️",
-            "بحب دعواتك إليّ. 🤲🏻", "بحب إنك بتخليني أؤمن أن الحب بسيط وصادق. 🤍",
-            "بحب إنك موجود... وبس. ❤️", "بحب كل نسخة منك بأيام تعبك وزعلك. 🫂",
-            "وبحبك... لأن مهما عديت الأسباب، بضل في سبب جديد: وهو 'أنت'. ❤️"
-        ];
-        let openedReasons = 0;
-        function initReasons() {
-            const grid = document.getElementById('reasons-grid');
-            grid.innerHTML = "";
-            reasons.forEach((text, idx) => {
-                let div = document.createElement('div');
-                div.className = 'item-box';
-                div.innerHTML = `❤️ سبب (${idx+1})`;
-                div.onclick = function() {
-                    if(!div.classList.contains('opened')) {
-                        div.classList.add('opened');
-                        div.innerHTML = text;
-                        openedReasons++;
-                        if(openedReasons === reasons.length) {
-                            document.getElementById('next-to-door4').style.display = 'inline-block';
-                        }
-                    }
-                };
-                grid.appendChild(div);
-            });
+        function showFinalMessage() {
+            document.getElementById('secret-msg').style.display = 'block';
         }
 
-        const memories = [
-            "بتتذكر أول مرة حسيت إنك صرت جزء من يومي؟ من وقتها ما عاد مرّ يوم إلا وكان اسمك حاضر. 🤍",
-            "بتتذكر أول مرة ضحكت بسببي؟ كانت بداية ذكريات كتيرة حلوة. 😊❤️",
-            "في أيام صعبة كانت تمر، بس مجرد وجودك كان يخففها. 🥹",
-            "أجمل ذكرى هي أي لحظة كنت فيها معي. 🤍",
-            "أنا ما بحفظ التواريخ بقدر ما بحفظ المشاعر، وكل شعور حلو حسّيته معك لسا بقلبي. ❤️"
-        ];
-        let openedMemories = 0;
-        function initMemories() {
-            const grid = document.getElementById('memories-grid');
-            grid.innerHTML = "";
-            memories.forEach((text, idx) => {
-                let div = document.createElement('div');
-                div.className = 'item-box';
-                div.innerHTML = `📸 ذكرى (${idx+1})`;
-                div.onclick = fu
+        for(let i=0; i<30; i++) {
+            let star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+            document.body.appendChild(star);
+        }
+    </script>
+</body>
+</html>
+
