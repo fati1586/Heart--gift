@@ -3,140 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إلك... 🤍</title>
+    <title>لشخصي المميز</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tahoma', sans-serif; }
-        body { background-color: #0b0b0b; color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px; }
-        .screen { display: none; width: 100%; max-width: 500px; }
-        .screen.active { display: block; }
-        .btn { background: #fff; color: #0b0b0b; border: none; padding: 12px 30px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; margin-top: 25px; font-weight: bold; }
-        input[type="text"] { width: 80%; padding: 12px; border-radius: 25px; border: 2px solid #fff; background: transparent; color: #fff; font-size: 1.1rem; text-align: center; margin-top: 15px; outline: none; }
-        .error-msg { color: #ff6b6b; font-size: 0.9rem; margin-top: 10px; display: none; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
-        .box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); padding: 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; }
-        .box.opened { background: rgba(255,255,255,0.25); border-color: #ff6b81; }
-        p, h3 { line-height: 1.8; margin-bottom: 15px; }
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .hidden {
+            display: none !important;
+        }
+        h2 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #333333;
+            color: #ffffff;
+            border: 1px solid #555;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #444444;
+            border-color: #777;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            text-align: center;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #888;
+        }
+        .error-msg {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- المقدمة -->
-    <div id="s0" class="screen active">
-        <h3 id="txt" style="font-size: 1.4rem;">مرحبًا...</h3>
-        <button class="btn" onclick="nextStep()">التالي 🤍</button>
-    </div>
+    <div class="container">
+        <!-- المقدمة -->
+        <div id="step-intro">
+            <h2>مرحباً بك</h2>
+            <p>هذه المساحة مخصصة لك وحدك، تحتوي على محطات صغيرة تعبر عن الامتنان لكل ما تحمله.</p>
+            <button class="btn" onclick="nextStep('step-envelope')">ابدأ الرحلة</button>
+        </div>
 
-    <!-- الظرف -->
-    <div id="s1" class="screen">
-        <div style="font-size: 4rem; cursor: pointer;" onclick="go('s2')">💌</div>
-        <p style="margin-top: 15px;">اضغط على الظرف للفتح...</p>
-    </div>
+        <!-- الظرف الرقمي -->
+        <div id="step-envelope" class="hidden">
+            <h2>الظرف الرقمي</h2>
+            <p>قبل أن نفتح الغرف، هناك رسالة صغيرة بانتظارك...</p>
+            <button class="btn" onclick="nextStep('room-1')</div>">افتح الظرف</button>
+        </div>
 
-    <!-- الباب 1 -->
-    <div id="s2" class="screen">
-        <h3>🌹 الباب الأول: الاشتياق</h3>
-        <p>شو أكتر شي بحب أعمله أول ما بفيق؟ 🥹</p>
-        <input type="text" id="a1" placeholder="اكتب الجواب...">
-        <br><button class="btn" onclick="check(1, 'صوتك')">تحقق</button>
-        <p id="e1" class="error-msg">تذكّر: أسمع صوتك 🤍</p>
-    </div>
+        <!-- الغرفة الأولى -->
+        <div id="room-1" class="hidden">
+            <h2>الغرفة الأولى</h2>
+            <p>كل يوم يمر يثبت لي كم أن وجودك يعطي معنى مختلفاً لكل التفاصيل.</p>
+            <button class="btn" onclick="nextStep('room-2')">الانتقال للغرفة التالية</button>
+        </div>
 
-    <!-- رسائل 1 -->
-    <div id="s2-c" class="screen">
-        <h3>🌹 رسائل الاشتياق</h3>
-        <div class="grid" id="g1"></div>
-        <button class="btn" id="btn2" style="display:none;" onclick="go('s3')">الباب الثاني 🗝️</button>
-    </div>
+        <!-- الغرفة الثانية -->
+        <div id="room-2" class="hidden">
+            <h2>الغرفة الثانية</h2>
+            <p>الكلمات قد تقصر أحياناً عن وصف الشعور، لكنها محاولة بسيطة لقول شكراً لكونك هنا.</p>
+            <button class="btn" onclick="nextStep('room-3')">الانتقال للغرفة الأخيرة</button>
+        </div>
 
-    <!-- الباب 2 -->
-    <div id="s3" class="screen">
-        <h3>💌 الباب الثاني: الاعترافات</h3>
-        <p>شو أكتر كلمة بحب أسمعها منك؟ 🥹</p>
-        <input type="text" id="a2" placeholder="اكتب الجواب...">
-        <br><button class="btn" onclick="check(2, 'بنوتي')">تحقق</button>
-        <p id="e2" class="error-msg">تذكّر: يا بنوتي 🤍</p>
-    </div>
+        <!-- الغرفة الثالثة والأخيرة -->
+        <div id="room-3" class="hidden">
+            <h2>الغرفة الثالثة والأخيرة</h2>
+            <p>سؤال صغير للتأكد من أنك الشخص المعني بهذا المكان:<br>من وين الشخص اللي ساكن قلبي؟ 🇸🇾</p>
+            <input type="text" id="ans3" placeholder="اكتب الإجابة هنا...">
+            <button class="btn" onclick="checkAnswer()">تحقق</button>
+            <p id="e3" class="error-msg hidden">البلد هو: سوريا 🇸🇾</p>
+        </div>
 
-    <!-- رسائل 2 -->
-    <div id="s3-c" class="screen">
-        <h3>💌 رسائل الاعتراف</h3>
-        <div class="grid" id="g2"></div>
-        <button class="btn" id="btn3" style="display:none;" onclick="go('s4')">الباب الأخير ❤️</button>
-    </div>
-
-    <!-- الباب 3 -->
-    <div id="s4" class="screen">
-        <h3>❤️ الباب الثالث</h3>
-        <p>من وين الشخص اللي ساكن قلبي؟🇸🇾</p>
-        <input type="text" id="a3" placeholder="الدولة...">
-        <br><button class="btn" onclick="check(3, 'تركيا')">تحقق</button>
-        <p id="e3" class="error-msg">البلد هو: سويا 🇸🇾</p>
-    </div>
-
-    <!-- النهاية -->
-    <div id="s5" class="screen">
-        <h3>🌙 النهاية</h3>
-        <p style="text-align: right; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; font-size: 0.9rem;">
-            شكراً لأنك مشيت معي بكل هالرحلة. الله يحفظك ويطمن قلبك، وبتمنى يجي اليوم اللي أقدر أحضنك فيه وأقلك كل هالكلام وأنا قدامك. 🤍🌍
-        </p>
-        <button class="btn" onclick="go('s6')">🥺 لسا في شغلة...</button>
-    </div>
-
-    <!-- الختام -->
-    <div id="s6" class="screen">
-        <div style="font-size: 4rem; cursor: pointer;" onclick="document.getElementById('fin').style.display='block'">❤️</div>
-        <div id="fin" style="display:none; margin-top: 15px;">
-            <p style="color: #ffb6c1; font-size: 1.1rem;"><b>"من أول يوم... أنت ربحت قلبي، واليوم أنا سلمتك مفاتيحه. 🗝️🤍"</b></p>
+        <!-- النهاية -->
+        <div id="step-final" class="hidden">
+            <h2>تمت الإجابة بنجاح</h2>
+            <p>شكراً لأنك أنت، وشكراً لكل الأيام الجميلة معك.</p>
         </div>
     </div>
 
     <script>
-        const texts = ["مرحبًا...", "إذا وصلت لهون...", "فأكيد في سبب خلاك تضغط على هالرابط...", "معناه إنك الشخص الوحيد اللي إله حق يكون هون... 🤍", "هاد المكان... هو قلبي. ❤️"];
-        let tIdx = 0;
-        function nextStep() {
-            tIdx++;
-            if(tIdx < texts.length) {
-                document.getElementById("txt").innerText = texts[tIdx];
-                if(tIdx === texts.length - 1) document.querySelector("#s0 .btn").innerText = "افتح بيت قلبي 🤍";
+        function nextStep(stepId) {
+            // إخفاء كل العناصر
+            document.getElementById('step-intro').classList.add('hidden');
+            document.getElementById('step-envelope').classList.add('hidden');
+            document.getElementById('room-1').classList.add('hidden');
+            document.getElementById('room-2').classList.add('hidden');
+            document.getElementById('room-3').classList.add('hidden');
+            document.getElementById('step-final').classList.add('hidden');
+
+            // إظهار الخطوة المطلوبة
+            if(stepId === 'room-1</div>') {
+                document.getElementById('room-1').classList.remove('hidden');
             } else {
-                go('s1');
+                document.getElementById('room-2').classList.remove('hidden'); // تصحيح تدريجي للتنقل
             }
         }
-        function go(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            if(id === 's2-c') loadGrid('g1', ["اشتقتلك بطريقة ما بتعرفها الكلمات... 🥹🤍", "لو في طريقة أبعتلك حضن مع هالرسالة... 🫂❤️", "كل يوم بحبك أكتر من قبل... 🤍"], 'btn2');
-            if(id === 's3-c') loadGrid('g2', ["وجودك صار جزء من راحتي... 🤍", "شكراً لأنك حنون معي وعطيتني أمان. 🥹❤️", "أجمل صدفة بحياتي: إنت. 🌍"], 'btn3');
+
+        // دالة مخصصة للانتقال المباشر بين الغرف بسلاسة
+        document.querySelectorAll('.btn').forEach((btn, index) => {
+            if(index === 1) btn.onclick = () => showOnly('step-envelope');
+            if(index === 2) btn.onclick = () => showOnly('room-1');
+            if(index === 3) btn.onclick = () => showOnly('room-2');
+            if(index === 4) btn.onclick = () => showOnly('room-3');
+        });
+
+        function showOnly(id) {
+            document.getElementById('step-intro').classList.add('hidden');
+            document.getElementById('step-envelope').classList.add('hidden');
+            document.getElementById('room-1').classList.add('hidden');
+            document.getElementById('room-2').classList.add('hidden');
+            document.getElementById('room-3').classList.add('hidden');
+            document.getElementById('step-final').classList.add('hidden');
+            
+            document.getElementById(id).classList.remove('hidden');
         }
-        function check(n, key) {
-            let val = document.getElementById('a' + n).value.trim();
-            if(val.includes(key)) {
-                document.getElementById('e' + n).style.display = 'none';
-                if(n === 1) go('s2-c');
-                if(n === 2) go('s3-c');
-                if(n === 3) go('s5');
+
+        function checkAnswer() {
+            let val = document.getElementById('ans3').value.trim();
+            // يقبل الإجابة سواء كتبت سوريا أو مع الإيموجي
+            if (val === 'سوريا' || val === '🇸🇾' || val.includes('سوريا')) {
+                showOnly('step-final');
             } else {
-                document.getElementById('e' + n).style.display = 'block';
+                document.getElementById('e3').classList.remove('hidden');
             }
-        }
-        function loadGrid(gridId, arr, nextBtnId) {
-            let g = document.getElementById(gridId);
-            if(g.innerHTML !== "") return;
-            let opened = 0;
-            arr.forEach((txt, i) => {
-                let div = document.createElement('div');
-                div.className = 'box';
-                div.innerHTML = `رسالة (${i+1})`;
-                div.onclick = function() {
-                    if(!div.classList.contains('opened')) {
-                        div.classList.add('opened');
-                        div.innerHTML = txt;
-                        opened++;
-                        if(opened === arr.length) document.getElementById(nextBtnId).style.display = 'inline-block';
-                    }
-                };
-                g.appendChild(div);
-            });
         }
     </script>
 </body>
