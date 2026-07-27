@@ -41,26 +41,27 @@
             margin-bottom: 20px;
         }
         .btn {
-            background-color: #333333;
+            background-color: #4f46e5;
             color: #ffffff;
-            border: 1px solid #555;
-            padding: 12px 25px;
+            border: none;
+            padding: 14px 25px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
             width: 100%;
             margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
         }
-        .btn:hover {
-            background-color: #444444;
-            border-color: #777;
+        .btn:active {
+            background-color: #4338ca;
         }
         input[type="text"] {
             width: 100%;
             padding: 12px;
             background: #2a2a2a;
-            border: 1px solid #444;
+            border: 1px solid #555;
             border-radius: 8px;
             color: #fff;
             font-size: 1rem;
@@ -70,7 +71,7 @@
         }
         input[type="text"]:focus {
             outline: none;
-            border-color: #888;
+            border-color: #4f46e5;
         }
         .error-msg {
             color: #ff6b6b;
@@ -99,14 +100,14 @@
         <!-- الغرفة الأولى -->
         <div id="room-1" class="hidden">
             <h2>الغرفة الأولى</h2>
-            <p>كل يوم يمر يثبت لي كم أن وجودك يعطي معنى مختلفاً لكل التفاصيل.</p>
+            <p>كل يوم يمر يثبت لي كم أن وجودك يعطي معنى مختلفاً لكل التفاصيل الجميلة في حياتي.</p>
             <button class="btn" onclick="showStep('room-2')">الانتقال للغرفة التالية</button>
         </div>
 
         <!-- الغرفة الثانية -->
         <div id="room-2" class="hidden">
             <h2>الغرفة الثانية</h2>
-            <p>الكلمات قد تقصر أحياناً عن وصف الشعور، لكنها محاولة بسيطة لقول شكراً لكونك هنا.</p>
+            <p>الكلمات قد تقصر أحياناً عن وصف الشعور الحقيقي، لكنها محاولة بسيطة لقول شكراً لوجودك الدائم.</p>
             <button class="btn" onclick="showStep('room-3')">الانتقال للغرفة الأخيرة</button>
         </div>
 
@@ -128,7 +129,7 @@
 
     <script>
         function showStep(stepId) {
-            // إخفاء كل الخطوات والغرف
+            // إخفاء كل العناصر
             document.getElementById('step-intro').classList.add('hidden');
             document.getElementById('step-envelope').classList.add('hidden');
             document.getElementById('room-1').classList.add('hidden');
@@ -141,9 +142,8 @@
         }
 
         function checkAnswer() {
-            let val = document.getElementById('ans3').value.trim();
-            // التحقق من الإجابة سواء كتب "سوريا" أو الإيموجي أو الاثنين معاً
-            if (val === 'سوريا' || val === '🇸🇾' || val.includes('سوريا')) {
+            let val = document.getElementById('ans3').value.trim().toLowerCase();
+            if (val.includes('سوريا') || val.includes('سوريه') || val === '🇸🇾') {
                 showStep('step-final');
             } else {
                 document.getElementById('e3').classList.remove('hidden');
