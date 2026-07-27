@@ -5,338 +5,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إلك... 🤍</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tahoma', sans-serif;
-        }
-        body {
-            background-color: #0b0b0b;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            text-align: center;
-            position: relative;
-        }
-        .screen {
-            display: none;
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-        .screen.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .btn {
-            background: #fff;
-            color: #0b0b0b;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: 0.3s;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
-        }
-        .btn:hover {
-            background: #e0e0e0;
-            transform: scale(1.05);
-        }
-        input[type="text"] {
-            width: 80%;
-            padding: 12px 20px;
-            border-radius: 25px;
-            border: 2px solid #fff;
-            background: transparent;
-            color: #fff;
-            font-size: 1.1rem;
-            text-align: center;
-            margin-top: 15px;
-            outline: none;
-        }
-        input[type="text"]::placeholder {
-            color: rgba(255,255,255,0.5);
-        }
-        .error-msg {
-            color: #ff6b6b;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            display: none;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-            max-height: 380px;
-            overflow-y: auto;
-            padding: 10px;
-        }
-        .item-box {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.95rem;
-        }
-        .item-box:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-3px);
-        }
-        .item-box.opened {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #ff6b81;
-        }
-        p, h2, h3 {
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-        .pulsing-heart {
-            font-size: 5rem;
-            cursor: pointer;
-            animation: pulse 1.5s infinite;
-            margin: 20px 0;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        .star {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            animation: twinkle 2s infinite alternate;
-        }
-        @keyframes twinkle {
-            0% { opacity: 0.2; }
-            100% { opacity: 1; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tahoma', sans-serif; }
+        body { background-color: #0b0b0b; color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        .screen { display: none; width: 100%; max-width: 500px; }
+        .screen.active { display: block; }
+        .btn { background: #fff; color: #0b0b0b; border: none; padding: 12px 30px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; margin-top: 25px; font-weight: bold; }
+        input[type="text"] { width: 80%; padding: 12px; border-radius: 25px; border: 2px solid #fff; background: transparent; color: #fff; font-size: 1.1rem; text-align: center; margin-top: 15px; outline: none; }
+        .error-msg { color: #ff6b6b; font-size: 0.9rem; margin-top: 10px; display: none; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 20px; }
+        .box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); padding: 12px; border-radius: 10px; cursor: pointer; font-size: 0.9rem; }
+        .box.opened { background: rgba(255,255,255,0.25); border-color: #ff6b81; }
+        p, h3 { line-height: 1.8; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <!-- الشاشة الأولى: المقدمة -->
-    <div id="screen-start" class="screen active">
-        <h2 id="intro-text" style="font-size: 1.6rem;">مرحبًا...</h2>
-        <button class="btn" id="next-intro-btn" onclick="nextIntroStep()">التالي 🤍</button>
+    <!-- المقدمة -->
+    <div id="s0" class="screen active">
+        <h3 id="txt" style="font-size: 1.4rem;">مرحبًا...</h3>
+        <button class="btn" onclick="nextStep()">التالي 🤍</button>
     </div>
 
-    <!-- شاشة الظرف -->
-    <div id="screen-envelope" class="screen">
-        <div style="font-size: 4rem; cursor: pointer;" onclick="nextScreen('screen-door1-q')">💌</div>
-        <p style="margin-top: 15px; font-size: 1.2rem;">إلك...</p>
-        <p style="font-size: 0.9rem; color: #aaa;">(اضغط على الظرف للفتح)</p>
+    <!-- الظرف -->
+    <div id="s1" class="screen">
+        <div style="font-size: 4rem; cursor: pointer;" onclick="go('s2')">💌</div>
+        <p style="margin-top: 15px;">اضغط على الظرف للفتح...</p>
     </div>
 
-    <!-- الباب الأول -->
-    <div id="screen-door1-q" class="screen">
-        <h3>🌹 الباب الأول: غرفة الاشتياق</h3>
-        <p>قبل ما تدخل... جاوبني:<br><b>شو أكتر شي بحب أعمله أول ما بفيق من النوم؟ 🥹🤍</b></p>
-        <input type="text" id="ans1" placeholder="اكتب الجواب هون...">
-        <br>
-        <button class="btn" onclick="checkAnswer(1)">تحقق</button>
-        <p id="err1" class="error-msg">تذكّر: أسمع صوتك 🤍</p>
+    <!-- الباب 1 -->
+    <div id="s2" class="screen">
+        <h3>🌹 الباب الأول: الاشتياق</h3>
+        <p>شو أكتر شي بحب أعمله أول ما بفيق؟ 🥹</p>
+        <input type="text" id="a1" placeholder="اكتب الجواب...">
+        <br><button class="btn" onclick="check(1, 'صوتك')">تحقق</button>
+        <p id="e1" class="error-msg">تذكّر: أسمع صوتك 🤍</p>
     </div>
 
-    <div id="screen-door1-content" class="screen">
+    <!-- رسائل 1 -->
+    <div id="s2-c" class="screen">
         <h3>🌹 رسائل الاشتياق</h3>
-        <p style="font-size: 0.9rem; color: #ffb6c1;">اضغط على كل وردة لتكتشف رسالة:</p>
-        <div class="grid-container" id="flowers-grid"></div>
-        <button class="btn" id="next-to-door2" style="display:none;" onclick="nextScreen('screen-door2-q')">الانتقال للباب الثاني 🗝️</button>
+        <div class="grid" id="g1"></div>
+        <button class="btn" id="btn2" style="display:none;" onclick="go('s3')">الباب الثاني 🗝️</button>
     </div>
 
-    <!-- الباب الثاني -->
-    <div id="screen-door2-q" class="screen">
-        <h3>💌 الباب الثاني: غرفة الاعترافات</h3>
-        <p>قبل ما تفتح الباب... جاوبني:<br><b>شو أكتر كلمة بحب دايمًا أسمعها منك؟ 🥹</b></p>
-        <input type="text" id="ans2" placeholder="اكتب الجواب هون...">
-        <br>
-        <button class="btn" onclick="checkAnswer(2)">تحقق</button>
-        <p id="err2" class="error-msg">تذكّر: يا بنوتي 🤍</p>
+    <!-- الباب 2 -->
+    <div id="s3" class="screen">
+        <h3>💌 الباب الثاني: الاعترافات</h3>
+        <p>شو أكتر كلمة بحب أسمعها منك؟ 🥹</p>
+        <input type="text" id="a2" placeholder="اكتب الجواب...">
+        <br><button class="btn" onclick="check(2, 'بنوتي')">تحقق</button>
+        <p id="e2" class="error-msg">تذكّر: يا بنوتي 🤍</p>
     </div>
 
-    <div id="screen-door2-content" class="screen">
+    <!-- رسائل 2 -->
+    <div id="s3-c" class="screen">
         <h3>💌 رسائل الاعتراف</h3>
-        <div class="grid-container" id="confessions-grid"></div>
-        <button class="btn" id="next-to-door3" style="display:none;" onclick="nextScreen('screen-door3-q')">الانتقال للباب الأخير ❤️</button>
+        <div class="grid" id="g2"></div>
+        <button class="btn" id="btn3" style="display:none;" onclick="go('s4')">الباب الأخير ❤️</button>
     </div>
 
-    <!-- الباب الثالث والأخير -->
-    <div id="screen-door3-q" class="screen">
-        <h3>❤️ الباب الثالث: أسباب الحب</h3>
-        <p>آخر سؤال... جاوبني صح لتفتح الغرفة الأخيرة 😌<br><b>من وين الشخص اللي ساكن قلبي؟ ❤️</b></p>
-        <input type="text" id="ans3" placeholder="الدولة...">
-        <br>
-        <button class="btn" onclick="checkAnswer(3)">تحقق</button>
-        <p id="err3" class="error-msg">البلد هو: تركيا 🇹🇷</p>
+    <!-- الباب 3 -->
+    <div id="s4" class="screen">
+        <h3>❤️ الباب الثالث</h3>
+        <p>من وين الشخص اللي ساكن قلبي؟ 🇹🇷</p>
+        <input type="text" id="a3" placeholder="الدولة...">
+        <br><button class="btn" onclick="check(3, 'تركيا')">تحقق</button>
+        <p id="e3" class="error-msg">البلد هو: تركيا 🇹🇷</p>
     </div>
 
-    <!-- الغرفة الأخيرة -->
-    <div id="screen-final" class="screen">
-        <div style="font-size: 3rem;">🌙</div>
-        <h3>الغرفة الأخيرة</h3>
-        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 15px; text-align: right; max-height: 350px; overflow-y: auto; margin-top: 15px; font-size: 0.95rem;">
-            <p><b>💌 الرسالة الأخيرة:</b></p>
-            <p>إذا وصلت لهون... فأول شي... شكراً. 🤍<br>شكراً لأنك مشيت معي بكل هالرحلة وقريت كل كلمة طالعة من قلبي.</p>
-            <p>وبدعيلك من كل قلبي... الله يحفظك، ويطمن قلبك، ويبعد عنك كل تعب وحزن. 🫂</p>
-            <p>وإذا في أمنية وحدة بتمنى تتحقق... فهي إنو يجي اليوم اللي ما عاد يكون بينا أي مسافة، وأقدر أحضنك وأقلك كل هالكلام وأنا قدامك. 🌎</p>
-        </div>
-        <button class="btn" onclick="nextScreen('screen-secret')">🥺 لسا في شغلة صغيرة...</button>
+    <!-- النهاية -->
+    <div id="s5" class="screen">
+        <h3>🌙 النهاية</h3>
+        <p style="text-align: right; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; font-size: 0.9rem;">
+            شكراً لأنك مشيت معي بكل هالرحلة. الله يحفظك ويطمن قلبك، وبتمنى يجي اليوم اللي أقدر أحضنك فيه وأقلك كل هالكلام وأنا قدامك. 🤍🌍
+        </p>
+        <button class="btn" onclick="go('s6')">🥺 لسا في شغلة...</button>
     </div>
 
-    <!-- المشهد الأخير -->
-    <div id="screen-secret" class="screen">
-        <div class="pulsing-heart" onclick="showFinalMessage()">❤️</div>
-        <div id="secret-msg" style="display:none; margin-top: 20px;">
-            <p style="font-size: 1.2rem; color: #ffb6c1;"><b>"من أول يوم... أنت ربحت قلبي... واليوم... أنا بس سلمتك مفاتيحه. 🗝️🤍"</b></p>
-            <hr style="border: 0.5px solid rgba(255,255,255,0.2); margin: 20px 0;">
-            <p style="font-size: 1.1rem;">إذا ضاقت فيك الدنيا يوم... تذكر إن في بنت هون بتدعي لك وبتحبك من كل قلبها. ❤️</p>
+    <!-- الختام -->
+    <div id="s6" class="screen">
+        <div style="font-size: 4rem; cursor: pointer;" onclick="document.getElementById('fin').style.display='block'">❤️</div>
+        <div id="fin" style="display:none; margin-top: 15px;">
+            <p style="color: #ffb6c1; font-size: 1.1rem;"><b>"من أول يوم... أنت ربحت قلبي، واليوم أنا سلمتك مفاتيحه. 🗝️🤍"</b></p>
         </div>
     </div>
 
     <script>
-        const introTexts = [
-            "مرحبًا...",
-            "إذا وصلت لهون...",
-            "فأكيد في سبب خلاك تضغط على هالرابط...",
-            "وإذا كنت عم تقرأ هالكلام...",
-            "فمعناه إنك الشخص الوحيد اللي إله حق يكون هون... 🤍",
-            "أهلًا في المكان اللي بنيته من كل دعوة دعوتها إلك...",
-            "هاد المكان...",
-            "هو قلبي. ❤️"
-        ];
-        
-        let introIdx = 0;
-        const introEl = document.getElementById("intro-text");
-        const introBtn = document.getElementById("next-intro-btn");
-
-        function nextIntroStep() {
-            introIdx++;
-            if (introIdx < introTexts.length) {
-                introEl.style.opacity = 0;
-                setTimeout(() => {
-                    introEl.innerHTML = introTexts[introIdx];
-                    introEl.style.opacity = 1;
-                }, 200);
-                if (introIdx === introTexts.length - 1) {
-                    introBtn.innerHTML = "افتح بيت قلبي 🤍";
-                }
+        const texts = ["مرحبًا...", "إذا وصلت لهون...", "فأكيد في سبب خلاك تضغط على هالرابط...", "معناه إنك الشخص الوحيد اللي إله حق يكون هون... 🤍", "هاد المكان... هو قلبي. ❤️"];
+        let tIdx = 0;
+        function nextStep() {
+            tIdx++;
+            if(tIdx < texts.length) {
+                document.getElementById("txt").innerText = texts[tIdx];
+                if(tIdx === texts.length - 1) document.querySelector("#s0 .btn").innerText = "افتح بيت قلبي 🤍";
             } else {
-                nextScreen('screen-envelope');
+                go('s1');
             }
         }
-
-        function nextScreen(screenId) {
+        function go(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            if(screenId === 'screen-door1-content') initFlowers();
-            if(screenId === 'screen-door2-content') initConfessions();
+            document.getElementById(id).classList.add('active');
+            if(id === 's2-c') loadGrid('g1', ["اشتقتلك بطريقة ما بتعرفها الكلمات... 🥹🤍", "لو في طريقة أبعتلك حضن مع هالرسالة... 🫂❤️", "كل يوم بحبك أكتر من قبل... 🤍"], 'btn2');
+            if(id === 's3-c') loadGrid('g2', ["وجودك صار جزء من راحتي... 🤍", "شكراً لأنك حنون معي وعطيتني أمان. 🥹❤️", "أجمل صدفة بحياتي: إنت. 🌍"], 'btn3');
         }
-
-        function checkAnswer(doorNum) {
-            let val = document.getElementById('ans' + doorNum).value.trim();
-            let err = document.getElementById('err' + doorNum);
-            let correct = false;
-
-            if (doorNum === 1 && (val.includes("صوتك") || val.includes("اسمع صوتك"))) correct = true;
-            if (doorNum === 2 && (val.includes("بنوتي") || val.includes("يا بنوتي"))) correct = true;
-            if (doorNum === 3 && (val.includes("تركيا") || val.includes("تركيا 🇹🇷"))) correct = true;
-
-            if (correct) {
-                err.style.display = "none";
-                if (doorNum === 1) nextScreen('screen-door1-content');
-                if (doorNum === 2) nextScreen('screen-door2-content');
-                if (doorNum === 3) nextScreen('screen-final');
+        function check(n, key) {
+            let val = document.getElementById('a' + n).value.trim();
+            if(val.includes(key)) {
+                document.getElementById('e' + n).style.display = 'none';
+                if(n === 1) go('s2-c');
+                if(n === 2) go('s3-c');
+                if(n === 3) go('s5');
             } else {
-                err.style.display = "block";
+                document.getElementById('e' + n).style.display = 'block';
             }
         }
-
-        const flowers = [
-            "اشتقتلك بطريقة ما بتعرفها الكلمات... 🥹🤍",
-            "لو كان في طريقة أبعتلك حضن مع هالرسالة، كان أول شي عملته. 🫂❤️",
-            "كل يوم بكتشف إني بحبك أكتر من اليوم اللي قبله... 🤍",
-            "يمكن بيننا مسافات، بس ولا مرة حسيت إنك بعيد عن قلبي. ❤️",
-            "وجودك بحياتي خلاني أحب الأيام أكتر. 🥹"
-        ];
-        let openedFlowers = 0;
-        function initFlowers() {
-            const grid = document.getElementById('flowers-grid');
-            grid.innerHTML = "";
-            flowers.forEach((text, idx) => {
+        function loadGrid(gridId, arr, nextBtnId) {
+            let g = document.getElementById(gridId);
+            if(g.innerHTML !== "") return;
+            let opened = 0;
+            arr.forEach((txt, i) => {
                 let div = document.createElement('div');
-                div.className = 'item-box';
-                div.innerHTML = `🌹 وردة (${idx+1})`;
+                div.className = 'box';
+                div.innerHTML = `رسالة (${i+1})`;
                 div.onclick = function() {
                     if(!div.classList.contains('opened')) {
                         div.classList.add('opened');
-                        div.innerHTML = text;
-                        openedFlowers++;
-                        if(openedFlowers === flowers.length) {
-                            document.getElementById('next-to-door2').style.display = 'inline-block';
-                        }
+                        div.innerHTML = txt;
+                        opened++;
+                        if(opened === arr.length) document.getElementById(nextBtnId).style.display = 'inline-block';
                     }
                 };
-                grid.appendChild(div);
+                g.appendChild(div);
             });
-        }
-
-        const confessions = [
-            "بعرف إني مو دايمًا بعرف أوصف اللي بقلبي، بس وجودك صار جزء من راحتي... 🤍",
-            "شكراً لأنك كنت حنون معي وأعطيتني شعور الأمان وأنا معك. 🥹❤️",
-            "إذا سألتني شو أجمل صدفة بحياتي، رح جاوب: إنت. 🤍🌍"
-        ];
-        let openedConfessions = 0;
-        function initConfessions() {
-            const grid = document.getElementById('confessions-grid');
-            grid.innerHTML = "";
-            confessions.forEach((text, idx) => {
-                let div = document.createElement('div');
-                div.className = 'item-box';
-                div.innerHTML = `💌 رسالة (${idx+1})`;
-                div.onclick = function() {
-                    if(!div.classList.contains('opened')) {
-                        div.classList.add('opened');
-                        div.innerHTML = text;
-                        openedConfessions++;
-                        if(openedConfessions === confessions.length) {
-                            document.getElementById('next-to-door3').style.display = 'inline-block';
-                        }
-                    }
-                };
-                grid.appendChild(div);
-            });
-        }
-
-        function showFinalMessage() {
-            document.getElementById('secret-msg').style.display = 'block';
-        }
-
-        for(let i=0; i<30; i++) {
-            let star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = Math.random() * 3 + 'px';
-            star.style.height = star.style.width;
-            star.style.top = Math.random() * 100 + 'vh';
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.animationDuration = (Math.random() * 2 + 1) + 's';
-            document.body.appendChild(star);
         }
     </script>
 </body>
 </html>
-
