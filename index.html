@@ -41,7 +41,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* الأزرار والعناصر */
         .btn {
             background: #fff;
             color: #0b0b0b;
@@ -50,10 +49,11 @@
             font-size: 1.1rem;
             border-radius: 30px;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 25px;
             transition: 0.3s;
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+            display: none;
         }
 
         .btn:hover {
@@ -85,7 +85,6 @@
             display: none;
         }
 
-        /* شبكات العناصر (الورود، الظروف، النجوم) */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -116,22 +115,11 @@
             border-color: #ff6b81;
         }
 
-        /* التنسيقات النصية العامة */
         p, h2, h3 {
             line-height: 1.8;
             margin-bottom: 15px;
         }
 
-        .fade-text {
-            opacity: 0;
-            animation: showText 2s forwards;
-        }
-
-        @keyframes showText {
-            to { opacity: 1; }
-        }
-
-        /* القلب النابض */
         .pulsing-heart {
             font-size: 5rem;
             cursor: pointer;
@@ -145,7 +133,6 @@
             100% { transform: scale(1); }
         }
 
-        /* النجوم في الخلفية */
         .star {
             position: absolute;
             background: #fff;
@@ -163,8 +150,8 @@
 
     <!-- الشاشة الأولى: البداية -->
     <div id="screen-start" class="screen active">
-        <h2 id="intro-text" style="font-size: 1.8rem;">مرحبًا...</h2>
-        <button class="btn" id="start-btn" style="display:none;" onclick="nextScreen('screen-envelope')">🤍 افتح بيت قلبي</button>
+        <h2 id="intro-text" style="font-size: 1.6rem; transition: opacity 0.5s ease;">مرحبًا...</h2>
+        <button class="btn" id="start-btn" onclick="nextScreen('screen-envelope')">🤍 افتح بيت قلبي</button>
     </div>
 
     <!-- الشاشة الثانية: الظرف -->
@@ -174,116 +161,111 @@
         <p style="font-size: 0.9rem; color: #aaa;">(اضغط على الظرف للفتح)</p>
     </div>
 
-    <!-- الباب الأول: غرفة الاشتياق - السؤال -->
+    <!-- الباب الأول -->
     <div id="screen-door1-q" class="screen">
         <h3>🌹 الباب الأول: مفتاح غرفة الاشتياق</h3>
         <p>قبل ما تدخل أول غرفة... جاوبني:<br><b>شو أكتر شي بحب أعمله أول ما بفيق من النوم؟ 🥹🤍</b></p>
         <input type="text" id="ans1" placeholder="اكتب الجواب هون...">
         <br>
-        <button class="btn" onclick="checkAnswer(1)">تحقق</button>
+        <button class="btn" style="display:inline-block;" onclick="checkAnswer(1)">تحقق</button>
         <p id="err1" class="error-msg">حبوبي، فكر شوي وجاوب من قلبك! ❤️ (تذكّر: أسمع صوتك)</p>
     </div>
 
-    <!-- غرفة الاشتياق - المحتوى -->
     <div id="screen-door1-content" class="screen">
         <h3>🌹 غرفة الاشتياق</h3>
         <p style="font-size: 0.9rem; color: #ffb6c1;">اضغط على كل وردة لتكتشف رسالة:</p>
         <div class="grid-container" id="flowers-grid"></div>
-        <button class="btn" id="next-to-door2" style="display:none;" onclick="nextScreen('screen-door2-q')">الانتقال للباب الثاني 🗝️</button>
+        <button class="btn" id="next-to-door2" onclick="nextScreen('screen-door2-q')">الانتقال للباب الثاني 🗝️</button>
     </div>
 
-    <!-- الباب الثاني: غرفة الاعترافات - السؤال -->
+    <!-- الباب الثاني -->
     <div id="screen-door2-q" class="screen">
         <h3>💌 الباب الثاني: مفتاح غرفة الاعترافات</h3>
         <p>قبل ما تفتح الباب... جاوبني:<br><b>شو أكتر كلمة بحب دايمًا أسمعها منك؟ 🥹</b></p>
         <input type="text" id="ans2" placeholder="اكتب الجواب هون...">
         <br>
-        <button class="btn" onclick="checkAnswer(2)">تحقق</button>
+        <button class="btn" style="display:inline-block;" onclick="checkAnswer(2)">تحقق</button>
         <p id="err2" class="error-msg">قربت! تذكّر (يا بنوتي) 🤍</p>
     </div>
 
-    <!-- غرفة الاعترافات - المحتوى -->
     <div id="screen-door2-content" class="screen">
         <h3>💌 غرفة الاعترافات</h3>
         <div class="grid-container" id="confessions-grid"></div>
-        <button class="btn" id="next-to-door3" style="display:none;" onclick="nextScreen('screen-door3-q')">الانتقال للباب الثالث ❤️</button>
+        <button class="btn" id="next-to-door3" onclick="nextScreen('screen-door3-q')">الانتقال للباب الثالث ❤️</button>
     </div>
 
-    <!-- الباب الثالث: أسباب الحب - السؤال -->
+    <!-- الباب الثالث -->
     <div id="screen-door3-q" class="screen">
         <h3>❤️ الباب الثالث: أسباب الحب</h3>
         <p>إذا بدك تدخل... لازم تجاوب صح... 😌<br><b>شو تاريخ ميلادي؟</b></p>
         <input type="text" id="ans3" placeholder="DD/MM/YYYY">
         <br>
-        <button class="btn" onclick="checkAnswer(3)">تحقق</button>
+        <button class="btn" style="display:inline-block;" onclick="checkAnswer(3)">تحقق</button>
         <p id="err3" class="error-msg">التاريخ هو 08/08/2001 🤍</p>
     </div>
 
-    <!-- أسباب الحب - المحتوى -->
     <div id="screen-door3-content" class="screen">
         <h3>❤️ أسباب الحب (30 سبباً)</h3>
         <p style="font-size: 0.9rem; color: #ffb6c1;">اضغط لاكتشاف الأسباب:</p>
         <div class="grid-container" id="reasons-grid"></div>
-        <button class="btn" id="next-to-door4" style="display:none;" onclick="nextScreen('screen-door4-q')">الانتقال للباب الرابع 🕯️</button>
+        <button class="btn" id="next-to-door4" onclick="nextScreen('screen-door4-q')">الانتقال للباب الرابع 🕯️</button>
     </div>
 
-    <!-- الباب الرابع: الذكريات - السؤال -->
+    <!-- الباب الرابع -->
     <div id="screen-door4-q" class="screen">
         <h3>🕯️ الباب الرابع: غرفة الذكريات</h3>
         <p>قبل ما تدخل... جاوبني. 🥹<br><b>شو أكتر صفة بحبها فيك؟</b></p>
         <input type="text" id="ans4" placeholder="اكتب الجواب...">
         <br>
-        <button class="btn" onclick="checkAnswer(4)">تحقق</button>
+        <button class="btn" style="display:inline-block;" onclick="checkAnswer(4)">تحقق</button>
         <p id="err4" class="error-msg">الصفة هي: الحنية 🤍</p>
     </div>
 
-    <!-- غرفة الذكريات - المحتوى -->
     <div id="screen-door4-content" class="screen">
         <h3>🕯️ غرفة الذكريات</h3>
         <div class="grid-container" id="memories-grid"></div>
-        <button class="btn" id="next-to-door5" style="display:none;" onclick="nextScreen('screen-door5-q')">الانتقال للباب الخامس ⭐</button>
+        <button class="btn" id="next-to-door5" onclick="nextScreen('screen-door5-q')">الانتقال للباب الخامس ⭐</button>
     </div>
 
-    <!-- الباب الخامس: الأمنيات - السؤال -->
+    <!-- الباب الخامس -->
     <div id="screen-door5-q" class="screen">
         <h3>⭐ الباب الخامس: غرفة الأمنيات</h3>
         <p>كل إنسان عنده أمنيات... بس في أمنية وحدة هي الأقرب لقلبي. 🌙<br><b>شو أكتر شي بتمنّاه بحياتي؟ 🥹</b></p>
         <input type="text" id="ans5" placeholder="اكتب الجواب...">
         <br>
-        <button class="btn" onclick="checkAnswer(5)">تحقق</button>
+        <button class="btn" style="display:inline-block;" onclick="checkAnswer(5)">تحقق</button>
         <p id="err5" class="error-msg">الأمنية هي: حضنك 🫂</p>
     </div>
 
-    <!-- غرفة الأمنيات - المحتوى -->
     <div id="screen-door5-content" class="screen">
         <h3>⭐ غرفة الأمنيات</h3>
         <div class="grid-container" id="wishes-grid"></div>
-        <button class="btn" id="next-to-door6" style="display:none;" onclick="nextScreen('screen-door6-q')">الانتقال للباب الأخير 🌍</button>
+        <button class="btn" id="next-to-door6" onclick="nextScreen('screen-door6-q')">الانتقال للباب الأخير 🌍</button>
     </div>
 
-    <!-- الباب السادس والأخير - السؤال -->
+    <!-- الباب السادس -->
     <div id="screen-door6-q" class="screen">
         <h3>🌍 الباب السادس: الغرفة الأخيرة</h3>
         <p>ما بقي غير آخر باب...<br><b>من وين الشخص اللي ساكن قلبي؟ ❤️</b></p>
         <input type="text" id="ans6" placeholder="الدولة...">
         <br>
-        <button class="btn" onclick="checkAnswer(6)">تحقق</button>
+        <button class="btn" style="display:inline-block;" onclick="checkAnswer(6)">تحقق</button>
         <p id="err6" class="error-msg">البلد هو: سوريا 🇸🇾</p>
     </div>
 
-    <!-- الغرفة الأخيرة والرسالة الختامية -->
+    <!-- الغرفة الأخيرة -->
     <div id="screen-final" class="screen">
         <div style="font-size: 3rem;">🌙</div>
         <h3>الغرفة الأخيرة</h3>
-        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 15px; text-align: right; max-height: 350px; overflow-y: auto; margin-top: 15px; font-size: 0.95rem;" id="final-letter">
+        <div style="background: rgba(255,255,255,0.08); padding: 20px; border-radius: 15px; text-align: right; max-height: 350px; overflow-y: auto; margin-top: 15px; font-size: 0.95rem;">
             <p><b>💌 الرسالة الأخيرة:</b></p>
             <p>إذا وصلت لهون... فأول شي... شكراً. 🤍<br>شكراً لأنك مشيت معي بكل هالرحلة... وما استعجلت... وقريت كل كلمة، لأن كل كلمة هون طالعة من قلبي مو بس من إيدي.</p>
             <p>يمكن هاد مجرد موقع بالنسبة لأي حدا... بس بالنسبة إلي، هاد المكان هو كل المشاعر اللي ما عرفت أحكيها بصوتي. كل باب فتحته كان جزء من قلبي. ❤️</p>
-            <p>وبدعيلك من كل قلبي... الله يحفظك، ويطمن قلبك، ويرزقك كل الخير اللي بتستحقه، ويبعد عنك كل تعب وحزن. 🫂</p>
+            <p>وبدعيلك من كل قلبي... الله يحفظك، ويطمن قلبك، ويرزقك كل الخير اللي بتستحقه، ويبعد عنك كل تعب والحزن. 🫂</p>
             <p>وإذا في أمنية وحدة بتمنى تتحقق... فهي إنو يجي اليوم اللي ما عاد يكون بينا أي مسافة، وأقدر أحضنك وأقلك كل هالكلام وأنا قدامك. 🌎</p>
             <p>وأتمنى من كل قلبي... إنك تضل الشخص اللي بضحك معه، وبحكيله كل شي، وبدعي له كل يوم، وبحبه اليوم وبكرا وكل يوم بعده. ♾️</p>
         </div>
-        <button class="btn" onclick="showSecret()">🥺 لسا في شغلة صغيرة...</button>
+        <button class="btn" style="display:inline-block;" onclick="showSecret()">🥺 لسا في شغلة صغيرة...</button>
     </div>
 
     <!-- المشهد الأخير -->
@@ -292,13 +274,12 @@
         <div id="secret-msg" style="display:none; margin-top: 20px;">
             <p style="font-size: 1.2rem; color: #ffb6c1;"><b>"من أول يوم... أنت ربحت قلبي... واليوم... أنا بس سلمتك مفاتيحه. 🗝️🤍"</b></p>
             <hr style="border: 0.5px solid rgba(255,255,255,0.2); margin: 20px 0;">
-            <p style="font-size: 1.1rem;">إذا ضاقت فيك الدنيا يوم... تذكر إن في قلب هون بيدعيلك وببيحبك، وبيعتبرك أجمل هدية أعطتني ياها الحياة. ❤️</p>
+            <p style="font-size: 1.1rem;">إذا ضاقت فيك الدنيا يوم... تذكر إن في قلب هون بيدعيلك وبيحبك، وبيعتبرك أجمل هدية أعطتني ياها الحياة. ❤️</p>
             <p style="margin-top: 30px; font-size: 0.9rem; color: #aaa; cursor: pointer;" onclick="alert('وبالمناسبة... إذا نسيت أي كلمة من هالموقع... بتمنى ما تنسى أبدًا إن في بنت بتحبك من كل قلبها. 🤍')">🌙 (اضغط هنا للهمسة الأخيرة)</p>
         </div>
     </div>
 
     <script>
-        // إدخال نصوص البداية التفاعلية
         const introTexts = [
             "مرحبًا...",
             "إذا وصلت لهون...",
@@ -313,6 +294,7 @@
             "هاد المكان...",
             "هو قلبي. ❤️"
         ];
+        
         let currentTextIdx = 0;
         const introEl = document.getElementById("intro-text");
         const startBtn = document.getElementById("start-btn");
@@ -324,13 +306,17 @@
                     introEl.innerHTML = introTexts[currentTextIdx];
                     introEl.style.opacity = 1;
                     currentTextIdx++;
-                    setTimeout(playIntro, 2500);
-                }, 500);
+                    setTimeout(playIntro, 2400);
+                }, 400);
             } else {
                 startBtn.style.display = "inline-block";
             }
         }
-        setTimeout(playIntro, 1000);
+        
+        // بدء العرض بعد تحميل الصفحة بثانية
+        window.onload = function() {
+            setTimeout(playIntro, 1000);
+        };
 
         function nextScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -342,7 +328,6 @@
             if(screenId === 'screen-door5-content') initWishes();
         }
 
-        // التحقق من الإجابات
         function checkAnswer(doorNum) {
             let val = document.getElementById('ans' + doorNum).value.trim();
             let err = document.getElementById('err' + doorNum);
@@ -368,7 +353,6 @@
             }
         }
 
-        // محتوى الورود (الباب 1)
         const flowers = [
             "اشتقتلك بطريقة ما بتعرفها الكلمات... 🥹🤍",
             "لو كان في طريقة أبعتلك حضن مع هالرسالة، كان أول شي عملته. 🫂❤️",
@@ -403,7 +387,6 @@
             });
         }
 
-        // محتوى الاعترافات (الباب 2)
         const confessions = [
             "بعرف إني مو دايمًا بعرف أوصف اللي بقلبي، بس وجودك صار جزء من راحتي... 🤍",
             "شكراً لأنك كنت حنون معي وأعطيتني شعور الأمان وأنا معك. 🥹❤️",
@@ -433,7 +416,6 @@
             });
         }
 
-        // محتوى الأسباب (الباب 3)
         const reasons = [
             "بحب حنيتك لأنها أول شي لمس قلبي. 🥹", "بحب اهتمامك فيني حتى بأصغر التفاصيل. 🌷",
             "بحب صوتك لأنه بيطمني. 🎧🤍", "بحب ضحكتك لأنها بتخليني أبتسم. 😊",
@@ -469,4 +451,18 @@
                         }
                     }
                 };
-          
+                grid.appendChild(div);
+            });
+        }
+
+        const memories = [
+            "بتتذكر أول مرة حسيت إنك صرت جزء من يومي؟ من وقتها ما عاد مرّ يوم إلا وكان اسمك حاضر. 🤍",
+            "بتتذكر أول مرة ضحكت بسببي؟ كانت بداية ذكريات كتيرة حلوة. 😊❤️",
+            "في أيام صعبة كانت تمر، بس مجرد وجودك كان يخففها. 🥹",
+            "أجمل ذكرى هي أي لحظة كنت فيها معي. 🤍",
+            "أنا ما بحفظ التواريخ بقدر ما بحفظ المشاعر، وكل شعور حلو حسّيته معك لسا بقلبي. ❤️"
+        ];
+        let openedMemories = 0;
+        function initMemories() {
+            const grid = document.getElementById('memories-grid');
+   
