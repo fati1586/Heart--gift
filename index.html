@@ -86,28 +86,28 @@
         <div id="step-intro">
             <h2>مرحباً بك</h2>
             <p>هذه المساحة مخصصة لك وحدك، تحتوي على محطات صغيرة تعبر عن الامتنان لكل ما تحمله.</p>
-            <button class="btn" onclick="nextStep('step-envelope')">ابدأ الرحلة</button>
+            <button class="btn" onclick="showStep('step-envelope')">ابدأ الرحلة</button>
         </div>
 
         <!-- الظرف الرقمي -->
         <div id="step-envelope" class="hidden">
             <h2>الظرف الرقمي</h2>
             <p>قبل أن نفتح الغرف، هناك رسالة صغيرة بانتظارك...</p>
-            <button class="btn" onclick="nextStep('room-1')</div>">افتح الظرف</button>
+            <button class="btn" onclick="showStep('room-1')">افتح الظرف</button>
         </div>
 
         <!-- الغرفة الأولى -->
         <div id="room-1" class="hidden">
             <h2>الغرفة الأولى</h2>
             <p>كل يوم يمر يثبت لي كم أن وجودك يعطي معنى مختلفاً لكل التفاصيل.</p>
-            <button class="btn" onclick="nextStep('room-2')">الانتقال للغرفة التالية</button>
+            <button class="btn" onclick="showStep('room-2')">الانتقال للغرفة التالية</button>
         </div>
 
         <!-- الغرفة الثانية -->
         <div id="room-2" class="hidden">
             <h2>الغرفة الثانية</h2>
             <p>الكلمات قد تقصر أحياناً عن وصف الشعور، لكنها محاولة بسيطة لقول شكراً لكونك هنا.</p>
-            <button class="btn" onclick="nextStep('room-3')">الانتقال للغرفة الأخيرة</button>
+            <button class="btn" onclick="showStep('room-3')">الانتقال للغرفة الأخيرة</button>
         </div>
 
         <!-- الغرفة الثالثة والأخيرة -->
@@ -127,8 +127,8 @@
     </div>
 
     <script>
-        function nextStep(stepId) {
-            // إخفاء كل العناصر
+        function showStep(stepId) {
+            // إخفاء كل الخطوات والغرف
             document.getElementById('step-intro').classList.add('hidden');
             document.getElementById('step-envelope').classList.add('hidden');
             document.getElementById('room-1').classList.add('hidden');
@@ -136,38 +136,15 @@
             document.getElementById('room-3').classList.add('hidden');
             document.getElementById('step-final').classList.add('hidden');
 
-            // إظهار الخطوة المطلوبة
-            if(stepId === 'room-1</div>') {
-                document.getElementById('room-1').classList.remove('hidden');
-            } else {
-                document.getElementById('room-2').classList.remove('hidden'); // تصحيح تدريجي للتنقل
-            }
-        }
-
-        // دالة مخصصة للانتقال المباشر بين الغرف بسلاسة
-        document.querySelectorAll('.btn').forEach((btn, index) => {
-            if(index === 1) btn.onclick = () => showOnly('step-envelope');
-            if(index === 2) btn.onclick = () => showOnly('room-1');
-            if(index === 3) btn.onclick = () => showOnly('room-2');
-            if(index === 4) btn.onclick = () => showOnly('room-3');
-        });
-
-        function showOnly(id) {
-            document.getElementById('step-intro').classList.add('hidden');
-            document.getElementById('step-envelope').classList.add('hidden');
-            document.getElementById('room-1').classList.add('hidden');
-            document.getElementById('room-2').classList.add('hidden');
-            document.getElementById('room-3').classList.add('hidden');
-            document.getElementById('step-final').classList.add('hidden');
-            
-            document.getElementById(id).classList.remove('hidden');
+            // إظهار الخطوة المطلوبة فقط
+            document.getElementById(stepId).classList.remove('hidden');
         }
 
         function checkAnswer() {
             let val = document.getElementById('ans3').value.trim();
-            // يقبل الإجابة سواء كتبت سوريا أو مع الإيموجي
+            // التحقق من الإجابة سواء كتب "سوريا" أو الإيموجي أو الاثنين معاً
             if (val === 'سوريا' || val === '🇸🇾' || val.includes('سوريا')) {
-                showOnly('step-final');
+                showStep('step-final');
             } else {
                 document.getElementById('e3').classList.remove('hidden');
             }
